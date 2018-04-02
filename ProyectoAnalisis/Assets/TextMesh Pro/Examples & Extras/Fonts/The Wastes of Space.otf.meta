@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f8b45ee60a6478240a73765bf2dffbaf
+timeCreated: 1522082426
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: The Wastes of Space
+  fontNames:
+  - The Wastes of Space
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
