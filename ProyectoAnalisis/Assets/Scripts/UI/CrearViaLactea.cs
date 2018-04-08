@@ -1,21 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
+using TMPro;
 public class CrearViaLactea : MonoBehaviour
 {
 
 
     public GameObject canvasMenuCrear;
     public GameObject canvasMenuPpal;
+    
 
-
-
+  
+    public GameObject prefabBtnVialactea;
     private Animator animatorMenuCrear;
     private Animator animatorMenuPpal;
 
     [SerializeField]
     private ApiCalls apiCalls;
+  
 
     void Start()
     {
@@ -23,8 +26,36 @@ public class CrearViaLactea : MonoBehaviour
         animatorMenuPpal = canvasMenuPpal.GetComponent<Animator>();
         animatorMenuCrear = canvasMenuCrear.GetComponent<Animator>();
 
-        apiCalls.getViaLacteas();
+        StartCoroutine(GetViaLacteas());
     }
+
+   
+
+    public IEnumerator GetViaLacteas()
+    {
+        string accion = "Api/vialactea";
+        UnityWebRequest wr = UnityWebRequest.Get(apiCalls.url + accion);
+
+        yield return wr.SendWebRequest();
+
+        if (wr.isNetworkError || wr.isHttpError)
+        {
+            Debug.Log(wr.error);
+        }
+        else
+        {
+
+            string json = wr.downloadHandler.text;
+            
+
+            string JSONToParse = "{\"values\":" + json + "}";
+
+            ViaLacteas viaLacteas = JsonUtility.FromJson<ViaLacteas>(JSONToParse);
+            listarViaLacteas(viaLacteas.values);
+        }
+
+    }
+
     /// <summary>
     /// Se encarga de abrir y activar las animaciones del menu crear via lactea
     /// </summary>
@@ -42,12 +73,24 @@ public class CrearViaLactea : MonoBehaviour
     }
 
     /// <summary>
-    /// Hace una Peticion con las via lacteas disponibles y las muestra en forma de lista en la escena
+    /// muestra las vialacteas en forma de lista en la escena
     /// </summary>
-    public void listarViaLacteas()
+    public void listarViaLacteas(List<ViaLactea> viaLacteas)
     {
+        
+           Transform content = canvasMenuPpal.transform.Find("Canvas/Panel/ScrollView/ContentPane");
 
-        List<ViaLactea> viaLacteas;
+      
+        foreach (var item in viaLacteas)
+        {
+            GameObject btnAux= Instantiate(prefabBtnVialactea);
+            btnAux.transform.parent = content;
+            btnAux.transform.Find("Nebulosas").GetComponent<TextMeshProUGUI>().text=item.totalNebulosas+" NEBULOSAS";
+            btnAux.transform.Find("Nombre").GetComponent<TextMeshProUGUI>().text = item.nombre;
+            BotonViaLactea btnVL= btnAux.GetComponent<BotonViaLactea>();
+            btnVL.viaLactea = item;
+            btnVL.animatorMenuPpal = animatorMenuPpal;
+        }
 
     }
 
