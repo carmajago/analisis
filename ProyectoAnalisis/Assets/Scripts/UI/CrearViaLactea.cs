@@ -40,7 +40,9 @@ public class CrearViaLactea : MonoBehaviour
 
         if (wr.isNetworkError || wr.isHttpError)
         {
-            Debug.Log(wr.error);
+
+            MostrarError(wr.error);
+            canvasMenuPpal.SetActive(false);
         }
         else
         {
@@ -93,5 +95,11 @@ public class CrearViaLactea : MonoBehaviour
         }
 
     }
+    public void MostrarError(string error)
+    {
+        var CanvasError = GameObject.FindGameObjectWithTag("CanvasError");
+        CanvasError.transform.Find("Panel/Panel2/ERROR").GetComponent<TextMeshProUGUI>().text = error;
+        CanvasError.GetComponent<Canvas>().enabled = true;
 
+    }
 }
