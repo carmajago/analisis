@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Nebulosa  {
 
-
+    
     public int id;
     public string nombre;
 
@@ -14,7 +14,11 @@ public class Nebulosa  {
     public float y;
     public float z;
 
+    public int totalSistemas;
+  
+
 
     public List<SistemaPlanetario> sistemasPlanetarios;
+
     public int ViaLacteaFK;
 }

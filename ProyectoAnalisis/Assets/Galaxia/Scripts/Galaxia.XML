@@ -1,0 +1,1085 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Galaxia</name>
+    </assembly>
+    <members>
+        <member name="T:Galaxia.DefaultResources">
+            <summary>
+            Stores default values for Curves used in the Galaxy Prefab
+            </summary>
+        </member>
+        <member name="T:Galaxia.DensityWaveDistributor">
+            <summary>
+            The Density Wave Distribution Algorithm
+            http://simeon.co.vu/Documentation/Galaxia/custom_distributors.html
+            </summary>
+        </member>
+        <member name="M:Galaxia.DensityWaveDistributor.Process(Galaxia.ParticleDistributor.ProcessContext)">
+            <summary>
+            The main function for star orbits in the galaxy.
+            It also calculates the color of each particle
+            http://simeon.co.vu/Documentation/Galaxia/custom_distributors.html
+            </summary>
+            <param name="_particle">The particle to use, to calculate it's position</param>
+            <param name="galaxy">The <see cref="T:Galaxia.GalaxyPrefab"/> that holds all the information on the galaxy generation</param>
+            <param name="particles">The ParticlePrefab that holds the information on the particle itself</param>
+            <param name="center">The local center of the galaxy. It is advised to use the transform of the galaxy to move it</param>
+            <param name="angleRotation">the global rotation for all the particles a.k.a. the time</param>
+            <param name="index">the index of the particle</param>
+        </member>
+        <member name="T:Galaxia.Galaxy">
+            <summary>
+            The Component that holds and manages visualization of <see cref="T:Galaxia.GalaxyPrefab"/>
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.GenerateParticles">
+            <summary>
+            Generates <see cref="T:Galaxia.Particles"/> to all the <see cref="T:Galaxia.ParticlesPrefab"/> in the galaxy
+            This function only generates the particles, not the Meshes
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.GenerateParticles(Galaxia.ParticlesPrefab)">
+            <summary>
+            Same as the <see cref="M:Galaxia.Galaxy.GenerateParticles"/> but for a specific <see cref="T:Galaxia.ParticlesPrefab"/>
+            </summary>
+            <param name="prefab">The Particles Prefab to use for the generation</param>
+        </member>
+        <member name="M:Galaxia.Galaxy.DestroyParticles">
+            <summary>
+            Destroys all the <see cref="T:Galaxia.Particles"/> components in the Galaxy.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.DestroyParticles(Galaxia.ParticlesPrefab)">
+            <summary>
+            Destroys all <see cref="T:Galaxia.Particles"/> with a given prefab.
+            </summary>
+            <param name="prefab">particle prefab to search for</param>
+        </member>
+        <member name="M:Galaxia.Galaxy.UpdateParticles">
+            <summary>
+            Marks all the <see cref="T:Galaxia.Particles"/> for Update, next frame.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.UpdateParticlesImmediately">
+            <summary>
+            Forces all <see cref="T:Galaxia.Particles"/> to update Immediately
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.UpdateParticles(Galaxia.ParticlesPrefab)">
+            <summary>
+            Marks a <see cref="T:Galaxia.Particles"/> with a given <see cref="T:Galaxia.ParticlesPrefab"/> for Update, next frame.
+            </summary>
+            <param name="prefab">The <see cref="T:Galaxia.ParticlesPrefab"/> to search for</param>
+        </member>
+        <member name="M:Galaxia.Galaxy.UpdateParticlesImmediately(Galaxia.ParticlesPrefab)">
+            <summary>
+            Forces all <see cref="T:Galaxia.Particles"/> with a given <see cref="T:Galaxia.ParticlesPrefab"/> to update Immediately.
+            </summary>
+            <param name="prefab">The <see cref="T:Galaxia.ParticlesPrefab"/> to search for</param>
+        </member>
+        <member name="M:Galaxia.Galaxy.OnRenderObject">
+            <summary>
+            Called by unity when the object is drawn by any camera.
+            This method is the main rendering method for the galaxy.
+            It will not be called if the component is disabled or the Pre render event is used.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.DrawNow">
+            <summary>
+            Draws the Galaxy and all the <see cref="T:Galaxia.Particles"/> in the Galaxy Now
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.Draw">
+            <summary>
+            Sends the Galaxy and all the <see cref="T:Galaxia.Particles"/> for Rendering
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.OnDrawGizmosSelected">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.OnDrawGizmos">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.Position">
+            <summary>
+            A Utility function for getting the position of the <see cref="T:Galaxia.Galaxy"/>.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.Particles">
+            <summary>
+            List of <see cref="T:Galaxia.Particles"/> that holds the Components responsible for the individual visualization of the <see cref="T:Galaxia.ParticlesPrefab"/>.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.GenerationType">
+            <summary>
+            This dictates if the <see cref="T:Galaxia.Galaxy"/> updates automatically when a Property is changed.
+            If it is set to manual, <see cref="M:Galaxia.Galaxy.GenerateParticles"/> or <see cref="M:Galaxia.Galaxy.UpdateParticles(Galaxia.ParticlesPrefab)"/> must be called every time the galaxy is changed.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.GalaxyPrefab">
+            <summary>
+            The meat of the galaxy. This is a holder for galaxy specific particle properties.
+            It holds a list of <see cref="T:Galaxia.ParticlesPrefab"/> as well as the <see cref="T:Galaxia.ParticleDistributor"/>.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.DirectX11">
+            <summary>
+            Returns if DirectX 11 is supported on the software.
+            If it is available you can disable it from here.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.GPU">
+            <summary>
+            Will use Custom particles, rendered on the GPU
+            if not, it will use the Unity Particle System
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.RenderGalaxy">
+            <summary>
+            Should the galaxy be rendered. This disables the automatic rendering of the galaxy and does not disable the <see cref="M:Galaxia.Galaxy.Draw"/> and <see cref="M:Galaxia.Galaxy.DrawNow"/> methods.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.FrustumCulling">
+            <summary>
+            Enable FrustumCulling.
+            This determines if the galaxy is rendered when outside the camera's frustum. This only applies to the GPU particles and not the Unity ones.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.LastPreRenderEvent">
+            <summary>
+            Returns the last pre-render event
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.OpenGL">
+            <summary>
+            Checks if the currently utilized Graphics API is OpenGL instead of DirectX
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.SupportsDirectX11">
+            <summary>
+            Checks if the DirectX is the current Graphics API and if so then is it >= than DX11
+            </summary>
+        </member>
+        <member name="M:Galaxia.Galaxy.SetParticlesTime(System.Single)">
+            <summary>
+            A utility method for setting the time of all <see cref="T:Galaxia.Particles"/> on the <see cref="T:Galaxia.Galaxy"/>.
+            Used mainly for animations.
+            </summary>
+            <param name="time">The time of the particles.</param>
+        </member>
+        <member name="P:Galaxia.Galaxy.OnPreRender">
+            <summary>
+            On Pre Render Event Handler. This is called before each <see cref="T:Galaxia.Particles"/> is rendered.
+            If this event is used then the <see cref="T:Galaxia.Particles"/> won't be rendered.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Galaxy.OnPostRender">
+            <summary>
+            On Post Render Event Handler. This is called after each <see cref="T:Galaxia.Particles"/> is rendered.
+            </summary>
+        </member>
+        <member name="T:Galaxia.Galaxy.GalaxyGenerationType">
+            <summary>
+            Used for specifying the Galaxy Particle Generation Type.
+            </summary>
+        </member>
+        <member name="F:Galaxia.Galaxy.GalaxyGenerationType.Automatic">
+            <summary>
+            generates particles when the Galaxy Prefab properties change.
+            </summary>
+        </member>
+        <member name="F:Galaxia.Galaxy.GalaxyGenerationType.Manual">
+            <summary>
+            used to manually generate particles.
+            </summary>
+        </member>
+        <member name="T:Galaxia.Galaxy.RenderEventHandler">
+            <summary>
+            Render Event Implementation
+            </summary>
+        </member>
+        <member name="T:Galaxia.GalaxyPrefab">
+            <summary>
+            The holder of all the ParticlesPrefab
+            </summary>
+        </member>
+        <member name="P:Galaxia.GalaxyPrefab.Item(System.Int32)">
+            <summary>
+            Gets a <see cref="T:Galaxia.ParticlesPrefab"/>
+            </summary>
+            <example>
+            <code>
+            GalaxyPrefab galaxy;
+            galaxy[0].Size = 0.2;
+            </code>
+            </example>
+            <param name="index"></param>
+            <returns>A <see cref="T:Galaxia.ParticlesPrefab"/> at index</returns>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.GetEnumerator">
+            <summary>
+            Gets the Enumerator for all of the particle prefabs
+            </summary>
+            <returns>The Enumerator for all the particle prefabs</returns>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.PopulatePreset(Galaxia.ParticlesPrefab,Galaxia.ParticlesPrefab.Preset)">
+            <summary>
+            Populates a <see cref="T:Galaxia.ParticlesPrefab"/> with ready set Presets.
+            </summary>
+            <param name="prefab">The Prefab to populate</param>
+            <param name="Preset"> The preset to use</param>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.Add(Galaxia.ParticlesPrefab)">
+            <summary>
+            Adds a <see cref="T:Galaxia.ParticlesPrefab"/> to the Galaxy
+            </summary>
+            <param name="item">The particle prefab</param>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.GetByName(System.String)">
+            <summary>
+            Gets the <see cref="T:Galaxia.ParticlesPrefab"/> with a given name.
+            If no prefab with that name is found a null will be returned.
+            </summary>
+            <param name="name">The name of the prefab to search for</param>
+            <returns>If no prefab with that name is found a null will be returned.</returns>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.Create(System.String,Galaxia.ParticlesPrefab.Preset)">
+            <summary>
+            Creates and adds a <see cref="T:Galaxia.ParticlesPrefab"/> from a given preset
+            </summary>
+            <param name="name">Name of the new Particles Prefab</param>
+            <param name="Preset"></param>
+            <returns>The created and populated Particles Prefab</returns>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.Insert(Galaxia.ParticlesPrefab,Galaxia.ParticlesPrefab)">
+            <summary>
+            Insert a <see cref="T:Galaxia.ParticlesPrefab"/> afer an other
+            </summary>
+            <param name="after">The prefab to insert after</param>
+            <param name="toInsert">The Prefab to Insert</param>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.Clear">
+            <summary>
+            Clears all the Particle Prefabs
+            Note that this does not Destory the Prefabs
+            </summary>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.Contains(Galaxia.ParticlesPrefab)">
+            <summary>
+            Check if a <see cref="T:Galaxia.ParticlesPrefab"/> exists in the galaxy
+            </summary>
+            <param name="item">The Prefab to search for</param>
+            <returns>Is the Prefab present in the galaxy</returns>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.CopyTo(Galaxia.ParticlesPrefab[],System.Int32)">
+            <summary>
+            Copies all the <see cref="T:Galaxia.ParticlesPrefab"/> to another array
+            </summary>
+            <param name="array">The array used to copy tp</param>
+            <param name="arrayIndex">The index to start at</param>
+        </member>
+        <member name="P:Galaxia.GalaxyPrefab.Count">
+            <summary>
+            The number of <see cref="T:Galaxia.ParticlesPrefab"/> in the Galaxy
+            </summary>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.Remove(Galaxia.ParticlesPrefab)">
+            <summary>
+            Removes a given <see cref="T:Galaxia.ParticlesPrefab"/> from the galaxy.
+            If a Prefab does not exist in the galaxy it will return false
+            </summary>
+            <param name="item">The Prefab to remove</param>
+            <returns>Is a Prefab successfuly removed</returns>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.UpdateAllGalaxies">
+            <summary>
+            Updates all <see cref="T:Galaxia.Galaxy"/> that use the Galaxy Prefab
+            If a Galaxy is set to a Manual update, it will not be Updated.
+            This calls the <see cref="M:Galaxia.Galaxy.UpdateParticles"/> method
+            </summary>
+        </member>
+        <member name="M:Galaxia.GalaxyPrefab.UpdateAllGalaxies(Galaxia.ParticlesPrefab)">
+            <summary>
+            Updates all the <see cref="T:Galaxia.Particles"/> with a given <see cref="T:Galaxia.ParticlesPrefab"/>
+            in all the Galaxies using the Galaxy prefab
+            Note that this updated the existing particles and does not Destory them
+            </summary>
+            <param name="prefab"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Galaxia.GalaxyPrefab.RecreateAllGalaxies" -->
+        <member name="M:Galaxia.GalaxyPrefab.RecreateAllGalaxies(Galaxia.ParticlesPrefab)">
+            <summary>
+            Recreates the <see cref="T:Galaxia.Particles"/> with a given <see cref="T:Galaxia.ParticlesPrefab"/> of all <see name="Galaxies" cref="T:Galaxia.Galaxy"/> with the Galaxy Prefab
+            Note that this fully Destroys previous <see cref="T:Galaxia.Particles"/> and Creates new ones.
+            </summary>
+        </member>
+        <member name="P:Galaxia.GalaxyPrefab.Size">
+            <summary>
+            Size of the Galaxy
+            </summary>
+        </member>
+        <member name="P:Galaxia.GalaxyPrefab.HeightOffset">
+            <summary>
+            Height Offset of the galaxy particles
+            This includes the range from -Offset to +Offset from the position the Galaxy is in
+            </summary>
+        </member>
+        <member name="P:Galaxia.GalaxyPrefab.Distributor">
+            <summary>
+            The Active Distributor
+            Here are the algoriths for Position, color, size and rotation distribution of the particles
+            </summary>
+        </member>
+        <member name="T:Galaxia.GaussianDistributor">
+            <summary>
+            The Gaussian Distribution algorith.
+            This distributor resembles a star cluster.
+            </summary>
+        </member>
+        <member name="M:Galaxia.GaussianDistributor.Process(Galaxia.ParticleDistributor.ProcessContext)">
+            <summary>
+            Used by the Particle Generator to modify/distribute the particles to a desired shape.
+            This is where particles are processed one by one.
+            <see cref="T:Galaxia.ParticleDistributor.ProcessContext"/>
+            </summary>
+            <param name="context">The context holds information on the current particle and Galaxy Object.</param>
+        </member>
+        <member name="M:Galaxia.GaussianDistributor.UpdateMaterial(UnityEngine.Material)">
+            <summary>
+            Updates all uniform variables in the given material
+            </summary>
+            <param name="material">the given material</param>
+        </member>
+        <member name="T:Galaxia.ImageDistributor">
+            <summary>
+            This is the Image Distribution Algorithm.
+            It uses Images to distribute stars based on it's grayscale values.
+            It Generates Inverse Integrals for probability distributon.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ImageDistributor.DistributionMap">
+            <summary>
+            The distribution Map's grayscale values are used as probabilities for distribution.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ImageDistributor.ColorMap">
+            <summary>
+            The Color Map is used to determine the particle's color.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ImageDistributor.HeightMap">
+            <summary>
+            The Heightmap is used to control the height destribution of the particles.
+            </summary>
+        </member>
+        <member name="T:Galaxia.Particle">
+            <summary>
+            Main data storage class for particles.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particle.ConvertToParticleSystem(Galaxia.Particle,System.Int32)">
+            <summary>
+            Converts to Unity's particle system particle
+            </summary>
+            <param name="p"></param>
+            <param name="sheetSize">The sheet power size.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Galaxia.Particle.position">
+            <summary>
+            The Position of the particle
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.color">
+            <summary>
+            The Color of the particle
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.size">
+            <summary>
+            The size of the particle
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.rotation">
+            <summary>
+            The rotation of the particle
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.focalPoint">
+            <summary>
+            The focal point of the particle's elliptical orbit.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.startingTime">
+            <summary>
+            The starting time of the particle. Used by distribution algorithms.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.index">
+            <summary>
+            The global index of the particle.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particle.sheetPosition">
+            <summary>
+            The sheet position of the particle. Used by particle rendering for having multiple particle type from one texture sheet.
+            </summary>
+        </member>
+        <member name="T:Galaxia.ParticleDistributor">
+            <summary>
+            The Particle Distributor is the base class for all Particle Distributors.
+            As it's name suggests, it is used to control the distribution of generated particles.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ParticleDistributor.G">
+            <summary>
+            The Gravitational constant
+            </summary>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.Process(Galaxia.ParticleDistributor.ProcessContext)">
+            <summary>
+            Used by the Particle Generator to modify/distribute the particles to a desired shape.
+            This is where particles are processed one by one.
+            <see cref="T:Galaxia.ParticleDistributor.ProcessContext"/>
+            </summary>
+            <param name="context">The context holds information on the current particle and Galaxy Object.</param>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.ProcessProperties(Galaxia.ParticleDistributor.ProcessContext,UnityEngine.Vector3,System.Single)">
+            <summary>
+            Used to process any additional properties dependent on the position and angle of a particle
+            </summary>
+            <param name="context"></param>
+            <param name="pos"></param>
+            <param name="angle"></param>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.UpdateMaterial(UnityEngine.Material)">
+            <summary>
+            Updates all uniform variables in the given material
+            </summary>
+            <param name="material">the given material</param>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.RecreateCurves">
+            <summary>
+            Used for recreating any predefined curves.
+            </summary>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.Integral(UnityEngine.AnimationCurve,System.Int32)">
+            <summary>
+            Used to calculated the Integral Curve of the given Animation curve.
+            Used by the distribution function for <see cref="T:Galaxia.ImageDistributor"/>
+            </summary>
+            <param name="curve">The animation curve.</param>
+            <param name="steps">The resolution/quality of the integral sampling. A grater value means more detail but slower speed.</param>
+            <returns>The integrated Curve.</returns>
+        </member>
+        <member name="T:Galaxia.ParticleDistributor.ProcessContext">
+            <summary>
+            The context that holds all the data needed for particle distribution by any Particle Distributor.
+            This is used for customizing and pre processing particle properties for custom distributions.
+            Used in <see cref="M:Galaxia.ParticleDistributor.Process(Galaxia.ParticleDistributor.ProcessContext)"/> and <see cref="M:Galaxia.ParticleDistributor.ProcessProperties(Galaxia.ParticleDistributor.ProcessContext,UnityEngine.Vector3,System.Single)"/>
+            </summary>
+        </member>
+        <member name="F:Galaxia.ParticleDistributor.ProcessContext.particle">
+            <summary>
+            The Context's particle.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ParticleDistributor.ProcessContext.galaxy">
+            <summary>
+            The Galaxy Prefab.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ParticleDistributor.ProcessContext.particles">
+            <summary>
+            The Particles Prefab.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ParticleDistributor.ProcessContext.time">
+            <summary>
+            The time of the distributed particle.
+            Used by distribution algorithms.
+            </summary>
+        </member>
+        <member name="F:Galaxia.ParticleDistributor.ProcessContext.index">
+            <summary>
+            The index of the given particle.
+            This is the global index of the particle.
+            </summary>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.ProcessContext.#ctor(Galaxia.Particle,Galaxia.GalaxyPrefab,Galaxia.ParticlesPrefab,System.Single,System.Single)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="particle"></param>
+            <param name="galaxy"></param>
+            <param name="particles"></param>
+            <param name="time"></param>
+            <param name="index"></param>
+        </member>
+        <member name="M:Galaxia.ParticleDistributor.Inverse(UnityEngine.AnimationCurve)">
+            <summary>
+            Used to inverse an Animation curve.
+            This swaps the time and value of all the keys in the animation curve.
+            </summary>
+            <param name="curve">The animation curve to invert.</param>
+            <returns>The inverted version of the given animation curve.</returns>
+        </member>
+        <member name="T:Galaxia.Particles">
+            <summary>
+            This is the component class that holds the generated particles.
+            It also hold the Unity's particle system object when CPU particles are active.
+            This is the main connection between Galaxia and Unity.
+            </summary>
+        </member>
+        <member name="F:Galaxia.Particles.MAX_VERTEX_PER_MESH">
+            <summary>
+            The maximum amount of vertex per mesh.
+            This is used to get around the limitation of Unity's meshes having a max vertex count.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.Generate(Galaxia.ParticlesPrefab,Galaxia.GalaxyPrefab,System.Boolean)">
+            <summary>
+            Generate the particle data as well as the mesh
+            </summary>
+            <param name="Prefab">The Particle prefab to use</param>
+            <param name="galaxy">The galaxy prefab</param>
+            <param name="gpu">Should the generation be using the GPU acceleration</param>
+        </member>
+        <member name="M:Galaxia.Particles.Render">
+            <summary>
+            Used for rendering Internally by the <see cref="T:Galaxia.Galaxy"/> Component
+            It Does frustum culling if enabled
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.Build">
+            <summary>
+            Rebuilds the renderers.
+            if the system doesn't not support geometry shades it will build it with unity's particle system
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.ForceUpdateParticles">
+            <summary>
+            Used to forcefully update the particles
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateMaterials">
+            <summary>
+            Used to update the prefab material used by the GPU particles.
+            It also updates the material for the Unity particle system if CPU particles are enabled.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateParticles">
+            <summary>
+            Updates all the particles by redistributing them.
+            It also assign the particle data to the meshes or the Unity's particle system.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.DrawNow">
+            <summary>
+            Draws the generated particles meshes now.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.Draw">
+            <summary>
+            Queues the particle meshes for drawing next frame.
+            This can be used anywhere.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.Draw(UnityEngine.Rendering.CommandBuffer)">
+            <summary>
+            Draws the particle meshes to a given Command buffer.
+            </summary>
+            <param name="buffer">The Command buffer to draw into.</param>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateMeshes">
+            <summary>
+            Updates the generated meshes with the information from the particle data list
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.CalculateBounds">
+            <summary>
+            Calculates the mesh or the Unity particle System bounds and stores them in a cache.
+            It can be accessed by <see cref="P:Galaxia.Particles.RenderBounds"/>.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateMeshesNormal">
+            <summary>
+            This method updates the meshes by assigning points to the mesh.
+            This is used when Geometry Shaders are enabled. The Geometry shader generates the camera facing quads.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateMeshesBruteForce">
+            <summary>
+            This method generates quads and populates the mesh.
+            It is used when Geometry shaders are not supported and quads cannot be generated by the GPU.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateMeshesBase(System.Int32)">
+            <summary>
+            This is a utility method that makes sure the meshes array is not empty and has enough space.
+            </summary>
+            <param name="MeshCount"></param>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateMeshBase(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            This is a utility method that initializes meshes if they are <c>null</c>.
+            </summary>
+            <param name="MeshIndex">The index of the mesh.</param>
+            <param name="MeshCount">The total mesh count.</param>
+            <param name="ParicleCount">The total particle count.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Galaxia.Particles.CleanMeshes">
+            <summary>
+            Cleans (Destroys) old meshes.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateShuriken">
+            <summary>
+            Updates the Unity Particle System with the generated particle data.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateRenderer">
+            <summary>
+            Update all parameters of the renderer
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateParticleList(System.Single)">
+            <summary>
+            Update the particle data list without destroying it
+            Resizes the array as needed
+            </summary>
+            <param name="time">The global time of the particles. This is mainly used for animations.</param>
+        </member>
+        <member name="M:Galaxia.Particles.UpdateParticleList">
+            <summary>
+            Update the particle data list without destroying it
+            Resizes the array as needed
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.Destroy">
+            <summary>
+            Destroys all particle meshes and all renderers as well as the Game Object the component is attached to.
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.DestroyRenderers">
+            <summary>
+            Destroys all renderers
+            </summary>
+        </member>
+        <member name="M:Galaxia.Particles.DestoryMeshes">
+            <summary>
+            Destroys all mesh data.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.Prefab">
+            <summary>
+            The Particles Prefab
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.ParticleList">
+            <summary>
+            The list of Particles
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.Renderers">
+            <summary>
+            The list of Game object renderers.
+            These are the Game objects that have mesh renderers attached to them.
+            They are used when in-game to render particle meshes more efficiently.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.Meshes">
+            <summary>
+            All the Particle meshes. Multiple meshes can be generated because of Unity's mesh vertex cap.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.NeedsRebuild">
+            <summary>
+            Shows if the Particles Prefab has changed. And the particles need to be rebuilt.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.NeedsUpdate">
+            <summary>
+            Shows if the articles Prefab has changed. And the particles need to be updated.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.GalaxyPrefab">
+            <summary>
+            The Galaxy Prefab
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.Galaxy">
+            <summary>
+            The Galaxy Component of the parent.
+            The Particles component is attached to children objects added to the Main Game Object with the Galaxy component.
+            The Children objects are hidden from the Unity's inspector.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.Time">
+            <summary>
+            The Time of the particles.
+            Used manly for animations.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.OverlayColor">
+            <summary>
+            The Overlay Color of the Particles. This color will be multiplied with the overlay color of the Particle Prefab
+            </summary>
+        </member>
+        <member name="P:Galaxia.Particles.RenderBounds">
+            <summary>
+            The render bounds of the galaxy. This could be generated by the meshes of GPU particles or Unity's Particle system if CPU particles are implemented.
+            </summary>
+        </member>
+        <member name="T:Galaxia.ParticlesPrefab">
+            <summary>
+            Holder for all properties on the different particles in a GalaxyPrefab
+            </summary>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.SetUp(Galaxia.GalaxyPrefab)">
+            <summary>
+            Used to assign a Galaxy Prefab.
+            </summary>
+            <param name="prefab"></param>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.GetColor(UnityEngine.Vector3,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Gets the color for given parameters.
+            </summary>
+            <param name="pos">The position of the particle.</param>
+            <param name="distance"> the distance of the particle from the center of the galaxy.</param>
+            <param name="GalaxySize"> The Size of the galaxy.</param>
+            <param name="angle"> The angle of the orbit.</param>
+            <param name="index">The global index of the particle.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.GetSize(UnityEngine.Vector3,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Gets the size of a particle.
+            </summary>
+            <param name="pos">the position of the particle.</param>
+            <param name="distance"> the distance of the particle from the center of the galaxy.</param>
+            <param name="GalaxySize"> The Size of the galaxy.</param>
+            <param name="angle"> The angle of the orbit.</param>
+            <param name="index">The global index of the particle.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.GetRotation(UnityEngine.Vector3,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Gets the rotation of a particle.
+            </summary>
+            <param name="pos">the position of the particle.</param>
+            <param name="distance"> the distance of the particle from the center of the galaxy.</param>
+            <param name="GalaxySize"> The Size of the galaxy.</param>
+            <param name="angle"> The angle of the orbit.</param>
+            <param name="index">The global index of the particle.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.GetRotation">
+            <summary>
+            Get's a random rotation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.UpdateMaterial">
+            <summary>
+            Updates the Particles Prefab Internal material. With all the uniform variables from it's galaxy prefab.
+            </summary>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.UpdateMaterial(UnityEngine.Color)">
+            <summary>
+            Updates the Particles Prefab Internal material. With all the uniform variables from it's galaxy prefab.
+            </summary>
+            <param name="color">The Overlay Color of the stars</param>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.UpdateMaterial(Galaxia.GalaxyPrefab)">
+            <summary>
+            Updates the Particles Prefab Internal material. With all the uniform variables from the given Galaxy Prefab.
+            </summary>
+            <param name="prefab">The Galaxy Prefab</param>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.UpdateMaterial(Galaxia.GalaxyPrefab,UnityEngine.Color)">
+            <summary>
+            Updates the Particles Prefab Internal material. With all the uniform variables from the given Galaxy Prefab.
+            </summary>
+            <param name="prefab">The Galaxy Prefab</param>
+            <param name="color">The overlay color of the stars</param>
+        </member>
+        <member name="M:Galaxia.ParticlesPrefab.DestoryPrefab">
+            <summary>
+            Destroys the Particle Prefab.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.active">
+            <summary>
+            Is the prefab active.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Count">
+            <summary>
+            The amount of particles the prefab has.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Seed">
+            <summary>
+            The seed of the prefab.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Size">
+            <summary>
+            The size of the prefab.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.MaxScreenSize">
+            <summary>
+            The maximum screen size for every particle in the prefab
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.TextureSheetPow">
+            <summary>
+            The particle texture sheet power factor.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Downsample">
+            <summary>
+            The amount of down sample for the given particles when using the Advanced Galaxy Renderer
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.SizeDistributor">
+            <summary>
+            The Size Distributor Property
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.RotationDistributor">
+            <summary>
+            The Rotation Distributor property
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.AlphaDistributor">
+            <summary>
+            The Alpha distributor property
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.ColorDistributor">
+            <summary>
+            The color Distributor property
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.PositionDistribution">
+            <summary>
+            The position distributor property
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Color">
+            <summary>
+            The color Gradient
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.ColorOverlay">
+            <summary>
+            The Color Overlay
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Texture">
+            <summary>
+            The texture
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.OriginalPreset">
+            <summary>
+            The original Preset of the prefab.
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.Material">
+            <summary>
+            The internal prefab material
+            </summary>
+        </member>
+        <member name="P:Galaxia.ParticlesPrefab.GalaxyPrefab">
+            <summary>
+            The galaxy Prefab
+            </summary>
+        </member>
+        <member name="T:Galaxia.ParticlesPrefab.Preset">
+            <summary>
+            The Star Preset Types
+            </summary>
+        </member>
+        <member name="T:Galaxia.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Galaxia.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:Galaxia.SimplexNoise">
+            <summary>
+            Implementation of the Perlin simplex noise, an improved Perlin noise algorithm.
+            Based loosely on SimplexNoise1234 by Stefan Gustavson http://staffwww.itn.liu.se/~stegu/aqsis/aqsis-newnoise/
+            
+            </summary>
+        </member>
+        <member name="M:Galaxia.SimplexNoise.Generate(System.Single)">
+            <summary>
+            1D simplex noise
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Galaxia.SimplexNoise.Generate(System.Single,System.Single)">
+            <summary>
+            2D simplex noise
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Galaxia.StarFinder">
+            <summary>
+            The star Finder helper component.
+            Used to find particular stars.
+            </summary>
+        </member>
+        <member name="T:SharpNeatLib.Maths.FastRandom">
+            <summary>
+            A fast random number generator for .NET
+            Colin Green, January 2005
+            
+            September 4th 2005
+             Added NextBytesUnsafe() - commented out by default.
+             Fixed bug in Reinitialise() - y,z and w variables were not being reset.
+            
+            Key points:
+             1) Based on a simple and fast xor-shift pseudo random number generator (RNG) specified in: 
+             Marsaglia, George. (2003). Xorshift RNGs.
+             http://www.jstatsoft.org/v08/i14/xorshift.pdf
+             
+             This particular implementation of xorshift has a period of 2^128-1. See the above paper to see
+             how this can be easily extened if you need a longer period. At the time of writing I could find no 
+             information on the period of System.Random for comparison.
+            
+             2) Faster than System.Random. Up to 8x faster, depending on which methods are called.
+            
+             3) Direct replacement for System.Random. This class implements all of the methods that System.Random 
+             does plus some additional methods. The like named methods are functionally equivalent.
+             
+             4) Allows fast re-initialisation with a seed, unlike System.Random which accepts a seed at construction
+             time which then executes a relatively expensive initialisation routine. This provides a vast speed improvement
+             if you need to reset the pseudo-random number sequence many times, e.g. if you want to re-generate the same
+             sequence many times. An alternative might be to cache random numbers in an array, but that approach is limited
+             by memory capacity and the fact that you may also want a large number of different sequences cached. Each sequence
+             can each be represented by a single seed value (int) when using FastRandom.
+             
+             Notes.
+             A further performance improvement can be obtained by declaring local variables as static, thus avoiding 
+             re-allocation of variables on each call. However care should be taken if multiple instances of
+             FastRandom are in use or if being used in a multi-threaded environment.
+            
+            </summary>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.#ctor">
+            <summary>
+            Initialises a new instance using time dependent seed.
+            </summary>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.#ctor(System.Int32)">
+            <summary>
+            Initialises a new instance using an int value as seed.
+            This constructor signature is provided to maintain compatibility with
+            System.Random
+            </summary>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.Reinitialise(System.Int32)">
+            <summary>
+            Reinitialises using an int value as a seed.
+            </summary>
+            <param name="seed"></param>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.Next">
+            <summary>
+            Generates a random int over the range 0 to int.MaxValue-1.
+            MaxValue is not generated in order to remain functionally equivalent to System.Random.Next().
+            This does slightly eat into some of the performance gain over System.Random, but not much.
+            For better performance see:
+            
+            Call NextInt() for an int over the range 0 to int.MaxValue.
+            
+            Call NextUInt() and cast the result to an int to generate an int over the full Int32 value range
+            including negative values. 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.Next(System.Int32)">
+            <summary>
+            Generates a random int over the range 0 to upperBound-1, and not including upperBound.
+            </summary>
+            <param name="upperBound"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.Next(System.Int32,System.Int32)">
+            <summary>
+            Generates a random int over the range lowerBound to upperBound-1, and not including upperBound.
+            upperBound must be >= lowerBound. lowerBound may be negative.
+            </summary>
+            <param name="lowerBound"></param>
+            <param name="upperBound"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.NextDouble">
+            <summary>
+            Generates a random double. Values returned are from 0.0 up to but not including 1.0.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.NextBytes(System.Byte[])">
+            <summary>
+            Fills the provided byte array with random bytes.
+            This method is functionally equivalent to System.Random.NextBytes(). 
+            </summary>
+            <param name="buffer"></param>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.NextUInt">
+            <summary>
+            Generates a uint. Values returned are over the full range of a uint, 
+            uint.MinValue to uint.MaxValue, inclusive.
+            
+            This is the fastest method for generating a single random number because the underlying
+            random number generator algorithm generates 32 random bits that can be cast directly to 
+            a uint.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.NextInt">
+            <summary>
+            Generates a random int over the range 0 to int.MaxValue, inclusive. 
+            This method differs from Next() only in that the range is 0 to int.MaxValue
+            and not 0 to int.MaxValue-1.
+            
+            The slight difference in range means this method is slightly faster than Next()
+            but is not functionally equivalent to System.Random.Next().
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharpNeatLib.Maths.FastRandom.NextBool">
+            <summary>
+            Generates a single random bit.
+            This method's performance is improved by generating 32 bits in one operation and storing them
+            ready for future calls.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -18,18 +18,18 @@ public class BotonViaLactea : MonoBehaviour {
 
     void TaskOnClick()
     {
+        CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
+        cargar.setViaLactea(viaLactea);
         StartCoroutine(animacionSalir());
     }
 
     IEnumerator animacionSalir()
     {
         animatorMenuPpal.SetTrigger("exit");
-        GameObject particulas = Camera.main.transform.GetChild(0).gameObject;
-        particulas.GetComponent<ParticleSystem>().Play();
+        
         yield return new WaitForSeconds(0.6f);
-        Camera.main.GetComponent<Animator>().SetTrigger("exit");
-        yield return new WaitForSeconds(4f);
-        SceneManager.LoadScene("Editor", LoadSceneMode.Single);
+
+        StartCoroutine(CameraAnimations.animacionSalirMenuCrear());
 
     }
 }
