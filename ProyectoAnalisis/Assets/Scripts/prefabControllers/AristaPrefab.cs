@@ -7,7 +7,9 @@ public class AristaPrefab : MonoBehaviour {
     public GameObject origen;
     public GameObject destino;
 
-    public AristaSistema arista;
+    public AristaSistema aristaSistema;
+    public AristaNodo aristaNodo;
+
 
     public bool terminado=false;
     private TextMeshProUGUI InfoDistancia;
@@ -32,7 +34,9 @@ public class AristaPrefab : MonoBehaviour {
                 linea.SetPosition(0, origen.transform.position);
                 linea.SetPosition(1, destino.transform.position);
                 canvasDistancia.transform.position = (origen.transform.position + destino.transform.position) / 2;
-                InfoDistancia.text =""+(origen.transform.position - destino.transform.position).magnitude;
+                float distancia = (origen.transform.position - destino.transform.position).magnitude;
+                decimal num = decimal.Round(decimal.Parse(distancia.ToString()), 2);
+                InfoDistancia.text =""+ num;
             }
             else
             {

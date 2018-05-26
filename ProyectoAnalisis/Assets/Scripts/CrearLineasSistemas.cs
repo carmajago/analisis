@@ -36,7 +36,7 @@ public class CrearLineasSistemas : MonoBehaviour {
         AristaPrefab arista = lineaObject.GetComponent<AristaPrefab>();
         arista.origen = origen;
 
-        arista.arista.origenFK = origen.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id;
+        arista.aristaSistema.origenFK = origen.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id;
         linea.SetPosition(0, origen.transform.position);
 
         while (!Input.GetMouseButtonUp(0))
@@ -63,9 +63,9 @@ public class CrearLineasSistemas : MonoBehaviour {
             linea.SetPosition(1, destino.transform.position);
             arista.destino = destino;
             arista.terminado = true;
-            arista.arista.destinoFK = destino.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id;
-            arista.arista.nebulosaFK = destino.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.nebulosaFK;
-            ApiCalls.PostAristaSistema(arista.arista);
+            arista.aristaSistema.destinoFK = destino.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id;
+            arista.aristaSistema.nebulosaFK = destino.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.nebulosaFK;
+            ApiCalls.PostAristaSistema(arista.aristaSistema);
         }
        
 

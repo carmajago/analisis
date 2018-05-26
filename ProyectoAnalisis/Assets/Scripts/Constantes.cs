@@ -14,7 +14,7 @@ public static class Constantes  {
     public static int PLATINO_MIN = 100;
     public static int ELEMENTOZERO_MIN = 100;
 
-    public static int NUMERO_MODELOS = 17;
+    public static int NUMERO_MODELOS = 17; //numero de planetas diferentes con los que si cuenta.
 
 
 

@@ -214,7 +214,7 @@ public class CrearViaLactea : MonoBehaviour
     private Planeta crearPlaneta()
     {
         Planeta planeta = new Planeta();
-        planeta.iridio = Random.Range(Constantes.IRIDIO_MIN,Constantes.IRIDIO_MIN);
+        planeta.iridio = Random.Range(Constantes.IRIDIO_MIN,Constantes.IRIDIO_MAX);
         planeta.platino = Random.Range(Constantes.PLATINO_MIN, Constantes.PLATINO_MAX);
         planeta.paladio = Random.Range(Constantes.PALADIO_MIN, Constantes.PALADIO_MAX);
         planeta.elementoZero = Random.Range(Constantes.ELEMENTOZERO_MIN, Constantes.ELEMENTOZERO_MAX);

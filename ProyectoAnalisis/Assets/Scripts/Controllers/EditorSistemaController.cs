@@ -23,6 +23,9 @@ public class EditorSistemaController : MonoBehaviour {
     
     public Toggle mover; // esto se utiliza para saber si esta habilitado el toogle para pode mover el planeta
     public Toggle eliminarToggle;
+    public Toggle lineaToggle;
+
+
     private bool eliminar = false;
     private EditarNebulosaCamara nebulosaCamara;
 	void Start () {
@@ -42,7 +45,7 @@ public class EditorSistemaController : MonoBehaviour {
     }
     public bool tooglesON()
     {
-        return  eliminarToggle.isOn || mover.isOn;
+        return  eliminarToggle.isOn || mover.isOn || lineaToggle.isOn;
     }
 
     public void crearPlaneta(int id)

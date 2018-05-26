@@ -13,6 +13,8 @@ public class NebulosaSingleton : MonoBehaviour {
     public GameObject sistemaPlanetarioPrefab;
 
     public GameObject lineaPrefab;
+    public GameObject lineaNodoPrefab;
+
     public GameObject depositoPrefab;
     public GameObject teletrasnportadorPrefab;
     public List<GameObject> planetas;
@@ -60,6 +62,7 @@ public class NebulosaSingleton : MonoBehaviour {
                 item.nodos = new List<Nodo>();
                 List<Planeta> planets = ApiCalls.GetPlanetas(item.id);
 
+                List<GameObject> nodosTemp = new List<GameObject>();
                 foreach (var planeta in planets)
                 {
                     Vector3 pos = new Vector3(planeta.x,planeta.y,planeta.z);
@@ -67,6 +70,7 @@ public class NebulosaSingleton : MonoBehaviour {
                     aux.GetComponent<PlanetaPrebab>().setPlaneta(planeta);
                     aux.transform.localPosition = pos;
                     item.nodos.Add(planeta);
+                    nodosTemp.Add(aux);
                 }
                 Teletransportador teletransportador = ApiCalls.GetTeletransportador(item.id);
                 Deposito deposito = ApiCalls.GetDeposito(item.id);
@@ -78,7 +82,8 @@ public class NebulosaSingleton : MonoBehaviour {
                     aux.GetComponent<TeletransportadorPrefab>().setTeletransportador(teletransportador);
                     aux.transform.localPosition = pos;
                     item.nodos.Add(teletransportador);
-                }
+                    nodosTemp.Add(aux);
+            }
                 if (deposito != null)
                 {
                     Vector3 pos = new Vector3(deposito.x, deposito.y, deposito.z);
@@ -86,10 +91,11 @@ public class NebulosaSingleton : MonoBehaviour {
                     aux.GetComponent<DepositoPrefab>().setDeposito(deposito);
                     aux.transform.localPosition = pos;
                     item.nodos.Add(deposito);
-                }
-           
-          
+                    nodosTemp.Add(aux);
+            }
 
+
+                cargarAristasNodos(item.grafo, nodosTemp);
         }
         cargarAristasSistema(nebulosa.grafo, SistemaTemporal);
 
@@ -114,9 +120,54 @@ public class NebulosaSingleton : MonoBehaviour {
             arista.terminado = true;
         }
     }
-    public void buscarGameObjectSistema(List<GameObject> sistema,int id)
+    public void cargarAristasNodos(List<AristaNodo> grafo,List<GameObject> nodos)
     {
-        
+        foreach (var item in grafo)
+        {
+            GameObject lineaP = Instantiate(lineaNodoPrefab);
+            AristaPrefab arista = lineaP.GetComponent<AristaPrefab>();
+            foreach (var nodo in nodos)
+            {
+                PlanetaPrebab pp = nodo.GetComponent<PlanetaPrebab>();
+                DepositoPrefab dp = nodo.GetComponent<DepositoPrefab>();
+                TeletransportadorPrefab tp = nodo.GetComponent<TeletransportadorPrefab>();
+
+                if (pp != null)
+                {
+                    if (pp.planeta.id == item.origenFK)
+                    {
+                        arista.origen = nodo;
+                    }
+                    if (pp.planeta.id == item.destinoFK)
+                    {
+                        arista.destino = nodo;
+                    }
+                }else if (dp!=null)
+                {
+                    if (dp.deposito.id == item.origenFK)
+                    {
+                        arista.origen = nodo;
+                    }
+                    if (dp.deposito.id == item.destinoFK)
+                    {
+                        arista.destino = nodo;
+                    }
+                }
+                else
+                {
+                    if (tp.teletransportador.id == item.origenFK)
+                    {
+                        arista.origen = nodo;
+                    }
+                    if (tp.teletransportador.id == item.destinoFK)
+                    {
+                        arista.destino = nodo;
+                    }
+                }
+                
+            }
+            arista.terminado = true;
+        }
     }
     
 }
