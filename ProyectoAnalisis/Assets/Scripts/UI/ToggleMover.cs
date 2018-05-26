@@ -22,5 +22,5 @@ public class ToggleMover : MonoBehaviour {
         {
             item.interactable =!toggle.isOn;
         }
-    }
+    }   
 }

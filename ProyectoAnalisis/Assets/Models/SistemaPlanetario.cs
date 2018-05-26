@@ -13,11 +13,10 @@ public class SistemaPlanetario  {
     public float y;
     public float z;
 
-    public List<SistemaPlanetario> sistemasAdyacentes;
 
-    public Deposito deposito;
-    public Teletransportador teletransportador;
-    public List<Planeta> planetas;
+
+    public List<AristaNodo> grafo;
+    public List<Nodo> nodos;
 
     public int nebulosaFK;
 

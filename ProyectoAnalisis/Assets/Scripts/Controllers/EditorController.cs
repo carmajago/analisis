@@ -5,17 +5,17 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// controlador del editor de la via lactea 
+/// </summary>
 public class EditorController : MonoBehaviour
 {
 
     public GameObject prefabNebulosa;
-    public LayerMask layerDelete;
+    public LayerMask layerDelete; //esta capa debe estar configurada en UI
 
 
-    private bool click=false; //Variable auxiliar para la creacion de una nebulosa se utiliza en el metodo crarNebulosa
     private bool eliminar=false; // esta variable inicia en false por que el toggle también comienza en false es importante no cambiar valor por defecto del toogleEliminar
-
-
 
     void Start()
     {
@@ -26,25 +26,10 @@ public class EditorController : MonoBehaviour
 
     }
 
-   public void crearNebulosa()
-    {
-        StartCoroutine(crearNebulosaCOR());
-    }
-
-    public void eliminarNebulosa()
-    {
-        eliminar = !eliminar;
-        if(eliminar)
-         StartCoroutine(eliminarNebulosaCOR());
-    }
-
     public void irAHome()
     {
         SceneManager.LoadScene("Home", LoadSceneMode.Single);
     }
-
-
-    #region corrutinas
 
     /// <summary>
     /// Crea un retardo de 3 segundo mientras se ejecuta la animación de inicio
@@ -52,9 +37,48 @@ public class EditorController : MonoBehaviour
     /// <returns></returns>
     IEnumerator StarScene()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         Camera.main.GetComponent<CameraController>().enabled = true;
+    }
+    #region CREATE
+    public void crearNebulosa()
+    {
+        StartCoroutine(crearNebulosaCOR());
+    }
+
+    IEnumerator crearNebulosaCOR()
+    {
+        GameObject newNebulosa = Instantiate(prefabNebulosa);
+
+
+        while (!Input.GetMouseButtonDown(0))
+        {
+            Vector3 posMouse;
+            Vector3 pos = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(pos);
+            Plane xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
+            float distance;
+            xy.Raycast(ray, out distance);
+            posMouse = ray.GetPoint(distance);
+            newNebulosa.transform.position = posMouse;
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        NebulosaPrefab nebulosaP = newNebulosa.GetComponent<NebulosaPrefab>();
+        nebulosaP.actualizarDatos();
+        nebulosaP.nebulosa = ApiCalls.PostNebulosa(nebulosaP.nebulosa);
+        nebulosaP.refrescarInfo();
+    }
+    #endregion CREATE
+
+    #region DELETE
+
+    public void eliminarNebulosa()
+    {
+        eliminar = !eliminar;
+        if (eliminar)
+            StartCoroutine(eliminarNebulosaCOR());
     }
 
     /// <summary>
@@ -115,35 +139,8 @@ public class EditorController : MonoBehaviour
     /// Crea la nebulosa en la escena y envia la información al servidor.
     /// </summary>
     /// <returns></returns
-    IEnumerator crearNebulosaCOR()
-    {
-        GameObject newNebulosa = Instantiate(prefabNebulosa);
-        
+    /// 
 
-        while (!Input.GetMouseButtonDown(0))
-        {
-            Vector3 posMouse;
-            Vector3 pos = Input.mousePosition;
-            Ray ray = Camera.main.ScreenPointToRay(pos);
-            Plane xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
-            float distance;
-            xy.Raycast(ray, out distance);
-            posMouse = ray.GetPoint(distance);
-            newNebulosa.transform.position = posMouse;
-            yield return new WaitForSeconds(0.01f);
-        }
-
-        NebulosaPrefab nebulosaP = newNebulosa.GetComponent<NebulosaPrefab>();
-        nebulosaP.actualizarDatos();
-        nebulosaP.nebulosa= ApiCalls.PostNebulosa(nebulosaP.nebulosa);
-        nebulosaP.refrescarInfo();
-    }
-
-
-    #endregion corrutinas   
-
-   
-
-
+    #endregion DELETE
 
 }

@@ -9,40 +9,49 @@ public class MoverGameObjects : MonoBehaviour {
     public Toggle toggleMover;
 
     private GameObject gameObjectMover;
-
+    private bool isMover = false;
 
     private void Update()
     {
         if (toggleMover.isOn)
         {
 
-
-            if (gameObjectMover != null)
+            if (Input.GetMouseButton(0) && !isMover)
             {
-                Vector3 posMouse;
-                Vector3 pos = Input.mousePosition;
-                Ray ray = Camera.main.ScreenPointToRay(pos);
-                Plane xy = new Plane(Vector3.up, new Vector3(0, 0, 0));
-                float distance;
-                xy.Raycast(ray, out distance);
-                posMouse = ray.GetPoint(distance);
-                gameObjectMover.transform.position = posMouse;
-
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                gameObjectMover = null;
-            }
-
-            if (Input.GetMouseButton(0))
-            {
+                isMover = true;
                 gameObjectMover = buscarObjeto();
-                Debug.Log(gameObjectMover);
-
+                if (gameObjectMover != null)
+                {
+                    StartCoroutine(MoverCOR(gameObjectMover));
+                }
+                else
+                {
+                    isMover = false;
+                }
             }
         }
 
+    }
+
+
+    IEnumerator MoverCOR(GameObject objeto)
+    {
+          
+
+
+        while (!Input.GetMouseButtonUp(0))
+        {
+            Vector3 posMouse;
+            Vector3 pos = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(pos);
+            Plane xy = new Plane(Vector3.up, new Vector3(0, objeto.transform.position.y, 0));
+            float distance;
+            xy.Raycast(ray, out distance);
+            posMouse = ray.GetPoint(distance);
+            objeto.transform.position = posMouse;
+            yield return new WaitForSeconds(0.01f);
+        }
+        isMover = false;
     }
 
 
@@ -58,6 +67,7 @@ public class MoverGameObjects : MonoBehaviour {
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMover))
         {
+           
             temp = hit.transform.gameObject;
             
         }
