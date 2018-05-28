@@ -47,6 +47,7 @@ public class NebulosaPrefab : MonoBehaviour {
     /// <summary>
     /// Actualiza la información de la nebulosa con los datos de la escena
     /// Este metodo es utilizado en la escena editor
+    /// Este método se utiliza cuando se crea una nebulosa
     /// </summary>
     public void actualizarDatos()
     {

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Esta clase está relacionada con las animaciones y la interfaz, solo influye en el comportamiento de la camara
+/// </summary>
 public class EditarNebulosaCamara : MonoBehaviour {
 
 

@@ -12,7 +12,7 @@ public class NebulosaSingleton : MonoBehaviour {
     [Header("Recursos a cargar")]
     public GameObject sistemaPlanetarioPrefab;
 
-    public GameObject lineaPrefab;
+    public GameObject lineaSistemaPrefab;
     public GameObject lineaNodoPrefab;
 
     public GameObject depositoPrefab;
@@ -104,7 +104,7 @@ public class NebulosaSingleton : MonoBehaviour {
     {
         foreach (var item in grafo)
         {
-            GameObject lineaP = Instantiate(lineaPrefab);
+            GameObject lineaP = Instantiate(lineaSistemaPrefab);
             AristaPrefab arista = lineaP.GetComponent<AristaPrefab>();
             foreach (var sistema in sistemas)
             {
