@@ -28,6 +28,7 @@ public class EditorSistemaController : MonoBehaviour {
 
     private bool eliminar = false;
     private EditarNebulosaCamara nebulosaCamara;
+
 	void Start () {
         nebulosaCamara =Camera.main.GetComponent<EditarNebulosaCamara>();
         sistemaSingleton= GameObject.FindObjectOfType<SistemaSingleton>();
