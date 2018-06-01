@@ -52,7 +52,7 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
     {
         Vector3 pos = new Vector3(sistemaPlanetario.x, sistemaPlanetario.y, sistemaPlanetario.z);
         GameObject.FindObjectOfType<SistemaSingleton>().setSistema(this.gameObject);   
-        Camera.main.GetComponent<EditarNebulosaCamara>().irASistema(pos);
+        Camera.main.GetComponent<EditarNebulosaCamara>().irASistema(pos,sistemaPlanetario.nombre);
     }
 
     public void refrescarInfo()
@@ -67,6 +67,7 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
 
         
         nombre.text = sistemaPlanetario.nombre;
+        if(sistemaPlanetario.nodos!=null)
         planetas.text = "Planetas: "+sistemaPlanetario.nodos.Count;
         iridio.text = "Iridio: " + sistemaPlanetario.iridioTotal;
         platino.text = "Platino: " + sistemaPlanetario.platinoTotal;

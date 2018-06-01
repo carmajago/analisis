@@ -11,9 +11,8 @@ public class CameraController : MonoBehaviour {
     public float panBorderThickness=10f;
     public Vector2 panlimitX;
     public Vector2 panlimitZ;
-    public float minY;
-    public float maxY;
-    public float velScroll = 1;
+  
+ 
    
 
 
@@ -55,10 +54,10 @@ public class CameraController : MonoBehaviour {
             posicion.x -= panSpeed * Time.deltaTime;
         }
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        posicion.y -= scroll * 100f * Time.deltaTime*velScroll;
+       
+       
         posicion.x = Mathf.Clamp(posicion.x, panlimitX.x, panlimitX.y);
-        posicion.y = Mathf.Clamp(posicion.y,minY,maxY);
+  
         posicion.z = Mathf.Clamp(posicion.z, panlimitZ.x, panlimitZ.y);
 
         transform.position = posicion;
@@ -72,7 +71,7 @@ public class CameraController : MonoBehaviour {
             dosD = false;
             Camera.main.transform.position = posicionInicial;
             Camera.main.transform.rotation = rotacionInicial;
-            Debug.Log("Entra");
+
 
         }
         else
@@ -81,7 +80,7 @@ public class CameraController : MonoBehaviour {
             posicionInicial = Camera.main.transform.position;
             rotacionInicial = Camera.main.transform.rotation;
             Camera.main.transform.eulerAngles = new Vector3(90f, 0, 0);
-            Camera.main.transform.position = new Vector3(0, 150, 0);
+            Camera.main.transform.position = new Vector3(0, 130, 0);
         }
 
 

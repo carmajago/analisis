@@ -67,6 +67,7 @@ public class PlanetaPrebab : MonoBehaviour {
     {
         
         nebulosaCamara.isSistema = false;
+        nebulosaCamara.isPlaneta = true;
         Transform trCamera =Camera.main.GetComponent<Transform>();
         Vector3 distancia = new Vector3(0, 3.7f, 5.3f);
         posCamara = trCamera.position;
@@ -98,7 +99,9 @@ public class PlanetaPrebab : MonoBehaviour {
         
         nebulosaCamara.canvasSistema.SetActive(true);
         nebulosaCamara.isSistema = true;
-        
+        nebulosaCamara.isPlaneta = false;
+
+
     }
 
     public void actualizarDatos(int id,int idModelo)

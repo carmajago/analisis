@@ -69,13 +69,13 @@ public class NebulosaPrefab : MonoBehaviour {
     public void refrescarInfo()
     {
         TextMeshProUGUI nombre = infoNebulosa.transform.Find("Nombre").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI sistemas = infoNebulosa.transform.Find("Sistemas").GetComponent<TextMeshProUGUI>();
+
         Button button = infoNebulosa.transform.Find("Button").GetComponent<Button>();
 
         button.onClick.AddListener(irANebulosa);
 
         nombre.text = nebulosa.nombre;
-        sistemas.text ="Sistemas planetarios:"+nebulosa.totalSistemas;
+      
 
     }
 
@@ -84,7 +84,24 @@ public class NebulosaPrefab : MonoBehaviour {
     {
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
         ns.nebulosa = nebulosa;
-        SceneManager.LoadScene("EditorNebulosa", LoadSceneMode.Single);
+        StartCoroutine(animacionIrANebulosa(new Vector3(nebulosa.x,nebulosa.y,nebulosa.z)));
 
+    }
+    IEnumerator animacionIrANebulosa(Vector3 pos)
+    {
+        GameObject canvas = GameObject.FindGameObjectWithTag("CameraAnimation");
+        canvas.GetComponentInChildren<Canvas>().enabled = true;
+        Animator animator =canvas.GetComponent<Animator>();
+        animator.SetTrigger("Exit");
+        Transform trCamera =Camera.main.GetComponent<Transform>();
+        
+        
+        while ((pos - trCamera.position).magnitude > 10)
+        {
+            trCamera.position = Vector3.Lerp(trCamera.position, pos, 3f * Time.deltaTime);
+            yield return new WaitForSeconds(0.016f);
+        }
+        SceneManager.LoadScene("EditorNebulosa", LoadSceneMode.Single);
+       // SceneManager.LoadSceneAsync("EditorNebulosa", LoadSceneMode.Additive);
     }
 }

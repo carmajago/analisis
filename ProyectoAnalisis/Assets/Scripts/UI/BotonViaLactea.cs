@@ -14,6 +14,7 @@ public class BotonViaLactea : MonoBehaviour {
     {
         Button btn = GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
+       
     }
 
     void TaskOnClick()
@@ -28,8 +29,13 @@ public class BotonViaLactea : MonoBehaviour {
         animatorMenuPpal.SetTrigger("exit");
         
         yield return new WaitForSeconds(0.6f);
-
+     
         StartCoroutine(CameraAnimations.animacionSalirMenuCrear());
 
     }
+
+  
+   
+
+
 }

@@ -3,30 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class EditorNebulosaController : MonoBehaviour {
 
     public GameObject prefabSistema;
     public LayerMask layerDelete; //esta capa debe estar configurada en UI
-
+    public TextMeshProUGUI nombreNebulosa;
 
     private bool eliminar = false; // esta variable inicia en false por que el toggle también comienza en false es importante no cambiar valor por defecto del toogleEliminar
 
 
     void Start () {
+         StartCoroutine(desctivarCanvas());
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
         ns.setNebulosa(NebulosaService.GetNebulosa(ns.nebulosa.id));
-        
-
+        nombreNebulosa.text = ns.nebulosa.nombre;
+       
         ns.cargar();
     }
-	
+	IEnumerator desctivarCanvas()
+    {
+        yield return new WaitForSeconds(1);
+        GameObject canvas = GameObject.FindGameObjectWithTag("CameraAnimation");
+        canvas.GetComponentInChildren<Canvas>().enabled = false;
+    }
 
     public void irAViaLactea()
     {
+        StartCoroutine(animacionIrAVialactea());
+    }
+    IEnumerator animacionIrAVialactea()
+    {
+        GameObject canvas = GameObject.FindGameObjectWithTag("CameraAnimation");
+        canvas.GetComponentInChildren<Canvas>().enabled = true;
+        Animator animator = canvas.GetComponent<Animator>();
+        animator.SetTrigger("Exit");
+        yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene("Editor", LoadSceneMode.Single);
     }
-
     #region CREATE
     public void crearSistema()
     {
