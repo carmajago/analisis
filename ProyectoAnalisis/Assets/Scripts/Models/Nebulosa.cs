@@ -14,6 +14,9 @@ public class Nebulosa  {
     public float y;
     public float z;
 
+    public bool danger;
+
+    [NonSerialized]
     public int totalSistemas;
   
 

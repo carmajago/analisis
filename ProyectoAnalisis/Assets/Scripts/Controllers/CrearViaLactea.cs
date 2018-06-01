@@ -134,7 +134,7 @@ public class CrearViaLactea : MonoBehaviour
         }
 
 
-        viaLactea= ApiCalls.PostViaLactea(viaLactea);
+        viaLactea= ViaLacteaService.PostViaLactea(viaLactea);
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
         cargar.setViaLactea(viaLactea);
         StartCoroutine(CameraAnimations.animacionSalirMenuCrear());
@@ -151,7 +151,7 @@ public class CrearViaLactea : MonoBehaviour
                     {
                         Planeta planeta = crearPlaneta();
                         planeta.sistemaPlanetarioFK = sistema.id;
-                        ApiCalls.PostPlaneta(planeta);
+                        PlanetaService.PostPlaneta(planeta);
                     }
                     
                 }
@@ -159,8 +159,8 @@ public class CrearViaLactea : MonoBehaviour
                 deposito.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[0].id;
                 Teletransportador teletransportador = crearTeletransportador();
                 teletransportador.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[nebulosa.sistemasPlanetarios.Count - 1].id;
-               ApiCalls.PostDeposito(deposito);
-                ApiCalls.PostTeletransportador(teletransportador);
+               DepositoService.PostDeposito(deposito);
+                TeletransportadorService.PostTeletransportador(teletransportador);
             }
         }
         else
@@ -173,15 +173,15 @@ public class CrearViaLactea : MonoBehaviour
                     {
                         Planeta planeta = crearPlaneta();
                         planeta.sistemaPlanetarioFK = sistema.id;
-                        sistema.nodos.Add(ApiCalls.PostPlaneta(planeta));
+                        sistema.nodos.Add(PlanetaService.PostPlaneta(planeta));
                     }
                 }
                 Deposito deposito = crearDeposito();
                 deposito.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[0].id;
                 Teletransportador teletransportador = crearTeletransportador();
                 teletransportador.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[nebulosa.sistemasPlanetarios.Count - 1].id;
-                ApiCalls.PostDeposito(deposito);
-                ApiCalls.PostTeletransportador(teletransportador);
+                DepositoService.PostDeposito(deposito);
+                TeletransportadorService.PostTeletransportador(teletransportador);
             }
         }
 

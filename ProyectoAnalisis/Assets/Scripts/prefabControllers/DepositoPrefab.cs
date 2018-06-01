@@ -20,7 +20,7 @@ public class DepositoPrefab : MonoBehaviour {
             deposito.y = tr.localPosition.y;
             deposito.z = tr.localPosition.z;
 
-            ApiCalls.PutDeposito(deposito);
+            DepositoService.PutDeposito(deposito);
         }
     }
 

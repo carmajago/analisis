@@ -1,16 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Net;
 
-public class ViaLacteaService : MonoBehaviour {
+public static class ViaLacteaService {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static ViaLactea PostViaLactea(ViaLactea viaLactea)
+    {
+        //HttpClient client = new HttpClient();
+        //string result = await client.PostAsync(apiCalls.url+"api/vialactea",);
+        //Debug.Log(result);
+
+
+        var httpWebRequest = (HttpWebRequest)WebRequest.Create(ApiCalls.url + "/api/vialactea");
+        httpWebRequest.ContentType = "application/json";
+        httpWebRequest.Method = "POST";
+
+        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+        {
+            string json = JsonUtility.ToJson(viaLactea);
+            json = json.Replace("\"id\":0,", "");
+            json = json.Replace(",\"ViaLacteaFK\":0", "");
+
+            streamWriter.Write(json);
+            streamWriter.Flush();
+            streamWriter.Close();
+        }
+
+        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+
+
+            viaLactea = JsonUtility.FromJson<ViaLactea>(result);
+        }
+        return viaLactea;
+    }
+
 }

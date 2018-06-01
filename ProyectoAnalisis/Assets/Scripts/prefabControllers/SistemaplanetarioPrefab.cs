@@ -20,7 +20,7 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
         infoSistema.SetActive(activo);
         infoSistema.transform.Find("Button").GetComponent<Button>().onClick.AddListener(irASistema);
         canvasSistema.transform.Find("Button").GetComponent<Button>().onClick.AddListener(abrirInfo);
-
+        refrescarInfo();
     }
     public void LateUpdate()
     {
@@ -31,7 +31,7 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
             sistemaPlanetario.y = tr.position.y;
             sistemaPlanetario.z = tr.position.z;
 
-            ApiCalls.PutSistema(sistemaPlanetario);
+            SistemaPlanetarioService.PutSistema(sistemaPlanetario);
         }
     }
     public void setSistema(SistemaPlanetario _sistema)
@@ -58,15 +58,22 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
     public void refrescarInfo()
     {
         TextMeshProUGUI nombre = infoSistema.transform.Find("Nombre").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI planetas = infoSistema.transform.Find("planetas").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI planetas = infoSistema.transform.Find("Planetas").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI iridio = infoSistema.transform.Find("Iridio").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI platino = infoSistema.transform.Find("Platino").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI paladio = infoSistema.transform.Find("Paladio").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI elementoZero = infoSistema.transform.Find("Elemento zero").GetComponent<TextMeshProUGUI>();
 
 
+        
         nombre.text = sistemaPlanetario.nombre;
-       
+        planetas.text = "Planetas: "+sistemaPlanetario.nodos.Count;
+        iridio.text = "Iridio: " + sistemaPlanetario.iridioTotal;
+        platino.text = "Platino: " + sistemaPlanetario.platinoTotal;
+        paladio.text = "Paladio: " + sistemaPlanetario.paladioTotal;
+        elementoZero.text = "Elemento zero: " + sistemaPlanetario.elementoZeroTotal;
+
+
     }
     /// <summary>
     /// Actualiza la información del sistema planetario con los datos de la escena
@@ -77,11 +84,10 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
         sistemaPlanetario.x = transform.position.x;
         sistemaPlanetario.y = transform.position.y;
         sistemaPlanetario.z = transform.position.z;
-        if (sistemaPlanetario.nebulosaFK == 0)
-        {
+        
             NebulosaSingleton cargar = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
             sistemaPlanetario.nebulosaFK = cargar.nebulosa.id;
-        }
+        
     }
 
 }

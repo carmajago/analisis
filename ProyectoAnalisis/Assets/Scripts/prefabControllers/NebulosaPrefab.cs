@@ -36,7 +36,7 @@ public class NebulosaPrefab : MonoBehaviour {
             nebulosa.y = tr.position.y;
             nebulosa.z = tr.position.z;
            
-            ApiCalls.PutNebulosa(nebulosa);
+            NebulosaService.PutNebulosa(nebulosa);
         }
     }
 

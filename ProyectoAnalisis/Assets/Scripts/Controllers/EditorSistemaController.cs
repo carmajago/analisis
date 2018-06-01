@@ -76,7 +76,7 @@ public class EditorSistemaController : MonoBehaviour {
 
         PlanetaPrebab planetaP = newSistema.GetComponent<PlanetaPrebab>();
         planetaP.actualizarDatos(sistemaSingleton.prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id,id);
-        planetaP.planeta = ApiCalls.PostPlaneta(planetaP.planeta);
+        planetaP.planeta = PlanetaService.PostPlaneta(planetaP.planeta);
        
     }
 
@@ -107,7 +107,7 @@ public class EditorSistemaController : MonoBehaviour {
 
         DepositoPrefab planetaP = newSistema.GetComponent<DepositoPrefab>();
         planetaP.actualizarDatos(sistemaSingleton.prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id);
-        planetaP.deposito = ApiCalls.PostDeposito(planetaP.deposito);
+        planetaP.deposito = DepositoService.PostDeposito(planetaP.deposito);
 
     }
 
@@ -138,7 +138,7 @@ public class EditorSistemaController : MonoBehaviour {
 
         TeletransportadorPrefab planetaP = newSistema.GetComponent<TeletransportadorPrefab>();
         planetaP.actualizarDatos(sistemaSingleton.prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id);
-        planetaP.teletransportador = ApiCalls.PostTeletransportador(planetaP.teletransportador);
+        planetaP.teletransportador = TeletransportadorService.PostTeletransportador(planetaP.teletransportador);
 
     }
 

@@ -15,7 +15,7 @@ public class EditorNebulosaController : MonoBehaviour {
 
     void Start () {
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
-        ns.setNebulosa(ApiCalls.GetNebulosa(ns.nebulosa.id));
+        ns.setNebulosa(NebulosaService.GetNebulosa(ns.nebulosa.id));
         
 
         ns.cargar();
@@ -57,7 +57,7 @@ public class EditorNebulosaController : MonoBehaviour {
 
         SistemaplanetarioPrefab sistemaP = newSistema.GetComponent<SistemaplanetarioPrefab>();
         sistemaP.actualizarDatos();
-        sistemaP.sistemaPlanetario = ApiCalls.PostSistema(sistemaP.sistemaPlanetario);
+        sistemaP.sistemaPlanetario = SistemaPlanetarioService.PostSistema(sistemaP.sistemaPlanetario);
         sistemaP.refrescarInfo();
     }
 

@@ -67,7 +67,7 @@ public class EditorController : MonoBehaviour
 
         NebulosaPrefab nebulosaP = newNebulosa.GetComponent<NebulosaPrefab>();
         nebulosaP.actualizarDatos();
-        nebulosaP.nebulosa = ApiCalls.PostNebulosa(nebulosaP.nebulosa);
+        nebulosaP.nebulosa = NebulosaService.PostNebulosa(nebulosaP.nebulosa);
         nebulosaP.refrescarInfo();
     }
     #endregion CREATE

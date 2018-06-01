@@ -21,7 +21,7 @@ public class TeletransportadorPrefab : MonoBehaviour {
             teletransportador.y = tr.localPosition.y;
             teletransportador.z = tr.localPosition.z;
 
-            ApiCalls.PutTeletransportador(teletransportador);
+            TeletransportadorService.PutTeletransportador(teletransportador);
         }
     }
     public void setTeletransportador(Teletransportador tele)

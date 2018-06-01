@@ -60,7 +60,7 @@ public class NebulosaSingleton : MonoBehaviour {
                 SistemaTemporal.Add(sistemaAux);
                 GameObject sistema = spp.transform.Find("sistema").gameObject;
                 item.nodos = new List<Nodo>();
-                List<Planeta> planets = ApiCalls.GetPlanetas(item.id);
+                List<Planeta> planets = PlanetaService.GetPlanetas(item.id);
 
                 List<GameObject> nodosTemp = new List<GameObject>();
                 foreach (var planeta in planets)
@@ -72,8 +72,8 @@ public class NebulosaSingleton : MonoBehaviour {
                     item.nodos.Add(planeta);
                     nodosTemp.Add(aux);
                 }
-                Teletransportador teletransportador = ApiCalls.GetTeletransportador(item.id);
-                Deposito deposito = ApiCalls.GetDeposito(item.id);
+                Teletransportador teletransportador = TeletransportadorService.GetTeletransportador(item.id);
+                Deposito deposito = DepositoService.GetDeposito(item.id);
 
                 if (teletransportador != null)
                 {

@@ -31,7 +31,7 @@ public class PlanetaPrebab : MonoBehaviour {
             planeta.y = tr.localPosition.y;
             planeta.z = tr.localPosition.z;
 
-            ApiCalls.PutPlaneta(planeta);
+            PlanetaService.PutPlaneta(planeta);
         }
     }
 
@@ -126,7 +126,7 @@ public class PlanetaPrebab : MonoBehaviour {
             planeta.platino = double.Parse(platino.text);
             planeta.elementoZero = double.Parse(elementoZero.text);
 
-            ApiCalls.PutPlaneta(planeta);
+            PlanetaService.PutPlaneta(planeta);
         }
     }
 
