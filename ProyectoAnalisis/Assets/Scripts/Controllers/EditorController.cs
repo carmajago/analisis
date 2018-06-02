@@ -22,7 +22,7 @@ public class EditorController : MonoBehaviour
         
         StartCoroutine(StarScene());
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
-        cargar.cargar();
+        cargar.cargar("EditorNebulosa");
 
     }
 

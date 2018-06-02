@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class NebulosaPrefab : MonoBehaviour {
 
     public Nebulosa nebulosa;
+    public string escena;
 
     private GameObject canvasNebulosa;
     private GameObject infoNebulosa;
@@ -116,7 +117,7 @@ public class NebulosaPrefab : MonoBehaviour {
             trCamera.position = Vector3.Lerp(trCamera.position, pos, 3f * Time.deltaTime);
             yield return new WaitForSeconds(0.016f);
         }
-        SceneManager.LoadScene("EditorNebulosa", LoadSceneMode.Single);
+        SceneManager.LoadScene(escena, LoadSceneMode.Single);
        // SceneManager.LoadSceneAsync("EditorNebulosa", LoadSceneMode.Additive);
     }
 }

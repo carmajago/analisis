@@ -17,3 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Escenas/EditorNebulosa.unity
     guid: 7e3223db42091b04180e1d43634cc164
+  - enabled: 1
+    path: Assets/Escenas/Simulador/ViaLactea.unity
+    guid: 46bda3c2a18c45541a38d41da9f4b360
+  - enabled: 1
+    path: Assets/Escenas/Simulador/SeleccionarNebulosa.unity
+    guid: 0bccbd05320ef4a43954a5e13f5ba832
+  - enabled: 1
+    path: Assets/Escenas/Simulador/Nebulosa.unity
+    guid: c01a5cf01c0734c45a6197d09bd7fb53

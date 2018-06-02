@@ -12,7 +12,7 @@ public class CargarViaLactea : MonoBehaviour {
     public GameObject prefabNebulosa;
 
     public ViaLactea viaLactea;
-
+    
 
     void Awake()
     {
@@ -36,14 +36,16 @@ public class CargarViaLactea : MonoBehaviour {
     }
     /// <summary>
     /// Este metodo  instancia en la escena todas las nebulosas que hay en la via lactea
+    /// <paramref name="escena"/>Nombre de la escena a la cual se va a dirigir, se asigna pero no quiere decir que en este llamado nos dirijamos a esa escena
     /// </summary>
-    public void cargar()
+    public void cargar(string escena)
     {
         foreach (var item in viaLactea.Nebulosas)
         { Vector3 posicion = new Vector3(item.x, item.y, item.z);
             GameObject prebabNebulosa= Instantiate(prefabNebulosa,posicion ,Quaternion.identity);
-            prebabNebulosa.GetComponent<NebulosaPrefab>().setNebulosa(item);
-
+            NebulosaPrefab np = prebabNebulosa.GetComponent<NebulosaPrefab>();
+            np.setNebulosa(item);
+            np.escena = escena;
         }
     }
 

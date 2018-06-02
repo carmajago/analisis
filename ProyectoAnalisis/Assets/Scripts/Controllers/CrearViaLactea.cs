@@ -81,6 +81,7 @@ public class CrearViaLactea : MonoBehaviour
             BotonViaLactea btnVL= btnAux.GetComponent<BotonViaLactea>();
             btnVL.viaLactea = item;
             btnVL.animatorMenuPpal = animatorMenuPpal;
+            btnVL.escena = "Editor";
         }
 
     }
@@ -150,7 +151,7 @@ public class CrearViaLactea : MonoBehaviour
         viaLactea= ViaLacteaService.PostViaLactea(viaLactea);
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
         cargar.setViaLactea(viaLactea);
-        StartCoroutine(CameraAnimations.animacionSalirMenuCrear());
+        StartCoroutine(CameraAnimations.animacionSalirMenuCrear("Editor"));
 
 
         if (random.isOn)

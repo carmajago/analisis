@@ -9,7 +9,7 @@ public class BotonViaLactea : MonoBehaviour {
     public ViaLactea viaLactea;
     public Animator animatorMenuPpal;
 
-
+    public string escena;//El nombre de la escena  a la cual se va a cargar
     void Start()
     {
         Button btn = GetComponent<Button>();
@@ -30,7 +30,7 @@ public class BotonViaLactea : MonoBehaviour {
         
         yield return new WaitForSeconds(0.6f);
      
-        StartCoroutine(CameraAnimations.animacionSalirMenuCrear());
+        StartCoroutine(CameraAnimations.animacionSalirMenuCrear(escena));
 
     }
 

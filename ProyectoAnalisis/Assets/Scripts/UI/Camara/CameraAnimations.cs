@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public static class CameraAnimations  {
     
 
-   public static IEnumerator animacionSalirMenuCrear()
+   public static IEnumerator animacionSalirMenuCrear(string escena)
     {
         GameObject particulas = Camera.main.transform.GetChild(0).gameObject;
         particulas.GetComponent<ParticleSystem>().Play();
@@ -15,7 +15,7 @@ public static class CameraAnimations  {
         canvasAnim.GetComponent<Animator>().SetTrigger("exit");
         Camera.main.GetComponent<Animator>().SetTrigger("exit");
         yield return new WaitForSeconds(4f);
-        SceneManager.LoadScene("Editor", LoadSceneMode.Single);
+        SceneManager.LoadScene(escena, LoadSceneMode.Single);
 
     }
 

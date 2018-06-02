@@ -246,11 +246,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -545,11 +545,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -966,11 +966,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1291,11 +1291,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1445,11 +1445,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1896,11 +1896,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -2371,11 +2371,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -2605,11 +2605,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -2913,11 +2913,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -3067,11 +3067,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -3513,11 +3513,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -3882,7 +3882,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1832611847}
+      - m_Target: {fileID: 1832611849}
         m_MethodName: irAViaLactea
         m_Mode: 1
         m_Arguments:
@@ -5502,11 +5502,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -5901,11 +5901,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -6318,11 +6318,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -6721,7 +6721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1822693351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6765,7 +6765,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1822693350}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -6812,13 +6812,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1832611848}
-  - component: {fileID: 1832611847}
-  - component: {fileID: 1832611849}
-  - component: {fileID: 1832611850}
-  - component: {fileID: 1832611851}
-  - component: {fileID: 1832611852}
-  - component: {fileID: 1832611853}
   - component: {fileID: 1832611854}
+  - component: {fileID: 1832611849}
+  - component: {fileID: 1832611847}
   m_Layer: 0
   m_Name: Controlador
   m_TagString: Controlador
@@ -6834,16 +6830,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832611846}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cf3e1cacac1af54e8f1143399c15c84, type: 3}
+  m_Script: {fileID: 11500000, guid: aba64ecd2fc235c4a9b4dfbaa6633e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabSistema: {fileID: 1657158682139714, guid: 6e29b426bdd379645a964df828e31020,
-    type: 2}
-  layerDelete:
-    serializedVersion: 2
-    m_Bits: 32
-  nombreNebulosa: {fileID: 819538106}
-  Peligrosa: {fileID: 171720969}
 --- !u!4 &1832611848
 Transform:
   m_ObjectHideFlags: 0
@@ -6865,100 +6854,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832611846}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641bb87146252e14ebbc5f2b1f8a7d27, type: 3}
+  m_Script: {fileID: 11500000, guid: d7cac73cdd778c84dae79535ffccb7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMover:
-    serializedVersion: 2
-    m_Bits: 32
-  toggleMover: {fileID: 0}
---- !u!114 &1832611850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1832611846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4cba28f2f506e64897d9336ee691f38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerDelete:
-    serializedVersion: 2
-    m_Bits: 32
-  planetas:
-  - {fileID: 1559605268030458, guid: 51d2b4a54eae07e45a58a97ec15b11d5, type: 2}
-  - {fileID: 1466651192742916, guid: 17e7f94fd31842f4ba3834405f48ebd1, type: 2}
-  - {fileID: 1995387285407172, guid: 8b1e01e0518e54d43afe8f9b217029d7, type: 2}
-  - {fileID: 1416535534329306, guid: 186f45bcf59532f4681b5e979e93ca7b, type: 2}
-  - {fileID: 1538075421892232, guid: d034242b3fc7213458347fc45bbd0d68, type: 2}
-  - {fileID: 1485000468825072, guid: 0f54f437f7a29f148a8d296a630e6434, type: 2}
-  - {fileID: 1106233162410796, guid: 91f637b07c9f9df488dfae66243d7e4a, type: 2}
-  - {fileID: 1753980324946654, guid: 2d693501809c2dc44a28520214eb570f, type: 2}
-  - {fileID: 1367001153321322, guid: 77f4966b750f5cd4e807813a637bc748, type: 2}
-  - {fileID: 1597038238918280, guid: 131bd6aabfcd7934d96204c3363fa9d4, type: 2}
-  - {fileID: 1970916965039098, guid: 854b5b51418a1fe4981ff7b469d22e2d, type: 2}
-  - {fileID: 1731595021977176, guid: 0a3d13807fb613d46be78e22c3434ca1, type: 2}
-  - {fileID: 1614938373283202, guid: 37e4cfb9681976242ae388226a85d4df, type: 2}
-  - {fileID: 1487855019518480, guid: 6c1caa9e3030bd94caa43e55dc9b92a8, type: 2}
-  - {fileID: 1452785808909742, guid: 917080245542f004f84aa0b0ead9524c, type: 2}
-  - {fileID: 1584851954873422, guid: 701ff0ffc171f5f419aa3d3ede420bd8, type: 2}
-  - {fileID: 1620793669829834, guid: d007251057707624482a829198afa1aa, type: 2}
-  depositoPrefab: {fileID: 1155791018096890, guid: f846e80c442252045b44be0ddc612211,
-    type: 2}
-  telePrefab: {fileID: 1959738274063402, guid: b185164651e99d54599d48e1206ebd68, type: 2}
-  mover: {fileID: 0}
-  eliminarToggle: {fileID: 0}
-  lineaToggle: {fileID: 0}
---- !u!114 &1832611851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1832611846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641bb87146252e14ebbc5f2b1f8a7d27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMover:
-    serializedVersion: 2
-    m_Bits: 32
-  toggleMover: {fileID: 0}
---- !u!114 &1832611852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1832611846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5833d4020359a49846e3811f9b19cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capa:
-    serializedVersion: 2
-    m_Bits: 32
-  lineaPrefab: {fileID: 1523949244307810, guid: b346176a415942a44a08e05f4e6bc4b8,
-    type: 2}
-  activo: {fileID: 0}
---- !u!114 &1832611853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1832611846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbdff4f80fd9764fbb9e918621e1293, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capa:
-    serializedVersion: 2
-    m_Bits: 32
-  lineaPrefab: {fileID: 1964305143856864, guid: 5b1d1a86fb3a7a942903a824a899da8a,
-    type: 2}
-  activo: {fileID: 0}
+  nombreNebulosa: {fileID: 819538106}
+  Peligrosa: {fileID: 171720969}
 --- !u!114 &1832611854
 MonoBehaviour:
   m_ObjectHideFlags: 0

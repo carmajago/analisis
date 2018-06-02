@@ -48,7 +48,25 @@ public class EditorSistemaController : MonoBehaviour {
     {
         return  eliminarToggle.isOn || mover.isOn || lineaToggle.isOn;
     }
+    public void abrirInfoPlaneta()
+    {
 
+        GameObject temp;
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            temp = hit.transform.gameObject;
+            PlanetaPrebab pp = temp.GetComponent<PlanetaPrebab>();
+
+            if (pp != null)
+            {
+
+                pp.SendMessage("abrirInfoPlaneta");
+            }
+        }
+    }
     public void crearPlaneta(int id)
     {
         GameObject.FindObjectOfType<BotonNuevoPlaneta>().tooglePlanetas();
@@ -79,6 +97,7 @@ public class EditorSistemaController : MonoBehaviour {
         planetaP.planeta = PlanetaService.PostPlaneta(planetaP.planeta);
        
     }
+
 
     public void crearDeposito()
     {
@@ -142,25 +161,7 @@ public class EditorSistemaController : MonoBehaviour {
 
     }
 
-    public void abrirInfoPlaneta()
-    {
-       
-        GameObject temp;
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        {
-            temp = hit.transform.gameObject;
-            PlanetaPrebab pp = temp.GetComponent<PlanetaPrebab>();
-           
-            if (pp != null)
-            {
-              
-                pp.SendMessage("abrirInfoPlaneta");
-            }
-        }
-    }
+   
     #region DELETE
     public void eliminarPlaneta()
     {

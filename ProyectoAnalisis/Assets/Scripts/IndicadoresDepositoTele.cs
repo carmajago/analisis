@@ -23,23 +23,27 @@ public class IndicadoresDepositoTele : MonoBehaviour {
         if (deposito == null)
         {
             depositoT.isOn = false;
-            depositoB.interactable = true;
+            if (depositoB != null)
+                depositoB.interactable = true;
         }
         else
         {
             depositoT.isOn = true;
-            depositoB.interactable = false;
+            if (depositoB != null)
+                depositoB.interactable = false;
         }
 
         if (teletransportador == null)
         {
             teletransportadorT.isOn = false;
+            if(teletransportadorB!=null)
             teletransportadorB.interactable = true;
         }
         else
         {
             teletransportadorT.isOn = true;
-            teletransportadorB.interactable = false;
+            if (teletransportadorB != null)
+                teletransportadorB.interactable = false;
         }
     }
 
