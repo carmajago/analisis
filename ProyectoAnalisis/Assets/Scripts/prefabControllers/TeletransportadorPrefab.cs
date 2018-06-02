@@ -10,6 +10,7 @@ public class TeletransportadorPrefab : MonoBehaviour {
     void Start()
     {
         tr = GetComponent<Transform>();
+        GameObject.FindGameObjectWithTag("Controlador").GetComponent<IndicadoresDepositoTele>().teletransportador = this.gameObject;
     }
 
     void LateUpdate()

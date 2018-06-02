@@ -23,6 +23,21 @@ public class NebulosaPrefab : MonoBehaviour {
         btn.onClick.AddListener(abrirInfo);
         refrescarInfo();
 
+        if (nebulosa.danger)
+        {
+            cambiarAPeligrosa();
+        }
+    }
+
+    void cambiarAPeligrosa()
+    {
+        Image imagen = canvasNebulosa.transform.Find("Button").GetComponent<Image>();
+        Image imagen2 = canvasNebulosa.transform.Find("Circle").GetComponent<Image>();
+
+        imagen.color = Color.red;
+        imagen2.color = Color.red;
+
+
     }
     /// <summary>
     /// Verifica que no se haya editado la nebulosa en la escena y si se edita envia la nueva información al servidor.

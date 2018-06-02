@@ -39,14 +39,27 @@ public class CrearViaLactea : MonoBehaviour
     {
         StartCoroutine(corrutinaAbrirMenuCrear());
     }
+    public void cerrarMenuCrear()
+    {
+        StartCoroutine(corrutinaCerrarMenuCrear());
+    }
+    public IEnumerator corrutinaCerrarMenuCrear()
+    {
+        canvasMenuPpal.SetActive(true);
+        animatorMenuPpal.SetTrigger("exit");
+        
+        animatorMenuCrear.SetTrigger("start");
+        yield return new WaitForSeconds(2f);
+       // canvasMenuCrear.SetActive(false);
 
+    }
     public IEnumerator corrutinaAbrirMenuCrear()
     {
         animatorMenuPpal.SetTrigger("exit");
         canvasMenuCrear.SetActive(true);
         animatorMenuCrear.SetTrigger("start");
         yield return new WaitForSeconds(2f);
-        canvasMenuPpal.SetActive(false);
+        //canvasMenuPpal.SetActive(false);
     }
 
     /// <summary>
@@ -76,9 +89,9 @@ public class CrearViaLactea : MonoBehaviour
     #region CREAR_VIA_LACTEA
     public void nuevaViaLactea()
     {
-        TMP_InputField totalNebulosas=canvasMenuCrear.transform.Find("Canvas/Nebulosas/Total").GetComponent<TMP_InputField>();
-        TMP_InputField totalSistemasPlanetarios=canvasMenuCrear.transform.Find("Canvas/SistemasPlanetarios/Total").GetComponent<TMP_InputField>();
-        TMP_InputField totalSistemasPlanetas= canvasMenuCrear.transform.Find("Canvas/Planetas/Total").GetComponent<TMP_InputField>();
+        //TMP_InputField totalNebulosas=canvasMenuCrear.transform.Find("Canvas/Nebulosas/Total").GetComponent<TMP_InputField>();
+        //TMP_InputField totalSistemasPlanetarios=canvasMenuCrear.transform.Find("Canvas/SistemasPlanetarios/Total").GetComponent<TMP_InputField>();
+        //TMP_InputField totalSistemasPlanetas= canvasMenuCrear.transform.Find("Canvas/Planetas/Total").GetComponent<TMP_InputField>();
 
         Slider maxNebulosas = canvasMenuCrear.transform.Find("Canvas/Nebulosas/Slider").GetComponent<Slider>();
         Slider maxSistemasPlanetarios = canvasMenuCrear.transform.Find("Canvas/SistemasPlanetarios/Slider").GetComponent<Slider>();
@@ -118,11 +131,11 @@ public class CrearViaLactea : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < int.Parse(totalNebulosas.text); i++)
+            for (int i = 0; i <(int) maxNebulosas.value; i++)
             {
                 Nebulosa nebulosa = crearNebulosa();
                 viaLactea.Nebulosas.Add(nebulosa);
-                for (int j = 0; j < int.Parse(totalSistemasPlanetarios.text); j++)
+                for (int j = 0; j <(int) maxSistemasPlanetarios.value; j++)
                 {
                     SistemaPlanetario sistema = crearsistemaPlanetario();
 
@@ -169,7 +182,7 @@ public class CrearViaLactea : MonoBehaviour
             {
                 foreach (var sistema in nebulosa.sistemasPlanetarios)
                 {
-                    for (int i = 0; i < int.Parse(totalSistemasPlanetarios.text); i++)
+                    for (int i = 0; i < maxPlanetas.value; i++)
                     {
                         Planeta planeta = crearPlaneta();
                         planeta.sistemaPlanetarioFK = sistema.id;

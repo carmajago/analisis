@@ -9,6 +9,8 @@ public class EditorNebulosaController : MonoBehaviour {
     public GameObject prefabSistema;
     public LayerMask layerDelete; //esta capa debe estar configurada en UI
     public TextMeshProUGUI nombreNebulosa;
+    public TextMeshProUGUI Peligrosa;
+
 
     private bool eliminar = false; // esta variable inicia en false por que el toggle también comienza en false es importante no cambiar valor por defecto del toogleEliminar
 
@@ -18,7 +20,7 @@ public class EditorNebulosaController : MonoBehaviour {
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
         ns.setNebulosa(NebulosaService.GetNebulosa(ns.nebulosa.id));
         nombreNebulosa.text = ns.nebulosa.nombre;
-       
+        Peligrosa.enabled = ns.nebulosa.danger;
         ns.cargar();
     }
 	IEnumerator desctivarCanvas()

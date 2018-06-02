@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 23034244015068380}
   - component: {fileID: 135207340659697776}
   - component: {fileID: 114580016793591942}
+  - component: {fileID: 95452246664669182}
   m_Layer: 5
   m_Name: Tierra
   m_TagString: Untagged
@@ -100,7 +101,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1620793669829834}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.27, y: 0, z: -1.47}
   m_LocalScale: {x: 0.0016834589, y: 0.001683459, z: 0.001683459}
   m_Children:
@@ -300,6 +301,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1063920437286770}
   m_Mesh: {fileID: 4300006, guid: 4ce8eab777ae9924298519561c54f489, type: 3}
+--- !u!95 &95452246664669182
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620793669829834}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53cfac65f9a399e458f3777b53210eb6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114580016793591942
 MonoBehaviour:
   m_ObjectHideFlags: 1

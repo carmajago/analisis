@@ -16,6 +16,8 @@ TagManager:
   - Teletransportador
   - CameraAnimation
   - LoadingBar
+  - Indicadores
+  - Controlador
   layers:
   - Default
   - TransparentFX

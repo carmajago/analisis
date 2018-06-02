@@ -21,6 +21,8 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
         infoSistema.transform.Find("Button").GetComponent<Button>().onClick.AddListener(irASistema);
         canvasSistema.transform.Find("Button").GetComponent<Button>().onClick.AddListener(abrirInfo);
         refrescarInfo();
+
+      
     }
     public void LateUpdate()
     {

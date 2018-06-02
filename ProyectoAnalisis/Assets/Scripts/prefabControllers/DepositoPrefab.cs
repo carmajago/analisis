@@ -9,7 +9,9 @@ public class DepositoPrefab : MonoBehaviour {
 
 	void Start () {
         tr = GetComponent<Transform>();
-	}
+        IndicadoresDepositoTele idt= GameObject.FindGameObjectWithTag("Controlador").GetComponent<IndicadoresDepositoTele>();
+        idt.deposito= this.gameObject;
+    }
 
     void LateUpdate()
     {
