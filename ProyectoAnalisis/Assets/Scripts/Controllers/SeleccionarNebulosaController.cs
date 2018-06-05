@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class SeleccionarNebulosaController : MonoBehaviour {
 
@@ -70,6 +71,10 @@ public class SeleccionarNebulosaController : MonoBehaviour {
             btnVL.escena = "ViaLactea";
         }
 
+    }
+    public void irAHome()
+    {
+        SceneManager.LoadScene("Home", LoadSceneMode.Single);
     }
 
 }

@@ -17,6 +17,16 @@ public static class Constantes  {
     public static int NUMERO_MODELOS = 17; //numero de planetas diferentes con los que si cuenta.
 
 
+    ///Parametros de la nave
+    ///
+    public static float LIMITE_COMBUSTIBLE=100000;
+    public static float LIMITE_IRIDIO = 100000;
+    public static float LIMITE_PLATINO = 100000;
+    public static float LIMITE_PALADIO = 100000;
+    public static float LIMITE_ELEMENTOZERO = 100000;
+
+
+
 
 
 }

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ee6265c253cc0b240ab0d83c680d50a8, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 04d10717a9d480c429720c46de66b684, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18673897, g: 0.35402513, b: 1.4374598, a: 1}
+  m_IndirectSpecularColor: {r: 0.08257241, g: 0.08752219, b: 0.18803161, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1660,7 +1660,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1943584508837352, guid: 340c248eb5bc51f46bb1d80ca9a129db, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114194593674769052, guid: 340c248eb5bc51f46bb1d80ca9a129db,
         type: 2}
@@ -2196,9 +2196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919b6eb68131e7a489f117970f260e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnitudLinea: 50
+  magnitudLinea: 200
   yPos: 1
   camara: {fileID: 449312602}
+  MouseOff: 0
 --- !u!4 &2090140084
 Transform:
   m_ObjectHideFlags: 0

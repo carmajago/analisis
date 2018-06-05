@@ -26,3 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Escenas/Simulador/Nebulosa.unity
     guid: c01a5cf01c0734c45a6197d09bd7fb53
+  - enabled: 1
+    path: Assets/Escenas/Informacion.unity
+    guid: 615b2254f5d8d2c4fb8ea4b198e42ca8

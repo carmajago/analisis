@@ -8,6 +8,7 @@ using System.Text;
 
 using System.Net;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class CrearViaLactea : MonoBehaviour
 {
@@ -30,6 +31,10 @@ public class CrearViaLactea : MonoBehaviour
 
         StartCoroutine(GetViaLacteas());
       
+    }
+    public void irAHome()
+    {
+        SceneManager.LoadScene("Home", LoadSceneMode.Single);
     }
 
     /// <summary>
@@ -210,8 +215,15 @@ public class CrearViaLactea : MonoBehaviour
         nebulosa.y = 0;
         nebulosa.z = Random.Range(-80,80);
         nebulosa.sistemasPlanetarios = new List<SistemaPlanetario>();
-       
+       nebulosa.danger=ParseBool(Random.Range(0, 1));
         return nebulosa;
+    }
+    private bool ParseBool(int i)
+    {
+        if (i == 0)
+            return false;
+
+        return true;
     }
 
     private SistemaPlanetario crearsistemaPlanetario()

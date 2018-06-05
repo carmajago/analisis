@@ -7,6 +7,7 @@ public class MouseCursor : MonoBehaviour {
     public float magnitudLinea=10f;
     public float yPos;
     public Camera camara;
+    public bool MouseOff = false;
     private GameObject cursor;
     private Vector3 posMouse;
     private Transform tr;
@@ -19,7 +20,8 @@ public class MouseCursor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-         // Cursor.visible = false;
+        if(MouseOff)
+          Cursor.visible = false;
 
         Vector3 pos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(pos);
