@@ -26,7 +26,7 @@ public class EditarNebulosaCamara : MonoBehaviour {
     private bool dosD=false;
     private Vector3 posicionInicial = Vector3.zero;
     private Quaternion rotacionInicial;
-
+    private bool isSimulacion;
     Vector3 distancia = new Vector3(0, -16, 56);
     void Start () {
         posInicial = GetComponent<Transform>().position;
@@ -79,8 +79,20 @@ public class EditarNebulosaCamara : MonoBehaviour {
     }
 
 
-    public void irASistema(Vector3 pos,string nombre)
+    public void irASistema(Vector3 pos,string nombre, bool isSim)
     {
+
+      //GameObject.FindGameObjectWithTag("Nave").GetComponent<CamaraNave>().enabled =false;
+       
+        isSimulacion = isSim;
+        if (isSimulacion)
+        {
+            Debug.Log("Enra");
+            GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>().navegacionSistema();
+            GameObject.FindGameObjectWithTag("Nave").GetComponent<CamaraNave>().enabled = false;
+
+        }
+
         nombreSistema.text = nombre;
         isPlaneta = true;
         canvasSistema.SetActive(true);
@@ -90,15 +102,25 @@ public class EditarNebulosaCamara : MonoBehaviour {
         limitZ = new Vector2(pos.z + distancia.z + panlimitZ.x, pos.z + distancia.z + panlimitZ.y);
         StopAllCoroutines();
         StartCoroutine(animacionIr(pos+distancia,true));
+
+
     }
     public void regresarASistemas()
     {
+        if (isSimulacion)
+        {
+            GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>().navegacionNebulosa();
+
+        }
         isPlaneta = true;
         canvasSistema.SetActive(false);
         canvasSistemas.SetActive(true);
         isSistema = false;
         StopAllCoroutines();
         StartCoroutine(animacionIr(posInicial,false));
+
+
+        
     }
 
 
@@ -120,6 +142,14 @@ public class EditarNebulosaCamara : MonoBehaviour {
         isSistema = Sistema;
         multiplicadorDeVelocidad = 15;
         isPlaneta = false;
+
+        if (isSimulacion)
+        {
+            Debug.Log("Entra");
+            Camera.main.GetComponent<EditarNebulosaCamara>().enabled = Sistema;
+            GameObject.FindGameObjectWithTag("Nave").GetComponent<CamaraNave>().enabled = !Sistema;
+
+        }
     }
 
     public void set2D()

@@ -37,9 +37,6 @@ public static class NebulosaService  {
         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
         {
             string json = JsonUtility.ToJson(nebulosa);
-
-
-
             streamWriter.Write(json);
             streamWriter.Flush();
             streamWriter.Close();
@@ -51,7 +48,7 @@ public static class NebulosaService  {
             var result = streamReader.ReadToEnd();
 
 
-            nebulosa = JsonUtility.FromJson<Nebulosa>(result);
+           // nebulosa = JsonUtility.FromJson<Nebulosa>(result);
         }
 
     }

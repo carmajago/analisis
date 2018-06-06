@@ -123,19 +123,30 @@ public class EditorSistemaController : MonoBehaviour {
             newSistema.transform.position = posMouse;
             yield return new WaitForSeconds(0.01f);
         }
+        RaycastHit hit;
 
-        DepositoPrefab planetaP = newSistema.GetComponent<DepositoPrefab>();
-        planetaP.actualizarDatos(sistemaSingleton.prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id);
-        planetaP.deposito = DepositoService.PostDeposito(planetaP.deposito);
+        Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(ray2, out hit, Mathf.Infinity, layerDelete))
+        {
+
+            Planeta sistema = hit.transform.gameObject.GetComponent<PlanetaPrebab>().planeta;
+            newSistema.transform.position = newSistema.transform.position + new Vector3(-4, 0, 0);
+            Deposito deposito = new Deposito();
+            deposito.planetaFK = sistema.id;
+            DepositoService.PostDeposito(deposito);
+            newSistema.transform.parent = hit.transform;
+            newSistema.GetComponent<DepositoPrefab>().deposito = deposito;
+            sistema.deposito = deposito;
+        }
+        else
+        {
+            Destroy(newSistema);
+        }
 
     }
 
-    public void crearTeletransportador()
-    {
-        GameObject.FindObjectOfType<BotonNuevoPlaneta>().tooglePlanetas();
-        StartCoroutine(crearTeletransportadorCOR());
-    }
-    IEnumerator crearTeletransportadorCOR()
+    IEnumerator crearTeletrasnportadorCOR()
     {
         GameObject tr = sistemaSingleton.prebabSistema.transform.Find("sistema").gameObject;
 
@@ -154,12 +165,43 @@ public class EditorSistemaController : MonoBehaviour {
             newSistema.transform.position = posMouse;
             yield return new WaitForSeconds(0.01f);
         }
+        RaycastHit hit;
 
-        TeletransportadorPrefab planetaP = newSistema.GetComponent<TeletransportadorPrefab>();
-        planetaP.actualizarDatos(sistemaSingleton.prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id);
-        planetaP.teletransportador = TeletransportadorService.PostTeletransportador(planetaP.teletransportador);
+        Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(ray2, out hit, Mathf.Infinity, layerDelete))
+        {
+
+            Planeta sistema = hit.transform.gameObject.GetComponent<PlanetaPrebab>().planeta;
+            newSistema.transform.position = newSistema.transform.position + new Vector3(4, 0, 0);
+            Teletransportador tele = new Teletransportador();
+            tele.planetaFK = sistema.id;
+            newSistema.transform.parent = hit.transform;
+            TeletransportadorService.PostTeletransportador(tele);
+            newSistema.GetComponent<TeletransportadorPrefab>().teletransportador = tele;
+            sistema.teletransportador =tele;
+        }
+        else
+        {
+            Destroy(newSistema);
+        }
+
+
+        //PlanetaPrebab planetaP = newSistema.GetComponent<PlanetaPrebab>();
+        //planetaP.actualizarDatos(sistemaSingleton.prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id, id);
+        //planetaP.planeta = PlanetaService.PostPlaneta(planetaP.planeta);
 
     }
+
+
+    public void crearTeletransportador()
+    {
+        GameObject.FindObjectOfType<BotonNuevoPlaneta>().tooglePlanetas();
+        StartCoroutine(crearTeletrasnportadorCOR());  
+    }
+   
+
+     
 
    
     #region DELETE
@@ -188,22 +230,10 @@ public class EditorSistemaController : MonoBehaviour {
                 // Does the ray intersect any objects excluding the player layer
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerDelete))
                 {
-
-                    if (hit.transform.tag == "Deposito")
-                    {
-                        Deposito sistema = hit.transform.gameObject.GetComponent<DepositoPrefab>().deposito;
-                        StartCoroutine(deletePlanetaCOR(sistema));
-                    }
-                    else if (hit.transform.tag == "Teletransportador")
-                    {
-                        Teletransportador sistema = hit.transform.gameObject.GetComponent<TeletransportadorPrefab>().teletransportador;
-                        StartCoroutine(deletePlanetaCOR(sistema));
-                    }
-                    else
-                    {
+                   
                         Planeta sistema = hit.transform.gameObject.GetComponent<PlanetaPrebab>().planeta;
                         StartCoroutine(deletePlanetaCOR(sistema));
-                    }
+                    
                    
                     Destroy(hit.transform.gameObject);
 
@@ -220,9 +250,9 @@ public class EditorSistemaController : MonoBehaviour {
     /// </summary>
     /// <param name="nebulosa"></param>
     /// <returns></returns>
-    public static IEnumerator deletePlanetaCOR(Nodo sistema)
+    public static IEnumerator deletePlanetaCOR(Planeta sistema)
     {
-        string accion = "Api/nodos/" + sistema.id;
+        string accion = "Api/planetas/" + sistema.id;
         UnityWebRequest wr = UnityWebRequest.Delete(ApiCalls.url + accion);
 
         yield return wr.SendWebRequest();

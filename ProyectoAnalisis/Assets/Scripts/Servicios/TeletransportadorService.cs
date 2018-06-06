@@ -6,32 +6,6 @@ using System.Net;
 
 public class TeletransportadorService : MonoBehaviour {
 
-    public static void PutTeletransportador(Teletransportador sistema)
-    {
-
-        var httpWebRequest = (HttpWebRequest)WebRequest.Create(ApiCalls.url + "/api/teletransportador/" + sistema.id);
-        httpWebRequest.ContentType = "application/json";
-        httpWebRequest.Method = "PUT";
-
-        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-        {
-            string json = JsonUtility.ToJson(sistema);
-
-            streamWriter.Write(json);
-            streamWriter.Flush();
-            streamWriter.Close();
-        }
-
-        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        {
-            var result = streamReader.ReadToEnd();
-
-
-            sistema = JsonUtility.FromJson<Teletransportador>(result);
-        }
-
-    }
 
     public static Teletransportador GetTeletransportador(int id)
     {

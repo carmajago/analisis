@@ -8,9 +8,9 @@ public class AristaNodo  {
 
     public int id;
     [NonSerialized]
-    public Nodo origen;
+    public Planeta origen;
     [NonSerialized]
-    public Nodo destino;
+    public Planeta destino;
 
     public int origenFK;
     public int destinoFK;

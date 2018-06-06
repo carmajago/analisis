@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Teletransportador:Nodo  {
+public class Teletransportador  {
+    public int planetaFK;
 
-   
+  //  public Planeta planeta;
     
 }

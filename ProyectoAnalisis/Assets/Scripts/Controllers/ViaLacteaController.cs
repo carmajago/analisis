@@ -7,6 +7,8 @@ public class ViaLacteaController : MonoBehaviour {
 
     void Start()
     {
+        GameObject.FindGameObjectWithTag("Nave").GetComponent<CamaraNave>().enabled = false;
+        GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>().enabled = false;
 
         StartCoroutine(StarScene());
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();

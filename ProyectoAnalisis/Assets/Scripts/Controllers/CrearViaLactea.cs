@@ -20,17 +20,17 @@ public class CrearViaLactea : MonoBehaviour
     private Animator animatorMenuCrear;
     private Animator animatorMenuPpal;
 
-   
-  
+
+
 
     void Start()
     {
-      
+
         animatorMenuPpal = canvasMenuPpal.GetComponent<Animator>();
         animatorMenuCrear = canvasMenuCrear.GetComponent<Animator>();
 
         StartCoroutine(GetViaLacteas());
-      
+
     }
     public void irAHome()
     {
@@ -52,10 +52,10 @@ public class CrearViaLactea : MonoBehaviour
     {
         canvasMenuPpal.SetActive(true);
         animatorMenuPpal.SetTrigger("exit");
-        
+
         animatorMenuCrear.SetTrigger("start");
         yield return new WaitForSeconds(2f);
-       // canvasMenuCrear.SetActive(false);
+        // canvasMenuCrear.SetActive(false);
 
     }
     public IEnumerator corrutinaAbrirMenuCrear()
@@ -73,24 +73,24 @@ public class CrearViaLactea : MonoBehaviour
     /// 
     public void listarViaLacteas(List<ViaLactea> viaLacteas)
     {
-        
-           Transform content = canvasMenuPpal.transform.Find("Canvas/Panel/ScrollView/ContentPane");
 
-      
+        Transform content = canvasMenuPpal.transform.Find("Canvas/Panel/ScrollView/ContentPane");
+
+
         foreach (var item in viaLacteas)
         {
-            GameObject btnAux= Instantiate(prefabBtnVialactea);
+            GameObject btnAux = Instantiate(prefabBtnVialactea);
             btnAux.transform.SetParent(content);
-            btnAux.transform.Find("Nebulosas").GetComponent<TextMeshProUGUI>().text=item.totalNebulosas+" NEBULOSAS";
+            btnAux.transform.Find("Nebulosas").GetComponent<TextMeshProUGUI>().text = item.totalNebulosas + " NEBULOSAS";
             btnAux.transform.Find("Nombre").GetComponent<TextMeshProUGUI>().text = item.nombre;
-            BotonViaLactea btnVL= btnAux.GetComponent<BotonViaLactea>();
+            BotonViaLactea btnVL = btnAux.GetComponent<BotonViaLactea>();
             btnVL.viaLactea = item;
             btnVL.animatorMenuPpal = animatorMenuPpal;
             btnVL.escena = "Editor";
         }
 
     }
-    
+
 
     #region CREAR_VIA_LACTEA
     public void nuevaViaLactea()
@@ -106,124 +106,87 @@ public class CrearViaLactea : MonoBehaviour
         Toggle random = canvasMenuCrear.transform.Find("Canvas/Info/Toggle").GetComponent<Toggle>();
         TMP_InputField nombreViaLactea = canvasMenuCrear.transform.Find("Canvas/Info/Nombre").GetComponent<TMP_InputField>();
 
- 
+
         ViaLactea viaLactea = new ViaLactea();
         viaLactea.nombre = nombreViaLactea.text;
         viaLactea.Nebulosas = new List<Nebulosa>();
-       
 
 
-        WWWForm form = new WWWForm();
-        form.AddField("nombre",viaLactea.nombre);
-        
+
+
+
         if (random.isOn)
         {
-           
+
             int nebulosas = Random.Range((int)maxNebulosas.minValue, (int)maxNebulosas.value);
             for (int i = 0; i < nebulosas; i++)
             {
                 Nebulosa nebulosaTemp = crearNebulosa();
-                form.AddField("Nebulosas[].nombre",nebulosaTemp.nombre);
                 viaLactea.Nebulosas.Add(nebulosaTemp);
                 int sistemas = Random.Range((int)maxSistemasPlanetarios.minValue, (int)maxSistemasPlanetarios.value);
                 for (int j = 0; j < sistemas; j++)
                 {
                     SistemaPlanetario sistemaTemp = crearsistemaPlanetario();
-                     viaLactea.Nebulosas[i].sistemasPlanetarios.Add(sistemaTemp);
-                  
+                    viaLactea.Nebulosas[i].sistemasPlanetarios.Add(sistemaTemp);
+                    for (int k = 0; k < (int)maxPlanetas.value; k++)
+                    {
+                        Planeta planeta = crearPlaneta();
+                        viaLactea.Nebulosas[i].sistemasPlanetarios[j].nodos.Add(planeta);
+                    }
+
                 }
             }
 
         }
         else
         {
-            for (int i = 0; i <(int) maxNebulosas.value; i++)
+            for (int i = 0; i < (int)maxNebulosas.value; i++)
             {
                 Nebulosa nebulosa = crearNebulosa();
                 viaLactea.Nebulosas.Add(nebulosa);
-                for (int j = 0; j <(int) maxSistemasPlanetarios.value; j++)
+                for (int j = 0; j < (int)maxSistemasPlanetarios.value; j++)
                 {
                     SistemaPlanetario sistema = crearsistemaPlanetario();
-
                     viaLactea.Nebulosas[i].sistemasPlanetarios.Add(sistema);
-                 
-                  
+
+                    for (int k = 0; k < (int)maxPlanetas.value; k++)
+                    {
+                        Planeta planeta = crearPlaneta();
+                        viaLactea.Nebulosas[i].sistemasPlanetarios[j].nodos.Add(planeta);
+                    }
+
                 }
             }
         }
 
 
-        viaLactea= ViaLacteaService.PostViaLactea(viaLactea);
+        viaLactea = ViaLacteaService.PostViaLactea(viaLactea);
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
         cargar.setViaLactea(viaLactea);
         StartCoroutine(CameraAnimations.animacionSalirMenuCrear("Editor"));
 
 
-        if (random.isOn)
-        {
-            foreach (var nebulosa in viaLactea.Nebulosas)
-            {
-                foreach (var sistema in nebulosa.sistemasPlanetarios)
-                {
-                    int planetas = Random.Range((int)maxPlanetas.minValue, (int)maxPlanetas.value);
-                    for (int i = 0; i < planetas; i++)
-                    {
-                        Planeta planeta = crearPlaneta();
-                        planeta.sistemaPlanetarioFK = sistema.id;
-                        PlanetaService.PostPlaneta(planeta);
-                    }
-                    
-                }
-                Deposito deposito = crearDeposito();
-                deposito.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[0].id;
-                Teletransportador teletransportador = crearTeletransportador();
-                teletransportador.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[nebulosa.sistemasPlanetarios.Count - 1].id;
-               DepositoService.PostDeposito(deposito);
-                TeletransportadorService.PostTeletransportador(teletransportador);
-            }
-        }
-        else
-        {
-            foreach (var nebulosa in viaLactea.Nebulosas)
-            {
-                foreach (var sistema in nebulosa.sistemasPlanetarios)
-                {
-                    for (int i = 0; i < maxPlanetas.value; i++)
-                    {
-                        Planeta planeta = crearPlaneta();
-                        planeta.sistemaPlanetarioFK = sistema.id;
-                        sistema.nodos.Add(PlanetaService.PostPlaneta(planeta));
-                    }
-                }
-                Deposito deposito = crearDeposito();
-                deposito.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[0].id;
-                Teletransportador teletransportador = crearTeletransportador();
-                teletransportador.sistemaPlanetarioFK = nebulosa.sistemasPlanetarios[nebulosa.sistemasPlanetarios.Count - 1].id;
-                DepositoService.PostDeposito(deposito);
-                TeletransportadorService.PostTeletransportador(teletransportador);
-            }
-        }
-
     }
-    
+
 
     private Nebulosa crearNebulosa()
     {
         Nebulosa nebulosa = new Nebulosa();
         nebulosa.nombre = "";//Falta
-        nebulosa.x=Random.Range(-100,100);
+        nebulosa.x = Random.Range(-65.0f,65.0f);
         nebulosa.y = 0;
-        nebulosa.z = Random.Range(-80,80);
+        nebulosa.z = Random.Range(-65.0f, 65.0f);
         nebulosa.sistemasPlanetarios = new List<SistemaPlanetario>();
-       nebulosa.danger=ParseBool(Random.Range(0, 1));
+        nebulosa.danger = ParseBool();
         return nebulosa;
     }
-    private bool ParseBool(int i)
+    private bool ParseBool()
     {
-        if (i == 0)
-            return false;
-
-        return true;
+        if (Random.Range(0, 100) < 50)
+        {
+            return true;
+        }
+        return false;
     }
 
     private SistemaPlanetario crearsistemaPlanetario()
@@ -233,14 +196,14 @@ public class CrearViaLactea : MonoBehaviour
         sistema.x = Random.Range(-1000, 1000);
         sistema.y = 0;
         sistema.z = Random.Range(-1200, 350);
-        sistema.nodos = new List<Nodo>();
+        sistema.nodos = new List<Planeta>();
         return sistema;
     }
 
     private Planeta crearPlaneta()
     {
         Planeta planeta = new Planeta();
-        planeta.iridio = Random.Range(Constantes.IRIDIO_MIN,Constantes.IRIDIO_MAX);
+        planeta.iridio = Random.Range(Constantes.IRIDIO_MIN, Constantes.IRIDIO_MAX);
         planeta.platino = Random.Range(Constantes.PLATINO_MIN, Constantes.PLATINO_MAX);
         planeta.paladio = Random.Range(Constantes.PALADIO_MIN, Constantes.PALADIO_MAX);
         planeta.elementoZero = Random.Range(Constantes.ELEMENTOZERO_MIN, Constantes.ELEMENTOZERO_MAX);
@@ -249,7 +212,7 @@ public class CrearViaLactea : MonoBehaviour
         planeta.y = 0;
         planeta.z = Random.Range(-4.00f, 4.00f);
 
-        planeta.idModelo = ""+Random.Range(0, Constantes.NUMERO_MODELOS);
+        planeta.idModelo = "" + Random.Range(0, Constantes.NUMERO_MODELOS);
         return planeta;
     }
     private Deposito crearDeposito()
@@ -283,7 +246,7 @@ public class CrearViaLactea : MonoBehaviour
 
             Eventos.mostrarError(wr.error);
             canvasMenuPpal.SetActive(false);
-            
+
         }
         else
         {

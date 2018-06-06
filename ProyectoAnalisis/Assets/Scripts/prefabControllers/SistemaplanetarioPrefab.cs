@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class SistemaplanetarioPrefab : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
     private GameObject infoSistema;
     private Transform tr;
     private bool activo=false; //estado en el que se encuentra la información del sistema.
+    public bool isSimulacion = false;
 
     void Start () {
         tr = GetComponent<Transform>();
@@ -53,8 +55,13 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
     public void irASistema()
     {
         Vector3 pos = new Vector3(sistemaPlanetario.x, sistemaPlanetario.y, sistemaPlanetario.z);
-        GameObject.FindObjectOfType<SistemaSingleton>().setSistema(this.gameObject);   
-        Camera.main.GetComponent<EditarNebulosaCamara>().irASistema(pos,sistemaPlanetario.nombre);
+        GameObject.FindObjectOfType<SistemaSingleton>().setSistema(this.gameObject);
+
+            Camera.main.GetComponent<EditarNebulosaCamara>().enabled = true;
+            Camera.main.GetComponent<EditarNebulosaCamara>().irASistema(pos, sistemaPlanetario.nombre,isSimulacion);
+            
+        
+       
     }
 
     public void refrescarInfo()
@@ -76,7 +83,10 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
         paladio.text = "Paladio: " + sistemaPlanetario.paladioTotal;
         elementoZero.text = "Elemento zero: " + sistemaPlanetario.elementoZeroTotal;
 
-
+        if(sistemaPlanetario.nombre=="" && sistemaPlanetario.id != 0)
+        {
+            StartCoroutine(getSistemas());
+        }
     }
     /// <summary>
     /// Actualiza la información del sistema planetario con los datos de la escena
@@ -93,4 +103,23 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
         
     }
 
+    IEnumerator getSistemas()
+    {
+        string accion = "Api/SistemaPlanetario/" + sistemaPlanetario.id;
+        UnityWebRequest wr = UnityWebRequest.Get(ApiCalls.url + accion);
+
+        yield return wr.SendWebRequest();
+
+        if (wr.isNetworkError || wr.isHttpError)
+        {
+            Debug.Log("ERROR: " + wr.error);
+        }
+        else
+        {
+            string json = wr.downloadHandler.text;
+            SistemaPlanetario nebulosa = JsonUtility.FromJson<SistemaPlanetario>(json);
+            TextMeshProUGUI nombre = infoSistema.transform.Find("Nombre").GetComponent<TextMeshProUGUI>();
+            nombre.text = nebulosa.nombre;
+        }
+    }
 }

@@ -18,6 +18,7 @@ TagManager:
   - LoadingBar
   - Indicadores
   - Controlador
+  - Nave
   layers:
   - Default
   - TransparentFX

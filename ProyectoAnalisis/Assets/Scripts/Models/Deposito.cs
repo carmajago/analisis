@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Deposito:Nodo  {
+public class Deposito  {
 
-
+    public int planetaFK;
 }

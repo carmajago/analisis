@@ -18,10 +18,9 @@ public class EditorNebulosaController : MonoBehaviour {
     void Start () {
          StartCoroutine(desctivarCanvas());
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
-        ns.setNebulosa(NebulosaService.GetNebulosa(ns.nebulosa.id));
         nombreNebulosa.text = ns.nebulosa.nombre;
         Peligrosa.enabled = ns.nebulosa.danger;
-        ns.cargar();
+        ns.cargar(false);
     }
 	IEnumerator desctivarCanvas()
     {

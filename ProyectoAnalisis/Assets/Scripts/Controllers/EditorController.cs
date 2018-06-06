@@ -13,7 +13,7 @@ public class EditorController : MonoBehaviour
 
     public GameObject prefabNebulosa;
     public LayerMask layerDelete; //esta capa debe estar configurada en UI
-
+    public Toggle danger;
 
     private bool eliminar=false; // esta variable inicia en false por que el toggle también comienza en false es importante no cambiar valor por defecto del toogleEliminar
 
@@ -66,8 +66,12 @@ public class EditorController : MonoBehaviour
         }
 
         NebulosaPrefab nebulosaP = newNebulosa.GetComponent<NebulosaPrefab>();
+        nebulosaP.escena = "EditorNebulosa";
+        nebulosaP.nebulosa.danger = danger.isOn;
+        nebulosaP.cambiarAPeligrosa();
         nebulosaP.actualizarDatos();
         nebulosaP.nebulosa = NebulosaService.PostNebulosa(nebulosaP.nebulosa);
+        
         nebulosaP.refrescarInfo();
     }
     #endregion CREATE

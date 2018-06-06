@@ -6,9 +6,8 @@ public class CamaraNave : MonoBehaviour {
 
 
    public  Vector3 offset;
-    public float distancia;
-    public float distanciaY;
-    public float alturaCamara;
+   
+  
 
 
     // Update is called once per frame
@@ -19,4 +18,7 @@ public class CamaraNave : MonoBehaviour {
 
         
     }
+    
+
+   
 }

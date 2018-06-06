@@ -4,17 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
-public class NebulosaPrefab : MonoBehaviour {
+public class NebulosaPrefab : MonoBehaviour
+{
 
     public Nebulosa nebulosa;
-    public string escena;
+    public string escena = "EditorNebulosa";
 
     private GameObject canvasNebulosa;
     private GameObject infoNebulosa;
     private bool activo = false;
     private Transform tr;
-    void Start() {
+    void Start()
+    {
         tr = GetComponent<Transform>();
         infoNebulosa = transform.Find("InfoNebulosa").gameObject;
         infoNebulosa.SetActive(activo);
@@ -24,20 +27,21 @@ public class NebulosaPrefab : MonoBehaviour {
         btn.onClick.AddListener(abrirInfo);
         refrescarInfo();
 
-        if (nebulosa.danger)
-        {
-            cambiarAPeligrosa();
-        }
+        
+            
+        
     }
 
-    void cambiarAPeligrosa()
+    public void cambiarAPeligrosa()
+    {
+    if (nebulosa.danger)
     {
         Image imagen = canvasNebulosa.transform.Find("Button").GetComponent<Image>();
         Image imagen2 = canvasNebulosa.transform.Find("Circle").GetComponent<Image>();
 
         imagen.color = Color.red;
         imagen2.color = Color.red;
-
+    }
 
     }
     /// <summary>
@@ -51,7 +55,7 @@ public class NebulosaPrefab : MonoBehaviour {
             nebulosa.x = tr.position.x;
             nebulosa.y = tr.position.y;
             nebulosa.z = tr.position.z;
-           
+
             NebulosaService.PutNebulosa(nebulosa);
         }
     }
@@ -73,11 +77,13 @@ public class NebulosaPrefab : MonoBehaviour {
         if (nebulosa.ViaLacteaFK == 0)
         {
             CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
-            nebulosa.ViaLacteaFK =cargar.viaLactea.id;
+            nebulosa.ViaLacteaFK = cargar.viaLactea.id;
         }
+
     }
-    public void abrirInfo () {
-        
+    public void abrirInfo()
+    {
+
         activo = !activo;
         infoNebulosa.SetActive(activo);
     }
@@ -90,8 +96,13 @@ public class NebulosaPrefab : MonoBehaviour {
 
         button.onClick.AddListener(irANebulosa);
 
+        if (nebulosa.nombre == "" && nebulosa.id != 0)
+        {
+            StartCoroutine(getNebulosa());
+        }
+
         nombre.text = nebulosa.nombre;
-      
+
 
     }
 
@@ -100,24 +111,45 @@ public class NebulosaPrefab : MonoBehaviour {
     {
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
         ns.nebulosa = nebulosa;
-        StartCoroutine(animacionIrANebulosa(new Vector3(nebulosa.x,nebulosa.y,nebulosa.z)));
+        StartCoroutine(animacionIrANebulosa(new Vector3(nebulosa.x, nebulosa.y, nebulosa.z)));
 
     }
     IEnumerator animacionIrANebulosa(Vector3 pos)
     {
         GameObject canvas = GameObject.FindGameObjectWithTag("CameraAnimation");
         canvas.GetComponentInChildren<Canvas>().enabled = true;
-        Animator animator =canvas.GetComponent<Animator>();
+        Animator animator = canvas.GetComponent<Animator>();
         animator.SetTrigger("Exit");
-        Transform trCamera =Camera.main.GetComponent<Transform>();
-        
-        
+        Transform trCamera = Camera.main.GetComponent<Transform>();
+
+
         while ((pos - trCamera.position).magnitude > 10)
         {
             trCamera.position = Vector3.Lerp(trCamera.position, pos, 3f * Time.deltaTime);
             yield return new WaitForSeconds(0.016f);
         }
         SceneManager.LoadScene(escena, LoadSceneMode.Single);
-       // SceneManager.LoadSceneAsync("EditorNebulosa", LoadSceneMode.Additive);
+        // SceneManager.LoadSceneAsync("EditorNebulosa", LoadSceneMode.Additive);
+    }
+
+
+    IEnumerator getNebulosa()
+    {
+        string accion = "Api/nebulosas/" + nebulosa.id;
+        UnityWebRequest wr = UnityWebRequest.Get(ApiCalls.url + accion);
+
+        yield return wr.SendWebRequest();
+
+        if (wr.isNetworkError || wr.isHttpError)
+        {
+            Debug.Log("ERROR: " + wr.error);
+        }
+        else
+        {
+            string json = wr.downloadHandler.text;
+            Nebulosa nebulosa = JsonUtility.FromJson<Nebulosa>(json);
+            TextMeshProUGUI nombre = infoNebulosa.transform.Find("Nombre").GetComponent<TextMeshProUGUI>();
+            nombre.text = nebulosa.nombre;
+        }
     }
 }

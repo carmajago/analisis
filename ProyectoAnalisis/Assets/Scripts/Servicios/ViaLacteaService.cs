@@ -20,7 +20,7 @@ public static class ViaLacteaService {
         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
         {
             string json = JsonUtility.ToJson(viaLactea);
-            json = json.Replace("\"id\":0,", "");
+            json = json.Replace(",\"teletransportador\":{\"planetaFK\":0},\"deposito\":{\"planetaFK\":0}", "");
             json = json.Replace(",\"ViaLacteaFK\":0", "");
 
             streamWriter.Write(json);

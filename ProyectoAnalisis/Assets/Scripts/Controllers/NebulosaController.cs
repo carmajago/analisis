@@ -10,13 +10,22 @@ public class NebulosaController : MonoBehaviour {
     public TextMeshProUGUI nombreNebulosa;
     public TextMeshProUGUI Peligrosa;
 
+    private GameObject nave;
+
+
     void Start () {
         StartCoroutine(desctivarCanvas());
+        
+        nave = GameObject.FindGameObjectWithTag("Nave");
+        nave.GetComponent<NaveEspacial>().enabled = true;
+        nave.GetComponent<CamaraNave>().enabled = true;
+
+
         NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
-        ns.setNebulosa(NebulosaService.GetNebulosa(ns.nebulosa.id));
         nombreNebulosa.text = ns.nebulosa.nombre;
         Peligrosa.enabled = ns.nebulosa.danger;
-        ns.cargar();
+        ns.cargar(true);
+
     }
 
     IEnumerator desctivarCanvas()

@@ -58,7 +58,7 @@ public class CrearLineasNodo : MonoBehaviour
         }
         GameObject destino = buscarObjeto();
 
-        if (destino == null)
+        if (destino == null || destino == origen)
         {
             Destroy(lineaObject);
         }
@@ -70,6 +70,8 @@ public class CrearLineasNodo : MonoBehaviour
             arista.aristaNodo.destinoFK = buscarIdNodo(destino);
             arista.aristaNodo.sistemaFK =buscarIdSistema(destino);
             ApiCalls.PostAristaNodo(arista.aristaNodo);
+
+            GameObject.FindGameObjectWithTag("Sistema").GetComponent<SistemaSingleton>().prebabSistema.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.grafo.Add(arista.aristaNodo);
         }
 
 
@@ -98,20 +100,12 @@ public class CrearLineasNodo : MonoBehaviour
     public int buscarIdNodo(GameObject nodo)
     {
         PlanetaPrebab pp = nodo.GetComponent<PlanetaPrebab>();
-        DepositoPrefab dp = nodo.GetComponent<DepositoPrefab>();
-        TeletransportadorPrefab tp = nodo.GetComponent<TeletransportadorPrefab>();
+        
 
-        if (pp != null)
-        {
+       
             return pp.planeta.id;
-        }
-        else if (dp)
-        {
-            return dp.deposito.id;
-        }
-
-
-        return tp.teletransportador.id;
+        
+       
 
     }
 
@@ -121,17 +115,10 @@ public class CrearLineasNodo : MonoBehaviour
         DepositoPrefab dp = nodo.GetComponent<DepositoPrefab>();
         TeletransportadorPrefab tp = nodo.GetComponent<TeletransportadorPrefab>();
 
-        if (pp != null)
-        {
+       
             return pp.planeta.sistemaPlanetarioFK;
-        }
-        else if (dp)
-        {
-            return dp.deposito.sistemaPlanetarioFK;
-        }
-
-
-        return tp.teletransportador.sistemaPlanetarioFK;
+        
+       
 
     }
 }

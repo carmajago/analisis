@@ -54,7 +54,7 @@ public class CrearLineasSistemas : MonoBehaviour {
         }
         GameObject destino = buscarObjeto();
 
-        if (destino == null)
+        if (destino == null || destino==origen)
         {
             Destroy(lineaObject);
         }
@@ -66,6 +66,8 @@ public class CrearLineasSistemas : MonoBehaviour {
             arista.aristaSistema.destinoFK = destino.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.id;
             arista.aristaSistema.nebulosaFK = destino.GetComponent<SistemaplanetarioPrefab>().sistemaPlanetario.nebulosaFK;
             ApiCalls.PostAristaSistema(arista.aristaSistema);
+
+            GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>().nebulosa.grafo.Add(arista.aristaSistema);
         }
        
 

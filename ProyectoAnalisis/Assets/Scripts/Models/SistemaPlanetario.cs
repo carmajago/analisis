@@ -23,8 +23,8 @@ public class SistemaPlanetario  {
     public float elementoZeroTotal;
 
     public List<AristaNodo> grafo;
-    [NonSerialized()]
-    public List<Nodo> nodos;
+   
+    public List<Planeta> nodos;
 
     public int nebulosaFK;
 

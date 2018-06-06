@@ -13,28 +13,10 @@ public class DepositoPrefab : MonoBehaviour {
         idt.deposito= this.gameObject;
     }
 
-    void LateUpdate()
-    {
-        Vector3 posicion = new Vector3(deposito.x, deposito.y, deposito.z);
-        if (tr.localPosition != posicion && Input.GetMouseButtonUp(0))
-        {
-            deposito.x = tr.localPosition.x;
-            deposito.y = tr.localPosition.y;
-            deposito.z = tr.localPosition.z;
-
-            DepositoService.PutDeposito(deposito);
-        }
-    }
-
+   
     public void setDeposito(Deposito _deposito)
     {
         deposito = _deposito;
     }
-    public void actualizarDatos(int id)
-    {
-        deposito.x = transform.localPosition.x;
-        deposito.y = transform.localPosition.y;
-        deposito.z = transform.localPosition.z;
-        deposito.sistemaPlanetarioFK = id;
-    }
+   
 }
