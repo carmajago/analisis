@@ -136,7 +136,9 @@ public class EditorSistemaController : MonoBehaviour {
             deposito.planetaFK = sistema.id;
             DepositoService.PostDeposito(deposito);
             newSistema.transform.parent = hit.transform;
-            newSistema.GetComponent<DepositoPrefab>().deposito = deposito;
+            DepositoPrefab dp = newSistema.GetComponent<DepositoPrefab>();
+            dp.deposito = deposito;
+            dp.planeta = hit.transform.gameObject;
             sistema.deposito = deposito;
         }
         else
@@ -178,8 +180,11 @@ public class EditorSistemaController : MonoBehaviour {
             tele.planetaFK = sistema.id;
             newSistema.transform.parent = hit.transform;
             TeletransportadorService.PostTeletransportador(tele);
-            newSistema.GetComponent<TeletransportadorPrefab>().teletransportador = tele;
+            TeletransportadorPrefab tp = newSistema.GetComponent<TeletransportadorPrefab>();
+            tp.teletransportador = tele;
+            tp.planeta = hit.transform.gameObject;
             sistema.teletransportador =tele;
+
         }
         else
         {

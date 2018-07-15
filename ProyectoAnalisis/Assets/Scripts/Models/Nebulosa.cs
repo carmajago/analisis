@@ -24,4 +24,7 @@ public class Nebulosa  {
     public List<SistemaPlanetario> sistemasPlanetarios;
     public List<AristaSistema> grafo;
     public int ViaLacteaFK;
+
+    [NonSerialized]
+    public RecorridoSistemas recorrido;
 }

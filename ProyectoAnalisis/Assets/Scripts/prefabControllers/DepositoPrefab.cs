@@ -6,6 +6,7 @@ public class DepositoPrefab : MonoBehaviour {
 
     public Deposito deposito;
     private Transform tr;
+    public GameObject planeta;
 
 	void Start () {
         tr = GetComponent<Transform>();

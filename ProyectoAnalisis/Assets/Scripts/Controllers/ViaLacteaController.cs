@@ -18,6 +18,9 @@ public class ViaLacteaController : MonoBehaviour {
 
     public void irAHome()
     {
+        Destroy(CanvasNaveEspacial.canvasNaveEspacial.gameObject);
+        Destroy(NaveEspacial.naveEspacial.gameObject);
+
         SceneManager.LoadScene("Home", LoadSceneMode.Single);
     }
 

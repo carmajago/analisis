@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Esta clase se encarga de indicar si existe deposito y teletransportador y evita que se cree mas de un deposito y en teletransportador
+/// Esta clase se encarga de indicar si existe deposito y teletransportador y evita que se cree mas de un deposito y un teletransportador
 /// </summary>
 public class IndicadoresDepositoTele : MonoBehaviour {
 

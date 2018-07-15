@@ -7,6 +7,6 @@ using UnityEngine;
 public class Teletransportador  {
     public int planetaFK;
 
-  //  public Planeta planeta;
+   
     
 }

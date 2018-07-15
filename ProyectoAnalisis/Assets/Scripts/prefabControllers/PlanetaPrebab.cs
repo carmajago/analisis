@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class PlanetaPrebab : MonoBehaviour {
@@ -148,5 +149,32 @@ public class PlanetaPrebab : MonoBehaviour {
         platino.text = "" + planeta.platino;
         paladio.text = "" + planeta.paladio;
         elementoZero.text = "" + planeta.elementoZero;
+
+        if (planeta.nombre == "" && planeta.id != 0)
+        {
+            StartCoroutine(getPlaneta());
+        }
+
+    }
+
+    IEnumerator getPlaneta()
+    {
+        string accion = "Api/planetas/" + planeta.id;
+        UnityWebRequest wr = UnityWebRequest.Get(ApiCalls.url + accion);
+
+        yield return wr.SendWebRequest();
+
+        if (wr.isNetworkError || wr.isHttpError)
+        {
+            Debug.Log("ERROR: " + wr.error);
+        }
+        else
+        {
+            string json = wr.downloadHandler.text;
+            Planeta planet = JsonUtility.FromJson<Planeta>(json);
+            TextMeshProUGUI nombre = infoPlaneta.transform.Find("Nombre").GetComponent<TextMeshProUGUI>();
+            nombre.text = planet.nombre;
+            planeta.nombre = planet.nombre;
+        }
     }
 }

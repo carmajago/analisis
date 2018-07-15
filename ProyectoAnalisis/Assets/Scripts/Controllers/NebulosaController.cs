@@ -25,8 +25,11 @@ public class NebulosaController : MonoBehaviour {
         nombreNebulosa.text = ns.nebulosa.nombre;
         Peligrosa.enabled = ns.nebulosa.danger;
         ns.cargar(true);
-
+      
     }
+
+  
+
 
     IEnumerator desctivarCanvas()
     {

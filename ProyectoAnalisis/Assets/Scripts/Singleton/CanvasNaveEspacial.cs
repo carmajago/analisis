@@ -68,7 +68,7 @@ public class CanvasNaveEspacial : MonoBehaviour {
         combustibleSlider.value =1- ((nave.combustible) / Constantes.LIMITE_COMBUSTIBLE);
         combustibleText.text = "" + nave.combustible;
 
-        sondas.text = "Sondas: " + nave.sondas.Count;
+        sondas.text = "Sondas: " + nave.sondas;
 
         iridioFill.fillAmount = nave.iridio / Constantes.LIMITE_IRIDIO;
         paladioFill.fillAmount = nave.paladio / Constantes.LIMITE_PALADIO;

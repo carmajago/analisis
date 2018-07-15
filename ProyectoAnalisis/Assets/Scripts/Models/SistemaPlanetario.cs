@@ -12,10 +12,7 @@ public class SistemaPlanetario  {
     public float x;
     public float y;
     public float z;
-
-  
     public float iridioTotal;
-    
     public float platinoTotal;
     
     public float paladioTotal;
@@ -28,6 +25,18 @@ public class SistemaPlanetario  {
 
     public int nebulosaFK;
 
-   
+    [NonSerialized]
+    public RecorridoPlanetas recorrido;
+
+    [NonSerialized]
+    public bool tieneDeposito;
+
+    [NonSerialized]
+    public bool tieneTeletransportador;
+
+    [NonSerialized]
+    public bool visitado=false;
+
+
 
 }

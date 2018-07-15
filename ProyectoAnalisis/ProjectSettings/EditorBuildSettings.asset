@@ -9,13 +9,13 @@ EditorBuildSettings:
     path: Assets/Escenas/Home.unity
     guid: ff0ac148ed1b00c42bf77333981cdfba
   - enabled: 1
-    path: Assets/Escenas/CrearOEditar.unity
+    path: Assets/Escenas/Editor/CrearOEditar.unity
     guid: 61023fbbd7886b34a92e71e832304084
   - enabled: 1
-    path: Assets/Escenas/Editor.unity
+    path: Assets/Escenas/Editor/Editor.unity
     guid: 26410ca1de459a34786003f46de5a0d8
   - enabled: 1
-    path: Assets/Escenas/EditorNebulosa.unity
+    path: Assets/Escenas/Editor/EditorNebulosa.unity
     guid: 7e3223db42091b04180e1d43634cc164
   - enabled: 1
     path: Assets/Escenas/Simulador/ViaLactea.unity

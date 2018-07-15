@@ -26,6 +26,10 @@ public class Planeta  {
     public double iridio;
     public double platino;
     public double paladio;
-    public double elementoZero;    
+    public double elementoZero;
 
+    [NonSerialized]
+    public bool visitado=false;
+
+   
 }

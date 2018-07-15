@@ -60,4 +60,26 @@ public static class SistemaPlanetarioService  {
         }
 
     }
+
+    public static SistemaPlanetario GetSistemaPlanetario(int id)
+    {
+        //HttpClient client = new HttpClient();
+        //string result = await client.PostAsync(apiCalls.url+"api/vialactea",);
+        //Debug.Log(result);
+        SistemaPlanetario nebulosa;
+
+        var httpWebRequest = (HttpWebRequest)WebRequest.Create(ApiCalls.url + "/api/sistemaPlanetario/" + id);
+        httpWebRequest.ContentType = "application/json";
+        httpWebRequest.Method = "GET";
+
+        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+
+
+            nebulosa = JsonUtility.FromJson<SistemaPlanetario>(result);
+        }
+        return nebulosa;
+    }
 }

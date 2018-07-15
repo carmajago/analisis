@@ -14,7 +14,8 @@ public static class CameraAnimations  {
         canvasAnim.GetComponent<Canvas>().enabled = true;
         canvasAnim.GetComponent<Animator>().SetTrigger("exit");
         Camera.main.GetComponent<Animator>().SetTrigger("exit");
-        yield return new WaitForSeconds(4f);
+          yield return new WaitForSeconds(2f);
+        yield return null;
         SceneManager.LoadScene(escena, LoadSceneMode.Single);
 
     }

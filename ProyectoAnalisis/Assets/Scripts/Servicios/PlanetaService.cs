@@ -9,6 +9,9 @@ public static class PlanetaService  {
     public static Planeta PostPlaneta(Planeta sistema)
     {
 
+        sistema.teletransportador = null;
+        sistema.deposito = null;
+
         var httpWebRequest = (HttpWebRequest)WebRequest.Create(ApiCalls.url + "/api/planetas");
         httpWebRequest.ContentType = "application/json";
         httpWebRequest.Method = "POST";

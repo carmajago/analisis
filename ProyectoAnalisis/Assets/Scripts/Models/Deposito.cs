@@ -7,4 +7,5 @@ using UnityEngine;
 public class Deposito  {
 
     public int planetaFK;
+    
 }

@@ -6,6 +6,7 @@ public class TeletransportadorPrefab : MonoBehaviour {
 
     public Teletransportador teletransportador;
     private Transform tr;
+    public GameObject planeta;
 
     void Start()
     {

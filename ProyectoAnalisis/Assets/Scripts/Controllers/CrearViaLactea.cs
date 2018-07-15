@@ -193,9 +193,9 @@ public class CrearViaLactea : MonoBehaviour
     {
         SistemaPlanetario sistema = new SistemaPlanetario();
         sistema.nombre = "";
-        sistema.x = Random.Range(-1000, 1000);
+        sistema.x = Random.Range(-800, 800);
         sistema.y = 0;
-        sistema.z = Random.Range(-1200, 350);
+        sistema.z = Random.Range(-800, 800);
         sistema.nodos = new List<Planeta>();
         return sistema;
     }
