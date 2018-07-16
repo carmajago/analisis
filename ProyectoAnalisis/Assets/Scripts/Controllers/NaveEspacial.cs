@@ -32,6 +32,8 @@ public class NaveEspacial : MonoBehaviour
     public static NaveEspacial naveEspacial;
     public LineRenderer lineaPaso;
 
+    #region planetaTemporal
+
     [HideInInspector]
     public float iridioPlanetaTemp;
     [HideInInspector]
@@ -44,8 +46,29 @@ public class NaveEspacial : MonoBehaviour
     public string nombrePlanetaTemp;
     [HideInInspector]
     public bool inPlaneta;
+    #endregion planetaTemporal
 
     bool escapar = false;
+
+    #region mejoras
+    [HideInInspector]
+    public int canonTanix;
+    [HideInInspector]
+    public int escudoMultinucleo;
+    [HideInInspector]
+    public int blindaje;
+    [HideInInspector]
+    public int propulsorOnix;
+    [HideInInspector]
+    public int canonPlanma;
+    [HideInInspector]
+    public int capacidadDeposito;
+    [HideInInspector]
+    public int vidaInfinity;
+    [HideInInspector]
+    public int capacidaCombustible;
+
+    #endregion mejoras
 
     private void Awake()
     {

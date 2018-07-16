@@ -36,8 +36,23 @@ public class CanvasNaveEspacial : MonoBehaviour
     private TextMeshProUGUI ElementoZeroPlaneta;
     private TextMeshProUGUI nombrePlaneta;
 
+    private Button btnMejoraEM;
+    private Button btnMejoraBL;
+    private Button btnMejoraPO;
+    private Button btnMejoraCP;
+    private Button btnMejoraCD;
+    private Button btnMejoraVI;
+    private Button btnMejoraCC;
+    private Button btnMejoraCT;
 
-
+    private TextMeshProUGUI EM;
+    private TextMeshProUGUI BL;
+    private TextMeshProUGUI PO;
+    private TextMeshProUGUI CP;
+    private TextMeshProUGUI CD;
+    private TextMeshProUGUI VI;
+    private TextMeshProUGUI CC;
+    private TextMeshProUGUI CT;
 
 
     public NaveEspacial nave;
@@ -92,6 +107,25 @@ public class CanvasNaveEspacial : MonoBehaviour
         nebulosa = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
          botonAtacar.GetComponent<Button>().onClick.AddListener(AbrirCanvas);
         botonAtacar.SetActive(nave.inPlaneta);
+
+
+        btnMejoraEM= GameObject.Find("Mejoras/EM").GetComponent<Button>();
+        btnMejoraBL= GameObject.Find("Mejoras/BL").GetComponent<Button>();
+        btnMejoraPO= GameObject.Find("Mejoras/PO").GetComponent<Button>();
+        btnMejoraCP= GameObject.Find("Mejoras/CP").GetComponent<Button>();
+        btnMejoraCD= GameObject.Find("Mejoras/CD").GetComponent<Button>();
+        btnMejoraVI= GameObject.Find("Mejoras/VI").GetComponent<Button>();
+        btnMejoraCC= GameObject.Find("Mejoras/CC").GetComponent<Button>();
+        btnMejoraCT= GameObject.Find("Mejoras/CT").GetComponent<Button>();
+
+        EM = btnMejoraEM.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        BL = btnMejoraBL.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        PO = btnMejoraPO.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        CP = btnMejoraCP.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        CD = btnMejoraCD.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        VI = btnMejoraVI.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        CC = btnMejoraCC.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        CT = btnMejoraCT.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
     }
     private void LateUpdate()
     {
@@ -142,6 +176,48 @@ public class CanvasNaveEspacial : MonoBehaviour
         dano.text ="DANO: "+nave.danoBase.ToString("0");
 
 
+        validarMejoras();
+    }
+
+    public void validarMejoras()
+    {
+        EM.text = "" + nave.escudoMultinucleo;
+        BL.text = "" + nave.blindaje;
+        PO.text = "" + nave.propulsorOnix;
+        CP.text = "" + nave.canonPlanma;
+        CD.text = "" + nave.capacidadDeposito;
+        VI.text = "" + nave.vidaInfinity;
+        CC.text = "" + nave.capacidaCombustible;
+        CT.text = "" + nave.canonTanix;
+
+        if (nave.escudoMultinucleo >= 1)
+        {
+            btnMejoraEM.interactable = true;
+        }
+        if (nave.blindaje >= 1)
+        {
+            btnMejoraBL.interactable = true;
+        }
+        if (nave.propulsorOnix >= 1)
+        {
+            btnMejoraPO.interactable = true;
+        }
+        if (nave.canonPlanma >= 1)
+        {
+            btnMejoraCP.interactable = true;
+        }
+        if (nave.capacidadDeposito >= 1)
+        {
+            btnMejoraCD.interactable = true;
+        }
+        if (nave.vidaInfinity >= 1)
+        {
+            btnMejoraVI.interactable = true;
+        }
+        if (nave.canonTanix >= 1)
+        {
+            btnMejoraCT.interactable = true;
+        }
 
     }
 
