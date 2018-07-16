@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class NebulosaSingleton : MonoBehaviour {
+public class NebulosaSingleton : MonoBehaviour
+{
     public static NebulosaSingleton nebulosaSingleton;
 
     public Nebulosa nebulosa;
@@ -18,19 +19,21 @@ public class NebulosaSingleton : MonoBehaviour {
     public GameObject depositoPrefab;
     public GameObject teletrasnportadorPrefab;
     public List<GameObject> planetas;
-    
 
-    void Awake () {
+
+    void Awake()
+    {
         if (nebulosaSingleton == null)
         {
             nebulosaSingleton = this;
             DontDestroyOnLoad(gameObject);
-        }else if (nebulosaSingleton != this)
+        }
+        else if (nebulosaSingleton != this)
         {
             Destroy(gameObject);
         }
-        
-	}
+
+    }
     /// <summary>
     /// Cuando se ingresa una nebulosa va al servidor y se trae la información detallada de esa nebulosa
     /// </summary>
@@ -42,57 +45,54 @@ public class NebulosaSingleton : MonoBehaviour {
 
 
     /// <summary>
-   
+
     /// Este metodo se encarga de cargar todo el contenido de la nebulosa en la escena:
     /// -Sistemas planetarios, planetas, teletransportadores,estaciones de combustible.
     /// </summary>
     public void cargar(bool isSimulacion)
     {
         List<GameObject> SistemaTemporal = new List<GameObject>();
-            foreach (var item in nebulosa.sistemasPlanetarios)
-            {
-            
-                Vector3 posicion = new Vector3(item.x, item.y, item.z);
-                GameObject sistemaAux= Instantiate(sistemaPlanetarioPrefab, posicion, Quaternion.identity);
-            
-                SistemaplanetarioPrefab spp= sistemaAux.GetComponent<SistemaplanetarioPrefab>();
-                spp.setSistema(item);
-                spp.isSimulacion = isSimulacion;
-                SistemaTemporal.Add(sistemaAux);
-                GameObject sistema = spp.transform.Find("sistema").gameObject;
+        foreach (var item in nebulosa.sistemasPlanetarios)
+        {
 
-                List<GameObject> nodosTemp = new List<GameObject>();
-                foreach (var planeta in item.nodos)
-                {
+            Vector3 posicion = new Vector3(item.x, item.y, item.z);
+            GameObject sistemaAux = Instantiate(sistemaPlanetarioPrefab, posicion, Quaternion.identity);
+
+            SistemaplanetarioPrefab spp = sistemaAux.GetComponent<SistemaplanetarioPrefab>();
+            spp.setSistema(item);
+            spp.isSimulacion = isSimulacion;
+            SistemaTemporal.Add(sistemaAux);
+            GameObject sistema = spp.transform.Find("sistema").gameObject;
+
+            List<GameObject> nodosTemp = new List<GameObject>();
+
+            foreach (var planeta in item.nodos)
+            {
+              
+                
+
+                Vector3 pos = new Vector3(planeta.x, planeta.y, planeta.z);
+                GameObject aux = Instantiate(planetas[int.Parse(planeta.idModelo)], sistema.transform);
+                aux.GetComponent<PlanetaPrebab>().setPlaneta(planeta);
+                aux.transform.localPosition = pos;
+
                 if (planeta.teletransportador.planetaFK != 0)
                 {
                     item.tieneTeletransportador = true;
-                }
-                if (planeta.deposito.planetaFK != 0)
-                {
-                    item.tieneDeposito = true;
-                }
-
-                Vector3 pos = new Vector3(planeta.x,planeta.y,planeta.z);
-                    GameObject aux= Instantiate(planetas[int.Parse(planeta.idModelo)],sistema.transform);
-                    aux.GetComponent<PlanetaPrebab>().setPlaneta(planeta);
-                    aux.transform.localPosition = pos;
-
-                    if (planeta.teletransportador.planetaFK!=0)
-                    {
-                       Vector3 posTele= aux.transform.position + new Vector3(4, 0, 0);
-                       GameObject tele = Instantiate(teletrasnportadorPrefab,aux.transform);
+                    Vector3 posTele = aux.transform.position + new Vector3(4, 0, 0);
+                    GameObject tele = Instantiate(teletrasnportadorPrefab, aux.transform);
                     tele.transform.position = posTele;
                     tele.transform.localScale = new Vector3(2, 2, 2);
                     TeletransportadorPrefab tp = tele.GetComponent<TeletransportadorPrefab>();
                     tp.teletransportador = planeta.teletransportador;
                     tp.planeta = aux;
-                    }
+                }
 
-                if (planeta.deposito.planetaFK!=0)
+                if (planeta.deposito.planetaFK != 0)
                 {
+                    item.tieneDeposito = true;
                     Vector3 posTele = aux.transform.position + new Vector3(-4, 0, 0);
-                    GameObject deposito = Instantiate(depositoPrefab,aux.transform);
+                    GameObject deposito = Instantiate(depositoPrefab, aux.transform);
                     deposito.transform.position = posTele;
                     deposito.transform.localScale = new Vector3(2, 2, 2);
                     DepositoPrefab dp = deposito.GetComponent<DepositoPrefab>();
@@ -102,17 +102,17 @@ public class NebulosaSingleton : MonoBehaviour {
 
 
                 nodosTemp.Add(aux);
-                }
-             
+            }
 
 
 
-                cargarAristasNodos(item.grafo, nodosTemp);
+
+            cargarAristasNodos(item.grafo, nodosTemp);
         }
         cargarAristasSistema(nebulosa.grafo, SistemaTemporal);
 
     }
-        public void cargarAristasSistema(List<AristaSistema> grafo ,List<GameObject> sistemas)
+    public void cargarAristasSistema(List<AristaSistema> grafo, List<GameObject> sistemas)
     {
         foreach (var item in grafo)
         {
@@ -173,5 +173,5 @@ public class NebulosaSingleton : MonoBehaviour {
             }
         }
     }
-    
+
 }

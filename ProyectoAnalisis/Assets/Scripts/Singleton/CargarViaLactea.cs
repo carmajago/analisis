@@ -40,6 +40,9 @@ public class CargarViaLactea : MonoBehaviour {
     /// </summary>
     public void cargar(string escena)
     {
+
+       
+
         foreach (var item in viaLactea.Nebulosas)
         { Vector3 posicion = new Vector3(item.x, item.y, item.z);
             GameObject prebabNebulosa= Instantiate(prefabNebulosa,posicion ,Quaternion.identity);

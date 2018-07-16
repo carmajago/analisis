@@ -49,7 +49,7 @@ public class RecorridoPlanetas : MonoBehaviour {
                 planetaInicial = item;
             }
             
-            if(item.teletransportador!=null || item.deposito != null)
+            if(item.teletransportador.planetaFK !=0 || item.deposito.planetaFK != 0)
             {
                 planetaInicial = item;
                 break;
@@ -89,19 +89,28 @@ public class RecorridoPlanetas : MonoBehaviour {
 
          camino.Add(inicial);
         double[] temporal = new double[4];
-        temporal[0] = costo[0] + inicial.iridio;
-        temporal[1] = costo[1] + inicial.paladio;
-        temporal[2] = costo[2] + inicial.platino;
-        temporal[3] = costo[3] + inicial.elementoZero;
+        temporal[0] = costo[0] ;
+        temporal[1] = costo[1] ;
+        temporal[2] = costo[2] ;
+        temporal[3] = costo[3] ;
+        int s = sondas;
+        if (GastoSondas.valeLaPenaGastarSondas(inicial))
+        {
 
-        ///Con
-        temporal[0] = Mathf.Clamp((float)temporal[0], 0, Constantes.IRIDIO_MAX);
-        temporal[1] = Mathf.Clamp((float)temporal[1], 0, Constantes.PALADIO_MAX);
-        temporal[2] = Mathf.Clamp((float)temporal[2], 0, Constantes.PLATINO_MIN);
-        temporal[3] = Mathf.Clamp((float)temporal[3], 0, Constantes.ELEMENTOZERO_MAX);
 
-        int s = sondas + 2;
+            temporal[0] += inicial.iridio;
+            temporal[1] +=  inicial.paladio;
+            temporal[2] +=  inicial.platino;
+            temporal[3] +=  inicial.elementoZero;
 
+            ///Con
+            temporal[0] = Mathf.Clamp((float)temporal[0], 0, Constantes.IRIDIO_MAX);
+            temporal[1] = Mathf.Clamp((float)temporal[1], 0, Constantes.PALADIO_MAX);
+            temporal[2] = Mathf.Clamp((float)temporal[2], 0, Constantes.PLATINO_MIN);
+            temporal[3] = Mathf.Clamp((float)temporal[3], 0, Constantes.ELEMENTOZERO_MAX);
+
+             s += 2;
+        }
 
         foreach (var item in adyacentes)
         {

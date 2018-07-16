@@ -32,6 +32,11 @@ public class ViaLacteaController : MonoBehaviour {
     {
         yield return new WaitForSeconds(1);
 
-        Camera.main.GetComponent<CameraController>().enabled = true;
+        CameraController cc = Camera.main.GetComponent<CameraController>();
+           if (cc != null)
+        {
+            cc.enabled = true; 
+        }
+            
     }
 }

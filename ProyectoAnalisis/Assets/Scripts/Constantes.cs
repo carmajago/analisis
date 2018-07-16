@@ -34,7 +34,9 @@ public static class Constantes  {
 
     ///Parametros de la nave
     ///
-    
+
+    public static float LIMITE_VIDA = 1200;
+
     public static float LIMITE_IRIDIO = 150000;
     public static float LIMITE_PLATINO = 150000;
     public static float LIMITE_PALADIO = 150000;
@@ -53,12 +55,13 @@ public static class Constantes  {
 
     ///Valorización de los elementos
 
-    public static float IRIDIO_VALOR = 0.1f;
-    public static float PALADIO_VALOR = 0.2f;
-    public static float PLATINO_VALOR = 0.3f;
-    public static float ELEMENTO_ZERO_VALOR = 0.4f;
+    public static float IRIDIO_VALOR = 0.25f;
+    public static float PALADIO_VALOR = 0.25f;
+    public static float PLATINO_VALOR = 0.25f;
+    public static float ELEMENTO_ZERO_VALOR = 0.25f;
 
 
+    
 
 
 

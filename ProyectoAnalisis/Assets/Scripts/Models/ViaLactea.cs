@@ -11,4 +11,7 @@ public class ViaLactea  {
 
     public int totalNebulosas;
     public List<Nebulosa> Nebulosas;
+
+    [NonSerialized]
+    public Nebulosa nebuPorDefecto;
 }

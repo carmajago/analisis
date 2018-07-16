@@ -19,6 +19,8 @@ TagManager:
   - Indicadores
   - Controlador
   - Nave
+  - Teletransportar
+  - LevelLoader
   layers:
   - Default
   - TransparentFX

@@ -111,8 +111,7 @@ public class CrearViaLactea : MonoBehaviour
         viaLactea.nombre = nombreViaLactea.text;
         viaLactea.Nebulosas = new List<Nebulosa>();
 
-
-
+        
 
 
         if (random.isOn)

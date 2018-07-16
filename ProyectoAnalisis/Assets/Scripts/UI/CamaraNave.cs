@@ -13,8 +13,7 @@ public class CamaraNave : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         
-        Vector3 posicion = transform.position + offset;
-        Camera.main.transform.position=posicion;
+        
 
         
     }

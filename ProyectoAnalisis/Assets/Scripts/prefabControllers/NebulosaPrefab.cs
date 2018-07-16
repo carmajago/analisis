@@ -96,10 +96,10 @@ public class NebulosaPrefab : MonoBehaviour
 
         button.onClick.AddListener(irANebulosa);
 
-        if (nebulosa.nombre == "" && nebulosa.id != 0)
-        {
-            StartCoroutine(getNebulosa());
-        }
+        //if (nebulosa.nombre == "" && nebulosa.id != 0)
+        //{
+        //    StartCoroutine(getNebulosa());
+        //}
 
         nombre.text = nebulosa.nombre;
 

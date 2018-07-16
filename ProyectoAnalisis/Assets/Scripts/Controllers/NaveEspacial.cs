@@ -2,26 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NaveEspacial : MonoBehaviour {
+public class NaveEspacial : MonoBehaviour
+{
 
-    public CanvasNaveEspacial canvasNave;
-    public LayerMask capaDeNavegacion;
+    [Header("Variables de simulación")]
     public float iridio;
     public float platino;
     public float paladio;
     public float elementoZero;
     public int sondas;
     public float combustible;
-    public float velocidad = 200;
+    public float vida;
+    public float danoBase;
+
+    [Header("")]
+    public Vector3 offsetSistema;
+    public Vector3 offsetPlanetas;
+
+    public float tiempoExtraccion = 5;
+    public CanvasNaveEspacial canvasNave;
+    public LayerMask capaDeNavegacion;
+    public float velocidadSistemas = 200f;
+    public float velocidadplanetas = 0.5f;
+
     public float posY = 0;
 
-    private bool isSistema;
-    private float velTemp;
+
+   
     public static NaveEspacial naveEspacial;
+    public LineRenderer lineaPaso;
 
-    public SistemaPlanetario SistemaOrigen;
-    public Planeta NodoOrigen;
-
+    [HideInInspector]
+    public float iridioPlanetaTemp;
+    [HideInInspector]
+    public float paladioPlanetaTemp;
+    [HideInInspector]
+    public float platinoPlanetaTemp;
+    [HideInInspector]
+    public float elementoZeroPlanetaTemp;
+    [HideInInspector]
+    public string nombrePlanetaTemp;
+    [HideInInspector]
+    public bool inPlaneta;
 
     private void Awake()
     {
@@ -36,12 +58,7 @@ public class NaveEspacial : MonoBehaviour {
         }
     }
 
-    private void Start()
-    {
-        velTemp = velocidad;    
-        navegacionNebulosa();
-        
-    }
+
     /// <summary>
     /// Limita el numero maximo de materiales que puede almacenar la nave
     /// </summary>
@@ -55,91 +72,230 @@ public class NaveEspacial : MonoBehaviour {
         combustible = Mathf.Clamp(combustible, 0, Constantes.LIMITE_COMBUSTIBLE);
 
     }
- 
 
-    public void sistemaDeNavegacion()
+
+    public void navegacionPlanetas()
     {
+        //velocidad = velTemp/2;
 
+        // posY = -40;
+        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
-        Vector3 posMouse;
-        Vector3 pos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(pos);
-        Plane xy = new Plane(Vector3.up, new Vector3(0, posY, 0));
-        float distance;
-        xy.Raycast(ray, out distance);
-        posMouse = ray.GetPoint(distance);
-        StopAllCoroutines();
-        StartCoroutine(moverAunpunto(posMouse));
+    }
+    public void navegacionSistema()
+    {
+        //  velocidad = velTemp;
 
-        
-        
+        // posY = 0;
+        transform.localScale = new Vector3(5, 5, 5);
     }
 
-    public IEnumerator crearRutasSistemas(List<SistemaPlanetario> grafo) 
+
+
+    public IEnumerator sistemaDeNavegacion(List<SistemaPlanetario> MejorCamino)
     {
-       
-        this.transform.position = new Vector3(grafo[0].x, grafo[0].y, grafo[0].z);
-        foreach (var item in grafo)
+
+        transform.position = new Vector3(MejorCamino[0].x, 0, MejorCamino[0].z);
+        
+        lineaPaso.SetPosition(0,new Vector3(MejorCamino[0].x,0,MejorCamino[0].z));
+        int i = 0;
+        foreach (var sistema in MejorCamino)
         {
-            
-            Vector3 target = new Vector3(item.x, item.y, item.z);
-            while ((transform.position - target).magnitude >= 0.1f)
+
+            lineaPaso.positionCount = i+1;
+
+            navegacionSistema();
+
+
+            GameObject circulo = new GameObject();
+            circulo.transform.position = new Vector3(sistema.x, 0, sistema.z);
+            circulo.transform.localScale = new Vector3(20, 20, 20);
+            GameObject sistemaTemp = new GameObject();
+            sistemaTemp.transform.parent = circulo.transform;
+            sistemaTemp.transform.localPosition = new Vector3(0, -2, 0);
+            sistemaTemp.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            Vector3 target = new Vector3(sistema.x, 0, sistema.z);
+
+
+            float combustibleTemp = ((transform.position - target).magnitude) * Constantes.GASTO_COMBUSTIBLE;
+            float combustubleRestante = combustible - ((transform.position - target).magnitude) * Constantes.GASTO_COMBUSTIBLE;
+
+            float gastoGasolina = 0;
+            int entra = 0;
+            while ((transform.position - target).magnitude != 0)
             {
-                float step = velocidad * Time.deltaTime;
+                lineaPaso.SetPosition(i, new Vector3(transform.position.x, 0,transform.position.z));
+                if (entra<=1)
+                {
+                    entra++;
+                   
+                    gastoGasolina = combustibleTemp * Constantes.GASTO_COMBUSTIBLE - (((transform.position - target).magnitude) * Constantes.GASTO_COMBUSTIBLE);
+                }
+                   combustible -=gastoGasolina;
+
+                float step = velocidadSistemas * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, target, step);
 
                 Vector3 targetDir = target - transform.position;
 
-               
+
                 Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
                 Debug.DrawRay(transform.position, newDir, Color.red);
                 // Move our position a step closer to the target.
                 transform.rotation = Quaternion.LookRotation(newDir);
+
+                Vector3 posicion = transform.position + offsetSistema;
+                Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, posicion, 0.1f);
+
                 yield return null;
 
             }
+            i++;//esta es para las lineas
+            combustible = combustubleRestante;
+
+            #region RecargarCombustible
+            ///Recarga combustible si es posible
+            RecargarCombustible rc = new RecargarCombustible();
+            double[] materiales = new double[4];
+            materiales[0] = iridio;
+            materiales[1] = paladio;
+            materiales[2] = platino;
+            materiales[3] = elementoZero;
+            Debug.Log("Esto tenía:" + iridio);
+            double rg = 0;
+            rc.recargarGasolinaYsondas(sistema, ref combustible, ref sondas, ref materiales, ref rg);
+        
+            iridio = (float)materiales[0];
+            paladio = (float)materiales[1];
+            platino = (float)materiales[2];
+            elementoZero = (float)materiales[3];
+
+            Debug.Log("Esto tengo:" + iridio);
+            #endregion RecargarCombustible
+
+
+            GameObject planetaTemp = new GameObject();
+            planetaTemp.transform.parent = sistemaTemp.transform;
+
+            if (sistema.recorrido.caminoGlobal.Count > 0)
+            {
+                planetaTemp.transform.localPosition = new Vector3(sistema.recorrido.caminoGlobal[0].x, 0, sistema.recorrido.caminoGlobal[0].z);
+                transform.position = planetaTemp.transform.position;
+            }
+            foreach (var planeta in sistema.recorrido.caminoGlobal)
+            {
+
+
+                navegacionPlanetas();
+                planetaTemp.transform.localPosition = (new Vector3(planeta.x, 0, planeta.z));
+
+                target = planetaTemp.transform.position;
+
+                Vector3 posicion = transform.position + offsetPlanetas;
+                Camera.main.transform.position = posicion;
+
+                while ((transform.position - target).magnitude >= 0.1f)
+                {
+
+
+                  
+                    float step = velocidadplanetas * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, target, step);
+
+                    Vector3 targetDir = target - transform.position;
+
+
+                    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+                    Debug.DrawRay(transform.position, newDir, Color.red);
+                    // Move our position a step closer to the target.
+                    transform.rotation = Quaternion.LookRotation(newDir);
+
+                    posicion = transform.position + offsetPlanetas;
+                    Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, posicion, 0.1f); ;
+
+                    yield return null;
+
+                }
+
+                StartCoroutine(entrarAPlaneta(planeta));
+                yield return new WaitForSeconds(tiempoExtraccion);///Tiempo de extracción
+            }
+
+
         }
+
+        GameObject.FindGameObjectWithTag("Teletransportar").GetComponent<Teletransportar>().iniciarAnimacion();
+        yield return new WaitForSeconds(2.1f);
+        LevelLoader levelLoader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+        levelLoader.loadLevel("ViaLactea");
+    }
+
+    IEnumerator entrarAPlaneta(Planeta planeta)
+    {
        
-    }
+        
+        
 
-   
+        Vector3 posicion = new Vector3(-7, 0, 0);
+        Vector3 rotacion = new Vector3(0, 90, 0);
+        Vector3 escala = new Vector3(0.1f, 0.1f, 0.1f);
 
-
-    public void navegacionSistema()
-    {
-        velocidad = velTemp/2;
-        isSistema = true;
-        posY = -40;
-        transform.localScale = new Vector3(0.25f,0.25f, 0.25f);
-        transform.position = new Vector3(transform.position.x, -40, transform.position.z);
-    }
-    public void navegacionNebulosa()
-    {
-        velocidad = velTemp;
-        isSistema = false;
-        posY = 0;
-        transform.localScale = new Vector3(5, 5, 5);
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-    }
+        transform.position += posicion;
+        transform.eulerAngles = rotacion;
+        transform.localScale -= escala;
 
 
-    IEnumerator moverAunpunto(Vector3 target)
-    {
-        while ((transform.position - target).magnitude != 0.1f)
+        Vector3 offsetExtraccion = new Vector3(5f, 19, 22);
+        Camera.main.transform.position -= offsetExtraccion;
+
+        if (sondas>=2 && GastoSondas.valeLaPenaGastarSondas(planeta))
         {
-            float step = velocidad * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target, step);
 
-            Vector3 targetDir = target - transform.position;
+            sondas -= 2;
+            double iridioTemp = planeta.iridio / tiempoExtraccion;
+            double paladioTemp = planeta.paladio / tiempoExtraccion;
+            double platinoTemp = planeta.platino / tiempoExtraccion;
+            double elementoZeroTemp = planeta.elementoZero / tiempoExtraccion;
 
 
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-            Debug.DrawRay(transform.position, newDir, Color.red);
-            // Move our position a step closer to the target.
-            transform.rotation = Quaternion.LookRotation(newDir);
-            yield return null;
+            inPlaneta = true;
+            int contador = 0;
+            nombrePlanetaTemp = planeta.nombre;
+            while (contador < tiempoExtraccion)
+            {
+                contador++;
+                iridio += (float)iridioTemp;
+                paladio += (float)paladioTemp;
+                platino += (float)platinoTemp;
+                elementoZero += (float)elementoZeroTemp;
+
+                planeta.iridio -= iridioTemp;
+                planeta.paladio -= paladioTemp;
+                planeta.platino -= platinoTemp;
+                planeta.elementoZero -= elementoZeroTemp;
+
+                iridioPlanetaTemp = (float)planeta.iridio;
+                paladioPlanetaTemp = (float)planeta.paladio;
+                platinoPlanetaTemp = (float)planeta.platino;
+                elementoZeroPlanetaTemp = (float)planeta.elementoZero;
+
+                iridioPlanetaTemp = Mathf.Clamp(iridioPlanetaTemp, 0, Mathf.Infinity);
+                platinoPlanetaTemp = Mathf.Clamp(platinoPlanetaTemp, 0, Mathf.Infinity);
+                paladioPlanetaTemp = Mathf.Clamp(paladioPlanetaTemp, 0, Mathf.Infinity);
+                elementoZeroPlanetaTemp = Mathf.Clamp(elementoZeroPlanetaTemp, 0, Mathf.Infinity);
+
+                yield return new WaitForSeconds(1f);
+            }
         }
-       
+
+        inPlaneta = false;
+        transform.position -= posicion;
+        transform.eulerAngles = Vector3.zero;
+        transform.localScale += escala;
+
+      
+        Camera.main.transform.position += offsetExtraccion;
     }
 
 }

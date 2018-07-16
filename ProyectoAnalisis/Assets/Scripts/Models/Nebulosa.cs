@@ -27,4 +27,7 @@ public class Nebulosa  {
 
     [NonSerialized]
     public RecorridoSistemas recorrido;
+
+    [NonSerialized]
+    public bool visitado;
 }

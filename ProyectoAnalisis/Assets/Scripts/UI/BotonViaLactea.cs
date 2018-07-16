@@ -22,6 +22,7 @@ public class BotonViaLactea : MonoBehaviour {
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
         cargar.setViaLactea(viaLactea);
         StartCoroutine(animacionSalir());
+       
     }
 
     IEnumerator animacionSalir()
@@ -31,6 +32,12 @@ public class BotonViaLactea : MonoBehaviour {
         yield return new WaitForSeconds(0.6f);
      
         StartCoroutine(CameraAnimations.animacionSalirMenuCrear(escena));
+        yield return new WaitForSeconds(2f);
+
+        LevelLoader LevelL= GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+
+        LevelL.loadLevel(escena);
+       // SceneManager.LoadScene(escena, LoadSceneMode.Single);
 
     }
 

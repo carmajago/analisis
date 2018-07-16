@@ -38,23 +38,10 @@ public class RecorridoSistemas : MonoBehaviour {
         materiales[3] = nave.elementoZero;
         if (nodoInicial != null)
         {
-           
+
 
             buscarCamino(nodoInicial, 0, nebulosa.grafo, nave.combustible, camino, 0f, nave.sondas, materiales);
         }
-
-           
-
-        foreach (var item in caminoGlobal)
-        {
-            Debug.Log(item.nombre + " - "+caminoGlobal.Count);
-        }
-        Debug.Log(gasolinaGlobal + "Gasolina");
-        Debug.Log(relacionGananciaGlobal + "Relacion Ganancia");
-       
-
-
-
     }
 
     /// <summary>
@@ -69,17 +56,21 @@ public class RecorridoSistemas : MonoBehaviour {
     private void buscarCamino(SistemaPlanetario inicio,double relacionGanancia, List<AristaSistema> grafo,float gasolina,List<SistemaPlanetario> camino,float distancia,int sondas,double[] materiales){
         inicio.visitado = true;
 
-
-        recargarGasolinaYsondas(inicio,ref gasolina,ref sondas,ref materiales,ref relacionGanancia);
-        camino.Add(inicio);
+        RecargarCombustible rc = new RecargarCombustible();
 
         List<Planeta> planetasTemp = new List<Planeta>();
-        planetasTemp= clonarPlanetas(inicio.nodos);
+        planetasTemp = clonarPlanetas(inicio.nodos);
         double[] materialesTemp = clonarMateriales(materiales);
+
+        double rg = relacionGanancia;
+        rc.recargarGasolinaYsondas(inicio,ref gasolina,ref sondas,ref materiales,ref rg);
+        camino.Add(inicio);
+
+       
 
 
         //int sondasTemp = inicio.recorrido.sondasGlobal;
-        double rg = calcularRelacionGanancia(inicio,relacionGanancia,distancia,ref sondas,ref materiales);
+         rg = calcularRelacionGanancia(inicio,rg,distancia,ref sondas,ref materiales);
         
         foreach (var item in buscarAdyacentes(inicio,grafo))
         {
@@ -103,7 +94,7 @@ public class RecorridoSistemas : MonoBehaviour {
         
         buscarOrigen(inicioAux,rg,grafoDuplicado,gasolina,sondas,0,camino,materiales);
         devolverMateriales(inicio.nodos, planetasTemp,ref materiales);
-        devolverMaterialesNave(ref materiales,materialesTemp);
+      devolverMaterialesNave(ref materiales,materialesTemp);
 
     }
     private double[] clonarMateriales(double[] materiales)
@@ -174,118 +165,6 @@ public class RecorridoSistemas : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// La nave recarga gasolina y compra sondas
-    /// </summary>
-    /// <param name="inicio"></param>
-    public void recargarGasolinaYsondas(SistemaPlanetario inicio,ref float gasolina ,ref int sondas,ref double[] materiales,ref double rg)
-    {
-
-        if (inicio.tieneDeposito)
-        {
-            float gasolinaPorcentaje = gasolina / Constantes.LIMITE_COMBUSTIBLE;
-            float sondasPorcentaje = sondas / Constantes.CAPACIDAD_SONDAS;
-
-
-            if (gasolinaPorcentaje < sondasPorcentaje)
-            {
-                while ( ((gasolinaPorcentaje < sondasPorcentaje) && puedeComprarCombustible(materiales)) && gasolinaPorcentaje*100<99)
-                {
-                   
-                        gasolina += comprarCombustible(ref materiales, ref rg);
-
-                     gasolinaPorcentaje = gasolina / Constantes.LIMITE_COMBUSTIBLE;
-                }
-            }
-            if (sondasPorcentaje < gasolinaPorcentaje)
-            {
-                while (((sondasPorcentaje < gasolinaPorcentaje) && puedeComprarSondas(materiales)) && sondasPorcentaje * 100 < 99)
-                {
-
-                    sondas += comprarSondas(ref materiales,ref rg);
-                   
-                    sondasPorcentaje = sondas / Constantes.CAPACIDAD_SONDAS;
-                }
-            }
-            while ((puedeComprarCombustible(materiales) && gasolinaPorcentaje * 100 < 99) || (puedeComprarSondas(materiales) && sondasPorcentaje * 100 < 99) )
-            {
-                if (puedeComprarCombustible(materiales) && gasolinaPorcentaje * 100 < 99)
-                {
-                   gasolina += comprarCombustible(ref materiales, ref rg);
-                    gasolinaPorcentaje = gasolina / Constantes.LIMITE_COMBUSTIBLE;
-                    
-                }
-                if (puedeComprarSondas(materiales) && sondasPorcentaje * 100 < 99)
-                {
-                    sondas += comprarSondas(ref materiales,ref rg);
-                    sondasPorcentaje = sondas / Constantes.CAPACIDAD_SONDAS;
-                }
-            }
-
-
-         
-
-        }
-        
-    }
-    bool puedeComprarCombustible(double[] materiales)
-    {
-        float litrosCobustible = Constantes.LIMITE_COMBUSTIBLE / 100; //total litros por 1%
-
-        float iridio = litrosCobustible * Constantes.IRIDIO_VC;
-        float paladio = litrosCobustible * Constantes.PALADIO_VC;
-        float platino = litrosCobustible * Constantes.PLATINO_VC;
-        float elementoZero = litrosCobustible * Constantes.ELEMENTO_ZERO_VC;
-
-        return (materiales[0] >= iridio && materiales[1] >= paladio && materiales[2] >= platino && materiales[3]>elementoZero);
-
-    }
-    bool puedeComprarSondas(double[] materiales)
-    {
-     //   int cantidadSondas =(int) Constantes.CAPACIDAD_SONDAS/ 100; //total litros por 1%
-
-        float iridio =  Constantes.IRIDIO_VS;
-        float paladio =  Constantes.PALADIO_VS;
-        float platino =  Constantes.PLATINO_VS;
-        float elementoZero =  Constantes.ELEMENTO_ZERO_VS;
-
-        return (materiales[0] >= iridio && materiales[1] >= paladio && materiales[2] >= platino && materiales[3] > elementoZero);
-
-    }
-      public int comprarSondas(ref double[] materiales,ref double rg )
-    {
-        //int cantidadSondas =(int) Constantes.LIMITE_COMBUSTIBLE / 100; //total litros por 1%
-
-        materiales[0] -=  Constantes.IRIDIO_VS;
-        materiales[1] -=  Constantes.PALADIO_VS;
-        materiales[2] -=  Constantes.PLATINO_VS;
-        materiales[3] -=  Constantes.ELEMENTO_ZERO_VS;
-
-        rg -= Constantes.IRIDIO_VS;
-        rg -= Constantes.PALADIO_VS;
-        rg -= Constantes.PLATINO_VS;
-        rg -= Constantes.ELEMENTO_ZERO_VS;
-
-        return 1;
-    }
-
-
-    public float comprarCombustible(ref double[] materiales ,ref double rg)
-    {
-        float litrosCombustible = Constantes.LIMITE_COMBUSTIBLE / 100; //total litros por 1%
-
-        materiales[0] -= litrosCombustible * Constantes.IRIDIO_VC;
-        materiales[1] -= litrosCombustible * Constantes.PALADIO_VC;
-        materiales[2] -= litrosCombustible * Constantes.PLATINO_VC;
-        materiales[3] -= litrosCombustible * Constantes.ELEMENTO_ZERO_VC;
-
-        rg -= litrosCombustible * Constantes.IRIDIO_VC * Constantes.IRIDIO_VALOR;
-        rg -= litrosCombustible * Constantes.PALADIO_VC * Constantes.PALADIO_VALOR;
-        rg -= litrosCombustible * Constantes.PLATINO_VC * Constantes.PLATINO_VALOR;
-        rg -= litrosCombustible * Constantes.ELEMENTO_ZERO_VC * Constantes.ELEMENTO_ZERO_VALOR;
-        return litrosCombustible;
-
-    }
 
 
     /// <summary>
@@ -331,25 +210,32 @@ public class RecorridoSistemas : MonoBehaviour {
         }
         else
         {
-            Debug.Log(rg + " RGL");
-            Debug.Log(gasolina + " GASL");
-            Debug.Log(sondas + " RGL");
-            string salida="";
-            foreach (var item in camino)
-            {
-                salida += item.nombre+"-";
-            }
-            Debug.Log(salida);
 
-            if (mejorCamino(ref rg, gasolina, sondas))
+            double regTemp =rg;
+            if (mejorCamino(ref regTemp, gasolina, sondas))
             {
+
+               
+
                 clonarCamino(camino);
-                relacionGananciaGlobal = rg;
+                relacionGananciaGlobal = regTemp;
                 gasolinaGlobal = gasolina;
             }
+
+            //Debug.Log(rg + " RGL");
+            //Debug.Log(regTemp + " RGG");
+            //Debug.Log(materiales[0] + "-" + materiales[1]);
+            //Debug.Log(gasolina + " GASL");
+            //Debug.Log(sondas + " sondas");
+            //string salida = "";
+            //foreach (var item in camino)
+            //{
+            //    salida += item.nombre + "-";
+            //}
+            //Debug.Log(salida);
+
         }
 
-        ////replantear condicional
 
         devolverMateriales(inicio.nodos, planetasTemp, ref materiales);
         devolverMaterialesNave(ref materiales, materialesTemp);
@@ -365,10 +251,10 @@ public class RecorridoSistemas : MonoBehaviour {
     /// <returns></returns>
     private bool mejorCamino(ref double relacionGanancia,double gasolina,int sondas)
     {
-        double iridio = ((gasolina * Constantes.IRIDIO_VC) + (sondas * Constantes.IRIDIO_VS)) * Constantes.IRIDIO_VALOR;
-        double paladio = ((gasolina * Constantes.PALADIO_VC) + (sondas * Constantes.PALADIO_VS))*Constantes.PALADIO_VALOR;
-        double platino = ((gasolina * Constantes.PLATINO_VC) + (sondas * Constantes.PLATINO_VS))*Constantes.PLATINO_VALOR;
-        double elementoZero = ((gasolina * Constantes.ELEMENTO_ZERO_VC) + (sondas * Constantes.ELEMENTO_ZERO_VS))* Constantes.ELEMENTO_ZERO_VALOR;
+        double iridio = ((gasolina * Constantes.IRIDIO_VC * Constantes.IRIDIO_VALOR) + (sondas * Constantes.IRIDIO_VS * Constantes.IRIDIO_VALOR)) ;
+        double paladio = ((gasolina * Constantes.PALADIO_VC*Constantes.PALADIO_VALOR) + (sondas * Constantes.PALADIO_VS * Constantes.PALADIO_VALOR));
+        double platino = ((gasolina * Constantes.PLATINO_VC * Constantes.PLATINO_VALOR) + (sondas * Constantes.PLATINO_VS * Constantes.PLATINO_VALOR));
+        double elementoZero = ((gasolina * Constantes.ELEMENTO_ZERO_VC * Constantes.ELEMENTO_ZERO_VALOR) + (sondas * Constantes.ELEMENTO_ZERO_VS * Constantes.ELEMENTO_ZERO_VALOR));
 
 
         relacionGanancia+=(iridio + paladio + platino + elementoZero);
@@ -427,6 +313,7 @@ public class RecorridoSistemas : MonoBehaviour {
             if (!origen)
             {
                 SistemaPlanetario orCopia = new SistemaPlanetario();
+                orCopia.tieneDeposito=item.origen.tieneDeposito;
                 orCopia.recorrido = item.origen.recorrido;
                 orCopia.nombre = item.origen.nombre;
                 orCopia.x = item.origen.x;
@@ -440,6 +327,7 @@ public class RecorridoSistemas : MonoBehaviour {
             if (!destino)
             {
                 SistemaPlanetario desCopia = new SistemaPlanetario();
+                desCopia.tieneDeposito = item.destino.tieneDeposito;
                 desCopia.recorrido = item.destino.recorrido;
                 desCopia.nombre = item.destino.nombre;
                 desCopia.x = item.destino.x;
@@ -477,14 +365,14 @@ public class RecorridoSistemas : MonoBehaviour {
     /// <returns></returns>
     public double calcularRelacionGanancia(SistemaPlanetario inicio, double relacionGanancia,float distancia,ref int sondas,ref double[] materiales)
     {
-        double iridio = 0;
+            double iridio = 0;
         double paladio = 0;
         double platino = 0;
         double elementoZero = 0;
 
         foreach (var item in inicio.recorrido.caminoGlobal)
         {
-            if (sondas >= 2 && valeLaPenaGastarSondas(item))
+            if (sondas >= 2 && GastoSondas.valeLaPenaGastarSondas(item))
             {
 
                 iridio += item.iridio;
@@ -533,25 +421,5 @@ public class RecorridoSistemas : MonoBehaviour {
 
     }
 
-    /// <summary>
-    /// Calcula si vale la pena gastar sondas en un planeta
-    /// </summary>
-    /// <param name="planeta"></param>
-    public bool valeLaPenaGastarSondas(Planeta planeta)
-    {
-        double iridio = planeta.iridio * Constantes.IRIDIO_VALOR;
-        double paladio = planeta.paladio * Constantes.PALADIO_VALOR;
-        double platino = planeta.platino * Constantes.PLATINO_VALOR;
-        double elementoZero = planeta.elementoZero * Constantes.ELEMENTO_ZERO_VALOR;
-        double total = iridio + paladio + platino + elementoZero;
 
-
-        double iridioValor =Constantes.IRIDIO_VS * Constantes.IRIDIO_VALOR;
-        double paladioValor = Constantes.IRIDIO_VS * Constantes.PALADIO_VALOR;
-        double platinoValor = Constantes.IRIDIO_VS * Constantes.PLATINO_VALOR;
-        double elementoZeroValor = Constantes.IRIDIO_VS * Constantes.ELEMENTO_ZERO_VALOR;
-        double totalValor = iridioValor + paladioValor + platinoValor + elementoZeroValor;
-
-        return total > totalValor;
-    }
 }

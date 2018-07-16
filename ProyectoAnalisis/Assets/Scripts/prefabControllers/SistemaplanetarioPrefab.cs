@@ -83,10 +83,10 @@ public class SistemaplanetarioPrefab : MonoBehaviour {
         paladio.text = "Paladio: " + sistemaPlanetario.paladioTotal;
         elementoZero.text = "Elemento zero: " + sistemaPlanetario.elementoZeroTotal;
 
-        if(sistemaPlanetario.nombre=="" && sistemaPlanetario.id != 0)
-        {
-            StartCoroutine(getSistemas());
-        }
+        //if(sistemaPlanetario.nombre=="" && sistemaPlanetario.id != 0)
+        //{
+        //    StartCoroutine(getSistemas());
+        //}
     }
     /// <summary>
     /// Actualiza la información del sistema planetario con los datos de la escena

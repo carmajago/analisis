@@ -85,13 +85,7 @@ public class EditarNebulosaCamara : MonoBehaviour {
       //GameObject.FindGameObjectWithTag("Nave").GetComponent<CamaraNave>().enabled =false;
        
         isSimulacion = isSim;
-        if (isSimulacion)
-        {
-            Debug.Log("Enra");
-            GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>().navegacionSistema();
-            GameObject.FindGameObjectWithTag("Nave").GetComponent<CamaraNave>().enabled = false;
-
-        }
+    
 
         nombreSistema.text = nombre;
         isPlaneta = true;
@@ -107,11 +101,7 @@ public class EditarNebulosaCamara : MonoBehaviour {
     }
     public void regresarASistemas()
     {
-        if (isSimulacion)
-        {
-            GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>().navegacionNebulosa();
-
-        }
+       
         isPlaneta = true;
         canvasSistema.SetActive(false);
         canvasSistemas.SetActive(true);

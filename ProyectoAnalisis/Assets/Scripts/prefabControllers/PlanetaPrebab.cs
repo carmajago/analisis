@@ -150,10 +150,10 @@ public class PlanetaPrebab : MonoBehaviour {
         paladio.text = "" + planeta.paladio;
         elementoZero.text = "" + planeta.elementoZero;
 
-        if (planeta.nombre == "" && planeta.id != 0)
-        {
-            StartCoroutine(getPlaneta());
-        }
+        //if (planeta.nombre == "" && planeta.id != 0)
+        //{
+        //    StartCoroutine(getPlaneta());
+        //}
 
     }
 
