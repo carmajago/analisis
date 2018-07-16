@@ -12,8 +12,8 @@ public class NaveEspacial : MonoBehaviour
     public float elementoZero;
     public int sondas;
     public float combustible;
-    public float vida;
-    public float danoBase;
+    public float vida=1200;
+    public float danoBase=60;
 
     [Header("")]
     public Vector3 offsetSistema;
@@ -44,6 +44,8 @@ public class NaveEspacial : MonoBehaviour
     public string nombrePlanetaTemp;
     [HideInInspector]
     public bool inPlaneta;
+
+    bool escapar = false;
 
     private void Awake()
     {
@@ -218,8 +220,78 @@ public class NaveEspacial : MonoBehaviour
 
                 }
 
-                StartCoroutine(entrarAPlaneta(planeta));
-                yield return new WaitForSeconds(tiempoExtraccion);///Tiempo de extracción
+
+                #region EntrarAPlaneta
+
+
+                Vector3 posiciont = new Vector3(-7, 0, 0);
+                Vector3 rotacion = new Vector3(0, 90, 0);
+                Vector3 escala = new Vector3(0.1f, 0.1f, 0.1f);
+
+                transform.position += posiciont;
+                transform.eulerAngles = rotacion;
+                transform.localScale -= escala;
+
+
+                Vector3 offsetExtraccion = new Vector3(5f, 19, 22);
+                Camera.main.transform.position -= offsetExtraccion;
+
+                if (sondas >= 2 && GastoSondas.valeLaPenaGastarSondas(planeta))
+                {
+
+
+                    sondas -= 2;
+                    double iridioTemp = planeta.iridio / tiempoExtraccion;
+                    double paladioTemp = planeta.paladio / tiempoExtraccion;
+                    double platinoTemp = planeta.platino / tiempoExtraccion;
+                    double elementoZeroTemp = planeta.elementoZero / tiempoExtraccion;
+
+
+                    inPlaneta = true;
+                    int contador = 0;
+                    nombrePlanetaTemp = planeta.nombre;
+                    while (contador < tiempoExtraccion)
+                    {
+                        if (escapar)
+                        {
+                            escapar = false;
+                            break;
+                        }
+
+                        contador++;
+                        iridio += (float)iridioTemp;
+                        paladio += (float)paladioTemp;
+                        platino += (float)platinoTemp;
+                        elementoZero += (float)elementoZeroTemp;
+
+                        planeta.iridio -= iridioTemp;
+                        planeta.paladio -= paladioTemp;
+                        planeta.platino -= platinoTemp;
+                        planeta.elementoZero -= elementoZeroTemp;
+
+                        iridioPlanetaTemp = (float)planeta.iridio;
+                        paladioPlanetaTemp = (float)planeta.paladio;
+                        platinoPlanetaTemp = (float)planeta.platino;
+                        elementoZeroPlanetaTemp = (float)planeta.elementoZero;
+
+                        iridioPlanetaTemp = Mathf.Clamp(iridioPlanetaTemp, 0, Mathf.Infinity);
+                        platinoPlanetaTemp = Mathf.Clamp(platinoPlanetaTemp, 0, Mathf.Infinity);
+                        paladioPlanetaTemp = Mathf.Clamp(paladioPlanetaTemp, 0, Mathf.Infinity);
+                        elementoZeroPlanetaTemp = Mathf.Clamp(elementoZeroPlanetaTemp, 0, Mathf.Infinity);
+
+                        yield return new WaitForSeconds(1f);
+                    }
+                }
+
+                inPlaneta = false;
+                transform.position -= posiciont;
+                transform.eulerAngles = Vector3.zero;
+                transform.localScale += escala;
+
+
+                Camera.main.transform.position += offsetExtraccion;
+                #endregion EntrarAPlaneta
+
             }
 
 
@@ -231,71 +303,17 @@ public class NaveEspacial : MonoBehaviour
         levelLoader.loadLevel("ViaLactea");
     }
 
-    IEnumerator entrarAPlaneta(Planeta planeta)
+
+
+    public void huir()
     {
-       
-        
-        
-
-        Vector3 posicion = new Vector3(-7, 0, 0);
-        Vector3 rotacion = new Vector3(0, 90, 0);
-        Vector3 escala = new Vector3(0.1f, 0.1f, 0.1f);
-
-        transform.position += posicion;
-        transform.eulerAngles = rotacion;
-        transform.localScale -= escala;
-
-
-        Vector3 offsetExtraccion = new Vector3(5f, 19, 22);
-        Camera.main.transform.position -= offsetExtraccion;
-
-        if (sondas>=2 && GastoSondas.valeLaPenaGastarSondas(planeta))
-        {
-
-            sondas -= 2;
-            double iridioTemp = planeta.iridio / tiempoExtraccion;
-            double paladioTemp = planeta.paladio / tiempoExtraccion;
-            double platinoTemp = planeta.platino / tiempoExtraccion;
-            double elementoZeroTemp = planeta.elementoZero / tiempoExtraccion;
-
-
-            inPlaneta = true;
-            int contador = 0;
-            nombrePlanetaTemp = planeta.nombre;
-            while (contador < tiempoExtraccion)
-            {
-                contador++;
-                iridio += (float)iridioTemp;
-                paladio += (float)paladioTemp;
-                platino += (float)platinoTemp;
-                elementoZero += (float)elementoZeroTemp;
-
-                planeta.iridio -= iridioTemp;
-                planeta.paladio -= paladioTemp;
-                planeta.platino -= platinoTemp;
-                planeta.elementoZero -= elementoZeroTemp;
-
-                iridioPlanetaTemp = (float)planeta.iridio;
-                paladioPlanetaTemp = (float)planeta.paladio;
-                platinoPlanetaTemp = (float)planeta.platino;
-                elementoZeroPlanetaTemp = (float)planeta.elementoZero;
-
-                iridioPlanetaTemp = Mathf.Clamp(iridioPlanetaTemp, 0, Mathf.Infinity);
-                platinoPlanetaTemp = Mathf.Clamp(platinoPlanetaTemp, 0, Mathf.Infinity);
-                paladioPlanetaTemp = Mathf.Clamp(paladioPlanetaTemp, 0, Mathf.Infinity);
-                elementoZeroPlanetaTemp = Mathf.Clamp(elementoZeroPlanetaTemp, 0, Mathf.Infinity);
-
-                yield return new WaitForSeconds(1f);
-            }
-        }
-
-        inPlaneta = false;
-        transform.position -= posicion;
-        transform.eulerAngles = Vector3.zero;
-        transform.localScale += escala;
-
-      
-        Camera.main.transform.position += offsetExtraccion;
+        escapar = true;
+        Debug.Log("Chao Papá");
+        //Chao papá
+    }
+    public void atacar()
+    {
+        Debug.Log("WIN");
     }
 
 }

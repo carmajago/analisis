@@ -20,6 +20,8 @@ public class CanvasSeleccionarEnemigos : MonoBehaviour {
     private Button btnReiniciar;
     private Button btnAtacar;
 
+    public NaveEspacial nave;
+
     public static CanvasSeleccionarEnemigos canvasEnemigos;
     void Awake()
     {
@@ -58,13 +60,47 @@ public class CanvasSeleccionarEnemigos : MonoBehaviour {
         btnAtacar.onClick.AddListener(atacar);
 
     }
+
     public void atacar()
     {
         Time.timeScale = 1; 
         GetComponent<Canvas>().enabled = false;
+        calcular();
 
     }
 
+    public void calcular()
+    {
+        nave = GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>();
+        if (valeLaPenaAtacar())
+        {
+            nave.vida -= EnemigoTipoA.DANO_ATAQUE * tipoA;
+            nave.vida -= EnemigoTipoB.DANO_ATAQUE * tipoB;
+            nave.vida -= EnemigoTipoC.DANO_ATAQUE * tipoC;
+
+            nave.atacar();
+        }
+        else
+        {
+            nave.huir();
+        }
+      
+    }
+
+    private bool valeLaPenaAtacar()
+    {
+        double disparosNave = 0;
+        disparosNave = (EnemigoTipoA.VIDA / nave.danoBase) *tipoA;
+        disparosNave += (EnemigoTipoB.VIDA / nave.danoBase) *tipoB;
+        disparosNave += (EnemigoTipoC.VIDA / nave.danoBase) * tipoC;
+
+        double disparosEnemigo = 0;
+        disparosEnemigo += (nave.vida / EnemigoTipoA.DANO_ATAQUE) * tipoA;
+        disparosEnemigo += (nave.vida / EnemigoTipoB.DANO_ATAQUE) * tipoB;
+        disparosEnemigo += (nave.vida / EnemigoTipoC.DANO_ATAQUE) * tipoC;
+
+        return disparosEnemigo > disparosNave;
+    }
     public void reiniciar()
     {
         botonA.interactable = true;
@@ -90,19 +126,19 @@ public class CanvasSeleccionarEnemigos : MonoBehaviour {
     public void seleccioarTipoA()
     {
         tipoA++;
-        Debug.Log("A" );
+       
         validar();
     }
     public void seleccioarTipoB()
     {
         tipoB++;
-        Debug.Log("B" );
+    
         validar();
     }
     public void seleccioarTipoC()
     {
         tipoC++;
-        Debug.Log("C" );
+
         validar();
     }
     public void validar()

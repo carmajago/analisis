@@ -23,6 +23,10 @@ public class CanvasNaveEspacial : MonoBehaviour
     private TextMeshProUGUI elementoZeroText;
     private TextMeshProUGUI combustibleText;
 
+    private TextMeshProUGUI vida;
+    private TextMeshProUGUI dano;
+
+
     private GameObject PanelPlaneta;
     public GameObject botonAtacar;
 
@@ -79,6 +83,10 @@ public class CanvasNaveEspacial : MonoBehaviour
         platinoPlaneta = GameObject.Find("MaterialesPlaneta/Platino").GetComponent<TextMeshProUGUI>();
         ElementoZeroPlaneta = GameObject.Find("MaterialesPlaneta/ElementoZero").GetComponent<TextMeshProUGUI>();
         nombrePlaneta = GameObject.Find("MaterialesPlaneta/Nombre").GetComponent<TextMeshProUGUI>();
+
+        vida = GameObject.Find("Vida").GetComponent<TextMeshProUGUI>();
+        dano = GameObject.Find("Dano").GetComponent<TextMeshProUGUI>();
+
         //botonAtacar = GameObject.Find("Atacar").gameObject;
 
         nebulosa = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
@@ -113,15 +121,15 @@ public class CanvasNaveEspacial : MonoBehaviour
 
 
         PanelPlaneta.SetActive(nave.inPlaneta);
-        Debug.Log(nebulosa.nebulosa.danger + "--------");
+
         if (nebulosa.nebulosa.danger)
             botonAtacar.SetActive(nave.inPlaneta);
 
 
-        iridioText.text = "" + nave.iridio;
-        paladioText.text = "" + nave.paladio;
-        platinoText.text = "" + nave.platino;
-        elementoZeroText.text = "" + nave.elementoZero;
+        iridioText.text = "" + nave.iridio.ToString("0");
+        paladioText.text = "" + nave.paladio.ToString("0");
+        platinoText.text = "" + nave.platino.ToString("0");
+        elementoZeroText.text = "" + nave.elementoZero.ToString("0");
 
 
         nombrePlaneta.text = nave.nombrePlanetaTemp;
@@ -129,6 +137,10 @@ public class CanvasNaveEspacial : MonoBehaviour
         paladioPlaneta.text = nave.paladioPlanetaTemp.ToString("0");
         platinoPlaneta.text = nave.platinoPlanetaTemp.ToString("0");
         ElementoZeroPlaneta.text = nave.elementoZeroPlanetaTemp.ToString("0");
+
+        vida.text ="VIDA: "+nave.vida.ToString("0");
+        dano.text ="DANO: "+nave.danoBase.ToString("0");
+
 
 
     }
