@@ -162,9 +162,19 @@ public class CrearViaLactea : MonoBehaviour
         viaLactea = ViaLacteaService.PostViaLactea(viaLactea);
         CargarViaLactea cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
         cargar.setViaLactea(viaLactea);
+
         StartCoroutine(CameraAnimations.animacionSalirMenuCrear("Editor"));
 
+        StartCoroutine(irAEditor());
+        
+    }
+    IEnumerator irAEditor()
+    {
+        yield return new WaitForSeconds(2f);
 
+        LevelLoader LevelL = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+
+        LevelL.loadLevel("Editor");
     }
 
 

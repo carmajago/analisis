@@ -78,6 +78,7 @@ public class NebulosaSingleton : MonoBehaviour
 
                 if (planeta.teletransportador.planetaFK != 0)
                 {
+                   
                     item.tieneTeletransportador = true;
                     Vector3 posTele = aux.transform.position + new Vector3(4, 0, 0);
                     GameObject tele = Instantiate(teletrasnportadorPrefab, aux.transform);
@@ -99,8 +100,6 @@ public class NebulosaSingleton : MonoBehaviour
                     dp.deposito = planeta.deposito;
                     dp.planeta = aux;
                 }
-
-
                 nodosTemp.Add(aux);
             }
 

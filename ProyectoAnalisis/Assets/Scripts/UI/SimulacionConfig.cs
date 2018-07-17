@@ -97,10 +97,10 @@ public class SimulacionConfig : MonoBehaviour {
         Constantes.CAPACIDAD_SONDAS = float.Parse(capacidadSondas.text);
         Constantes.LIMITE_COMBUSTIBLE = float.Parse(capacidadCombustible.text);
 
-        Constantes.IRIDIO_MAX = int.Parse(capacidadMateriales.text)/4;
-        Constantes.PLATINO_MAX = int.Parse(capacidadMateriales.text)/4;
-        Constantes.PALADIO_MAX = int.Parse(capacidadMateriales.text)/4;
-        Constantes.ELEMENTOZERO_MAX = int.Parse(capacidadMateriales.text)/4;
+        Constantes.LIMITE_IRIDIO = int.Parse(capacidadMateriales.text)/4;
+        Constantes.LIMITE_PALADIO = int.Parse(capacidadMateriales.text)/4;
+        Constantes.LIMITE_PLATINO= int.Parse(capacidadMateriales.text)/4;
+        Constantes.LIMITE_ELEMENTOZERO = int.Parse(capacidadMateriales.text)/4;
 
     }
 
@@ -119,7 +119,7 @@ public class SimulacionConfig : MonoBehaviour {
         gastoCombustible.text = "" + Constantes.GASTO_COMBUSTIBLE;
         capacidadSondas.text = "" + Constantes.CAPACIDAD_SONDAS;
         capacidadCombustible.text = "" + Constantes.LIMITE_COMBUSTIBLE;
-        capacidadMateriales.text = "" +(Constantes.IRIDIO_MAX * 4);
+        capacidadMateriales.text = "" +(Constantes.LIMITE_IRIDIO * 4);
 
 
 

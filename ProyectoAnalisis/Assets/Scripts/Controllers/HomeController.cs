@@ -12,6 +12,19 @@ public class HomeController : MonoBehaviour {
         {
             Destroy(CargarViaLactea.cargarViaLactea.gameObject);
         }
+        if (NaveEspacial.naveEspacial != null)
+        {
+            Destroy(NaveEspacial.naveEspacial.gameObject);
+        }
+        if (CanvasNaveEspacial.canvasNaveEspacial != null)
+        {
+            Destroy(CanvasNaveEspacial.canvasNaveEspacial.gameObject);
+        }
+        if (Pausar.pausar != null)
+        {
+            Destroy(Pausar.pausar);
+        }
+
     }
 
     public void irAMenuEditar()

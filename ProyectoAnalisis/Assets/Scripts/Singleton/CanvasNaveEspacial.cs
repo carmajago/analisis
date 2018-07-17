@@ -10,7 +10,7 @@ public class CanvasNaveEspacial : MonoBehaviour
     public static CanvasNaveEspacial canvasNaveEspacial;
 
     public GameObject CanvasAtacar;
-
+    public GameObject gameOver;
     private Slider combustibleSlider;
     private Image iridioFill;
     private Image platinoFill;
@@ -53,6 +53,10 @@ public class CanvasNaveEspacial : MonoBehaviour
     private TextMeshProUGUI VI;
     private TextMeshProUGUI CC;
     private TextMeshProUGUI CT;
+
+    private TextMeshProUGUI finSimulacion;
+
+
 
 
     public NaveEspacial nave;
@@ -126,6 +130,8 @@ public class CanvasNaveEspacial : MonoBehaviour
         VI = btnMejoraVI.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
         CC = btnMejoraCC.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
         CT = btnMejoraCT.transform.Find("Cantidad").GetComponent<TextMeshProUGUI>();
+        finSimulacion = transform.Find("Terminada").GetComponent<TextMeshProUGUI>();
+
     }
     private void LateUpdate()
     {
@@ -175,8 +181,10 @@ public class CanvasNaveEspacial : MonoBehaviour
         vida.text ="VIDA: "+nave.vida.ToString("0");
         dano.text ="DANO: "+nave.danoBase.ToString("0");
 
+        finSimulacion.enabled = nave.finSimulacion;
 
         validarMejoras();
+        gameOver.SetActive(nave.gameOver);
     }
 
     public void validarMejoras()

@@ -63,9 +63,7 @@ public class CrearRecorridos : MonoBehaviour
         #endregion pintarLineas
 
         StartCoroutine(nave.sistemaDeNavegacion(nebulosaSingleton.nebulosa.recorrido.caminoGlobal));
-
-        
-
-
     }
+   
+
 }

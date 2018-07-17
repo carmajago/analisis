@@ -23,13 +23,32 @@ public class IniciarSimulacion : MonoBehaviour {
                 item.visitado = true;
                 NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
                 ns.nebulosa = item;
+
+                foreach (var sistemas in item.sistemasPlanetarios)
+                {
+                    foreach (var planeta in sistemas.nodos)
+                    {
+                        if (planeta.teletransportador.planetaFK != 0)
+                        {
+                            item.tieneTeletransportador = true;
+                        }
+                    }
+                }
+
+                if(item.tieneTeletransportador)
                 StartCoroutine(animacionIrANebulosa(new Vector3(item.x, item.y, item.z)));
                 break;
             }
+            if (item == cargar.viaLactea.Nebulosas[cargar.viaLactea.Nebulosas.Count - 1])
+            {
+                NaveEspacial.naveEspacial.finSimulacion = true;
+            }
         }
+
+      
         //volver a tierra
 
-	}
+    }
 
     IEnumerator animacionIrANebulosa(Vector3 pos)
     {

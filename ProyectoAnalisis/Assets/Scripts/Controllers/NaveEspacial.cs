@@ -27,7 +27,10 @@ public class NaveEspacial : MonoBehaviour
 
     public float posY = 0;
 
-
+    [Header("Enemigos")]
+    public GameObject enemigoA;
+    public GameObject enemigoB;
+    public GameObject enemigoC;
    
     public static NaveEspacial naveEspacial;
     public LineRenderer lineaPaso;
@@ -48,8 +51,10 @@ public class NaveEspacial : MonoBehaviour
     public bool inPlaneta;
     #endregion planetaTemporal
 
+    [HideInInspector]
+    public bool finSimulacion;
     bool escapar = false;
-
+    public bool gameOver;
     #region mejoras
     [HideInInspector]
     public int canonTanix;
@@ -122,11 +127,27 @@ public class NaveEspacial : MonoBehaviour
 
         transform.position = new Vector3(MejorCamino[0].x, 0, MejorCamino[0].z);
         
-        lineaPaso.SetPosition(0,new Vector3(MejorCamino[0].x,0,MejorCamino[0].z));
+        lineaPaso.SetPosition(0,new Vector3(MejorCamino[0].x,0.1f,MejorCamino[0].z));
         int i = 0;
+
+        int contadorFinal=0; //contador para saber si llego a
+        Vector3 posInicial=new Vector3(MejorCamino[0].x,0,MejorCamino[0].x);
         foreach (var sistema in MejorCamino)
         {
 
+            float distancia=(posInicial-new Vector3(sistema.x,0,sistema.z)).magnitude;
+            posInicial = new Vector3(sistema.x, 0, sistema.z);
+            if (combustible < (distancia / Constantes.GASTO_COMBUSTIBLE))
+            {
+                gameOver = true;
+                
+                Debug.Log("Todo Esta Perdido");
+                Time.timeScale = 0;
+                break;
+            }
+
+            contadorFinal++;
+            
             lineaPaso.positionCount = i+1;
 
             navegacionSistema();
@@ -150,7 +171,7 @@ public class NaveEspacial : MonoBehaviour
             int entra = 0;
             while ((transform.position - target).magnitude != 0)
             {
-                lineaPaso.SetPosition(i, new Vector3(transform.position.x, 0,transform.position.z));
+                lineaPaso.SetPosition(i, new Vector3(transform.position.x, 0.1f,transform.position.z));
                 if (entra<=1)
                 {
                     entra++;
@@ -187,7 +208,7 @@ public class NaveEspacial : MonoBehaviour
             materiales[1] = paladio;
             materiales[2] = platino;
             materiales[3] = elementoZero;
-            Debug.Log("Esto tenía:" + iridio);
+            
             double rg = 0;
             rc.recargarGasolinaYsondas(sistema, ref combustible, ref sondas, ref materiales, ref rg);
         
@@ -196,7 +217,7 @@ public class NaveEspacial : MonoBehaviour
             platino = (float)materiales[2];
             elementoZero = (float)materiales[3];
 
-            Debug.Log("Esto tengo:" + iridio);
+
             #endregion RecargarCombustible
 
 
@@ -208,11 +229,19 @@ public class NaveEspacial : MonoBehaviour
                 planetaTemp.transform.localPosition = new Vector3(sistema.recorrido.caminoGlobal[0].x, 0, sistema.recorrido.caminoGlobal[0].z);
                 transform.position = planetaTemp.transform.position;
             }
+
+            if (contadorFinal == MejorCamino.Count)
+            {
+                break;
+            }
+
+            
             foreach (var planeta in sistema.recorrido.caminoGlobal)
             {
 
-
-                navegacionPlanetas();
+               
+               
+                    navegacionPlanetas();
                 planetaTemp.transform.localPosition = (new Vector3(planeta.x, 0, planeta.z));
 
                 target = planetaTemp.transform.position;
@@ -257,12 +286,21 @@ public class NaveEspacial : MonoBehaviour
 
 
                 Vector3 offsetExtraccion = new Vector3(5f, 19, 22);
-                Camera.main.transform.position -= offsetExtraccion;
+               // Camera.main.transform.position -= offsetExtraccion;
+
+                
 
                 if (sondas >= 2 && GastoSondas.valeLaPenaGastarSondas(planeta))
                 {
 
+                    Vector3 Posfinal1 = Camera.main.transform.position - offsetExtraccion;
 
+                    while ((Posfinal1 - Camera.main.transform.position).magnitude != 0)
+                    {
+                        Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, Posfinal1, 1f);
+                        yield return null;
+
+                    }
                     sondas -= 2;
                     double iridioTemp = planeta.iridio / tiempoExtraccion;
                     double paladioTemp = planeta.paladio / tiempoExtraccion;
@@ -273,6 +311,8 @@ public class NaveEspacial : MonoBehaviour
                     inPlaneta = true;
                     int contador = 0;
                     nombrePlanetaTemp = planeta.nombre;
+
+                    ///Extraer materiales 
                     while (contador < tiempoExtraccion)
                     {
                         if (escapar)
@@ -312,7 +352,14 @@ public class NaveEspacial : MonoBehaviour
                 transform.localScale += escala;
 
 
-                Camera.main.transform.position += offsetExtraccion;
+                Vector3 Posfinal = Camera.main.transform.position + offsetExtraccion;
+
+                while ((Posfinal - Camera.main.transform.position).magnitude != 0)
+                {
+                    Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, Posfinal, 1f);
+                    yield return null;
+
+                }
                 #endregion EntrarAPlaneta
 
             }
@@ -322,6 +369,7 @@ public class NaveEspacial : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("Teletransportar").GetComponent<Teletransportar>().iniciarAnimacion();
         yield return new WaitForSeconds(2.1f);
+       
         LevelLoader levelLoader = GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
         levelLoader.loadLevel("ViaLactea");
     }

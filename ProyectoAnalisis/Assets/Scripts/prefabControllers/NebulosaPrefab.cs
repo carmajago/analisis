@@ -27,8 +27,8 @@ public class NebulosaPrefab : MonoBehaviour
         btn.onClick.AddListener(abrirInfo);
         refrescarInfo();
 
-        
-            
+
+        cambiarAPeligrosa();
         
     }
 

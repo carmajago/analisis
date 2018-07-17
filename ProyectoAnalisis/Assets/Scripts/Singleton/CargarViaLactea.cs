@@ -47,6 +47,8 @@ public class CargarViaLactea : MonoBehaviour {
         { Vector3 posicion = new Vector3(item.x, item.y, item.z);
             GameObject prebabNebulosa= Instantiate(prefabNebulosa,posicion ,Quaternion.identity);
             NebulosaPrefab np = prebabNebulosa.GetComponent<NebulosaPrefab>();
+          
+ 
             np.setNebulosa(item);
             np.escena = escena;
         }

@@ -18,8 +18,6 @@ public class RecorridoSistemas : MonoBehaviour {
     public void iniciarAlgoritmo(Nebulosa nebulosa)
     {
 
-        //Duplicar nebulosa
-
         nebulosaG = nebulosa;
         // buscar el nodo inicial
         foreach (var item in nebulosa.sistemasPlanetarios)
@@ -37,10 +35,24 @@ public class RecorridoSistemas : MonoBehaviour {
         materiales[2] = nave.platino;
         materiales[3] = nave.elementoZero;
         if (nodoInicial != null)
-        {
-
-
+        { 
             buscarCamino(nodoInicial, 0, nebulosa.grafo, nave.combustible, camino, 0f, nave.sondas, materiales);
+        }
+    }
+    public void recalcularAlgorimo(SistemaPlanetario nodoInicial)
+    {
+
+        
+        List<SistemaPlanetario> camino = new List<SistemaPlanetario>();
+        nave = GameObject.FindGameObjectWithTag("Nave").GetComponent<NaveEspacial>();
+        double[] materiales = new double[4];
+        materiales[0] = nave.iridio;
+        materiales[1] = nave.paladio;
+        materiales[2] = nave.platino;
+        materiales[3] = nave.elementoZero;
+        if (nodoInicial != null)
+        {
+            buscarCamino(nodoInicial, 0, nebulosaG.grafo, nave.combustible, camino, 0f, nave.sondas, materiales);
         }
     }
 

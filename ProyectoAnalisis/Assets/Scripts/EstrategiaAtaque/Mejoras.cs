@@ -92,6 +92,8 @@ public class Mejoras : MonoBehaviour
                                 && nave.platino > Blindaje.PLATINO
                                 && nave.elementoZero > Blindaje.ELEMENTO_ZERO))
             {
+
+                nave.vida += 1200;
                 nave.blindaje++;
                 nave.iridio -= Blindaje.IRIDIO;
                 nave.paladio -= Blindaje.PALADIO;
@@ -101,6 +103,10 @@ public class Mejoras : MonoBehaviour
         }
 
     }
+
+    /// <summary>
+    /// incrementar la velocidad en un 20%
+    /// </summary>
     public void propulsorOnix()
     {
 
@@ -115,6 +121,8 @@ public class Mejoras : MonoBehaviour
                                 && nave.platino > PropulsorOnix.PLATINO
                                 && nave.elementoZero > PropulsorOnix.ELEMENTO_ZERO))
             {
+                nave.velocidadplanetas *= 1.2f;
+                nave.velocidadplanetas *= 1.2f;
                 nave.propulsorOnix++;
                 nave.iridio -= PropulsorOnix.IRIDIO;
                 nave.paladio -= PropulsorOnix.PALADIO;
@@ -123,6 +131,9 @@ public class Mejoras : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// incrementa el daño base 100 unidades
+    /// </summary>
     public void plasma()
     {
         float porcentajeVida = nave.vida * 100 / Constantes.LIMITE_VIDA;
@@ -136,6 +147,7 @@ public class Mejoras : MonoBehaviour
                                 && nave.platino > CanonPlasma.PLATINO
                                 && nave.elementoZero > CanonPlasma.ELEMENTO_ZERO))
             {
+                nave.danoBase += 100;
                 nave.canonPlanma++;
                 nave.iridio -= CanonPlasma.IRIDIO;
                 nave.paladio -= CanonPlasma.PALADIO;
@@ -157,6 +169,11 @@ public class Mejoras : MonoBehaviour
                                 && nave.platino > CapacidadDepositos.PLATINO
                                 && nave.elementoZero > CapacidadDepositos.ELEMENTO_ZERO))
             {
+                Constantes.LIMITE_IRIDIO *=1.5f;
+                Constantes.LIMITE_PALADIO *= 1.5f;
+                Constantes.LIMITE_PLATINO *= 1.5f;
+                Constantes.LIMITE_ELEMENTOZERO *= 1.5f;
+
                 nave.capacidadDeposito++;
                 nave.iridio -= CapacidadDepositos.IRIDIO;
                 nave.paladio -= CapacidadDepositos.PALADIO;
@@ -196,6 +213,8 @@ public class Mejoras : MonoBehaviour
                                 && nave.platino > CapacidadCombustible.PLATINO
                                 && nave.elementoZero > CapacidadCombustible.ELEMENTO_ZERO))
             {
+
+                Constantes.LIMITE_COMBUSTIBLE *= 1.5f;
                 nave.capacidaCombustible++;
                 nave.iridio -= CapacidadCombustible.IRIDIO;
                 nave.paladio -= CapacidadCombustible.PALADIO;

@@ -36,5 +36,16 @@ public class Pausar : MonoBehaviour {
         menuPausa.SetActive(false);
         Time.timeScale = 1;
     }
+    public void irAHome()
+    {
+        Time.timeScale = 1;
+            menuPausa.SetActive(false);
+        LevelLoader lv= GameObject.FindGameObjectWithTag("LevelLoader").GetComponent<LevelLoader>();
+        lv.loadLevel("Home");   
+    }
+    public void mejoras()
+    {
+
+    }
 
 }
