@@ -16,9 +16,15 @@ public class IniciarSimulacion : MonoBehaviour {
 	void Start () {
         cargar = GameObject.FindGameObjectWithTag("ViaLactea").GetComponent<CargarViaLactea>();
 
+
         foreach (var item in cargar.viaLactea.Nebulosas)
         {
-            if (!item.visitado)
+
+        }
+
+        foreach (var item in cargar.viaLactea.Nebulosas)
+        {
+            if (!item.visitado )
             {
                 item.visitado = true;
                 NebulosaSingleton ns = GameObject.FindGameObjectWithTag("Nebulosa").GetComponent<NebulosaSingleton>();
@@ -32,12 +38,28 @@ public class IniciarSimulacion : MonoBehaviour {
                         {
                             item.tieneTeletransportador = true;
                         }
+                        if (planeta.inicial)
+                        {
+                            item.inicial = true;
+                            sistemas.inicial = true;
+                        }
                     }
                 }
 
-                if(item.tieneTeletransportador)
-                StartCoroutine(animacionIrANebulosa(new Vector3(item.x, item.y, item.z)));
-                break;
+                if (item.tieneTeletransportador && item.inicial)
+                {
+                    
+
+                    foreach (var itemtemp in cargar.viaLactea.Nebulosas)
+                    {
+                        itemtemp.inicial = true;
+                    }
+                    StartCoroutine(animacionIrANebulosa(new Vector3(item.x, item.y, item.z)));
+                    break;
+                }
+                
+
+               
             }
             if (item == cargar.viaLactea.Nebulosas[cargar.viaLactea.Nebulosas.Count - 1])
             {

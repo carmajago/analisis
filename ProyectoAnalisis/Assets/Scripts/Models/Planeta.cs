@@ -31,5 +31,8 @@ public class Planeta  {
     [NonSerialized]
     public bool visitado=false;
 
+
+    public bool inicial=false;
+
    
 }

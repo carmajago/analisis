@@ -31,6 +31,7 @@ public class CrearRecorridos : MonoBehaviour
 
         #region pintarLineas
         int i = 0;
+        if(nebulosaSingleton.nebulosa.recorrido.caminoGlobal!=null)
         foreach (var item in nebulosaSingleton.nebulosa.recorrido.caminoGlobal)
         {
 

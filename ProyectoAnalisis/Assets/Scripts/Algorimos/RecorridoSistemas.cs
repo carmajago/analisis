@@ -17,13 +17,22 @@ public class RecorridoSistemas : MonoBehaviour {
 	}
     public void iniciarAlgoritmo(Nebulosa nebulosa)
     {
-
+        SistemaPlanetario nodoInicialTemporal=null;
         nebulosaG = nebulosa;
         // buscar el nodo inicial
         foreach (var item in nebulosa.sistemasPlanetarios)
         {
+            if (item.inicial)
+            {
+                nodoInicialTemporal = item;
+              
+            }
             if (item.tieneTeletransportador)
             {
+                if (nodoInicialTemporal == null)
+                {
+                    nodoInicialTemporal = item;
+                }
                 nodoInicial = item;
             }
         }
@@ -34,9 +43,9 @@ public class RecorridoSistemas : MonoBehaviour {
         materiales[1] = nave.paladio;
         materiales[2] = nave.platino;
         materiales[3] = nave.elementoZero;
-        if (nodoInicial != null)
+        if (nodoInicialTemporal != null)
         { 
-            buscarCamino(nodoInicial, 0, nebulosa.grafo, nave.combustible, camino, 0f, nave.sondas, materiales);
+            buscarCamino(nodoInicialTemporal, 0, nebulosa.grafo, nave.combustible, camino, 0f, nave.sondas, materiales);
         }
     }
     public void recalcularAlgorimo(SistemaPlanetario nodoInicial)

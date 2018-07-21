@@ -37,6 +37,7 @@ public class SistemaPlanetario  {
     [NonSerialized]
     public bool visitado=false;
 
-
+    [NonSerialized]
+    public bool inicial;
 
 }

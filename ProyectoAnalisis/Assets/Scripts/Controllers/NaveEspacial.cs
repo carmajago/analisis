@@ -132,10 +132,16 @@ public class NaveEspacial : MonoBehaviour
 
         int contadorFinal=0; //contador para saber si llego a
         Vector3 posInicial=new Vector3(MejorCamino[0].x,0,MejorCamino[0].x);
+        SistemaPlanetario sistemaInicial = MejorCamino[0];
         foreach (var sistema in MejorCamino)
         {
+            if (sistema == sistemaInicial && i!=0)
+            {
+                break;
+            }
 
-            float distancia=(posInicial-new Vector3(sistema.x,0,sistema.z)).magnitude;
+
+            float distancia =(posInicial-new Vector3(sistema.x,0,sistema.z)).magnitude;
             posInicial = new Vector3(sistema.x, 0, sistema.z);
             if (combustible < (distancia / Constantes.GASTO_COMBUSTIBLE))
             {
@@ -230,12 +236,8 @@ public class NaveEspacial : MonoBehaviour
                 transform.position = planetaTemp.transform.position;
             }
 
-            if (contadorFinal == MejorCamino.Count)
-            {
-                break;
-            }
 
-            
+          
             foreach (var planeta in sistema.recorrido.caminoGlobal)
             {
 

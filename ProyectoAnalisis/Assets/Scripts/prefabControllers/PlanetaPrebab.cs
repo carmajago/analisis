@@ -121,15 +121,17 @@ public class PlanetaPrebab : MonoBehaviour {
         TMP_InputField platino = infoPlaneta.transform.Find("PlatinoInput").GetComponent<TMP_InputField>();
         TMP_InputField paladio = infoPlaneta.transform.Find("PaladioInput").GetComponent<TMP_InputField>();
         TMP_InputField elementoZero = infoPlaneta.transform.Find("ElementoZeroInput").GetComponent<TMP_InputField>();
+        Toggle inicial = infoPlaneta.transform.Find("Inicial").GetComponent<Toggle>();
 
-        if(iridio.text != planeta.iridio.ToString() || iridio.text != planeta.iridio.ToString()
-            || iridio.text != planeta.iridio.ToString() || iridio.text != planeta.iridio.ToString())
+
+        if (iridio.text != planeta.iridio.ToString() || iridio.text != planeta.iridio.ToString()
+            || iridio.text != planeta.iridio.ToString() || iridio.text != planeta.iridio.ToString() || inicial.isOn!=planeta.inicial)
         {
             planeta.iridio = double.Parse(iridio.text);
             planeta.paladio = double.Parse(paladio.text);
             planeta.platino = double.Parse(platino.text);
             planeta.elementoZero = double.Parse(elementoZero.text);
-
+            planeta.inicial = inicial.isOn;
             PlanetaService.PutPlaneta(planeta);
         }
     }
@@ -141,7 +143,7 @@ public class PlanetaPrebab : MonoBehaviour {
         TMP_InputField platino = infoPlaneta.transform.Find("PlatinoInput").GetComponent<TMP_InputField>();
         TMP_InputField paladio = infoPlaneta.transform.Find("PaladioInput").GetComponent<TMP_InputField>();
         TMP_InputField elementoZero = infoPlaneta.transform.Find("ElementoZeroInput").GetComponent<TMP_InputField>();
-
+        Toggle inicial = infoPlaneta.transform.Find("Inicial").GetComponent<Toggle>();
 
         nombre.text = planeta.nombre;
 
@@ -149,7 +151,7 @@ public class PlanetaPrebab : MonoBehaviour {
         platino.text = "" + planeta.platino;
         paladio.text = "" + planeta.paladio;
         elementoZero.text = "" + planeta.elementoZero;
-
+        inicial.isOn = planeta.inicial;
         //if (planeta.nombre == "" && planeta.id != 0)
         //{
         //    StartCoroutine(getPlaneta());

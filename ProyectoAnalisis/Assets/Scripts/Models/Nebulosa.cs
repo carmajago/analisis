@@ -33,4 +33,7 @@ public class Nebulosa  {
 
     [NonSerialized]
     public bool tieneTeletransportador;
+
+    [NonSerialized]
+    public bool inicial=false;
 }

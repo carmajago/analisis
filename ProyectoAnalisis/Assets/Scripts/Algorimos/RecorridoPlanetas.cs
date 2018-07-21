@@ -48,7 +48,11 @@ public class RecorridoPlanetas : MonoBehaviour {
                 mayor = total;
                 planetaInicial = item;
             }
-            
+            if (item.inicial)
+            {
+                planetaInicial = item;
+                break;
+            }
             if(item.teletransportador.planetaFK !=0 || item.deposito.planetaFK != 0)
             {
                 planetaInicial = item;
